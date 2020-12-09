@@ -3,7 +3,7 @@
 }
 
 input[type="number"] {
-  width: 5rem;
+  width: 4rem;
 }
 
 .plus-btn {
@@ -12,6 +12,16 @@ input[type="number"] {
   font-weight: bold;
   /* font-size: 18px; */
   align-items: center;
+}
+
+.delete-quiz-btn {
+  cursor: pointer;
+  float: right;
+  opacity: 0.6;
+}
+
+.delete-quiz-btn:hover {
+  opacity: 1;
 }
 
 main {

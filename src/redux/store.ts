@@ -1,13 +1,14 @@
 import { createStore, applyMiddleware } from "redux";
 import { combineReducers } from "redux";
-import quizReducer from "./quiz/quiz.reducer";
+import { quizReducer, quizResultsReducer } from "./quiz/quiz.reducers";
 // import {logger} from 'redux-logger'
 import logger from 'redux-logger'
 
 const middleweres = [logger]
 
 const rootReducer = combineReducers({
-    quizzes: quizReducer
+    quizzes: quizReducer,
+    currentQuiz: quizResultsReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>

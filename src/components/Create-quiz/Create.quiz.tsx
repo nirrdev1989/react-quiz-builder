@@ -1,11 +1,13 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-
 import { Qestion, Quiz } from '../../redux/quiz/model';
-// import uuid from 'react-uuid'
 import { connect } from "react-redux";
 import { addQuizAction } from '../../redux/quiz/quiz.action';
 
-function CreateQuiz({ addQuizAction }: any) {
+interface CreateQuizProps {
+   addQuiz: (quiz: Quiz) => void
+}
+
+function CreateQuiz({ addQuiz }: CreateQuizProps) {
 
    const [createQuiz, setQuiz] = useState<Quiz>({
       title: '',
@@ -72,7 +74,7 @@ function CreateQuiz({ addQuizAction }: any) {
          return
       }
 
-      console.log(qestion.unswers)
+      // console.log(qestion.unswers)
 
       setQuiz((prev) => {
          return {
@@ -90,10 +92,14 @@ function CreateQuiz({ addQuizAction }: any) {
 
    function handleSubmit(event: FormEvent) {
       event.preventDefault()
+
+      if (createQuiz.numberQestions === 0) {
+         return
+      }
       alert('CREAT QUIZ')
 
       // console.log(createQuiz)
-      addQuizAction(createQuiz)
+      addQuiz(createQuiz)
 
       resetQuiz()
    }
@@ -171,7 +177,8 @@ function CreateQuiz({ addQuizAction }: any) {
                            </div>
                         </div>
                         <div className="input-ele">
-                           <label>Number of unswers</label>
+
+                           <span>Number of unswers</span>
                            <input
                               id="count-unswers"
                               value={qestion.numberOfUnswers}
@@ -190,10 +197,10 @@ function CreateQuiz({ addQuizAction }: any) {
                               return <div className="input-ele" key={index}>
                                  <input
                                     name={`${index}`}
-                                    value={qestion.unswers[index]}
+                                    // value={qestion.unswers[index]}
                                     type="text"
                                     required
-                                    className="form-control"
+                                    className="form-control form-control-sm"
                                     placeholder={`Unswer: ${index + 1}`}
                                     onChange={handleUnswersChnage}
                                  />
@@ -250,7 +257,7 @@ function CreateQuiz({ addQuizAction }: any) {
 
 function mapDispatchToProps(dispatch: Function) {
    return {
-      addQuizAction: (quiz: Quiz) => dispatch(addQuizAction(quiz))
+      addQuiz: (quiz: Quiz) => dispatch(addQuizAction(quiz))
    }
 }
 

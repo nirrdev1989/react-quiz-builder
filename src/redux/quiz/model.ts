@@ -16,3 +16,13 @@ export interface Quizzes {
         quiz: Quiz
     }
 }
+
+export interface QuizResults {
+    quizId: string
+    unswers: QuizResultsUnswer[]
+}
+
+export interface QuizResultsUnswer {
+    qestion: string
+    choosenUnswer: string
+}

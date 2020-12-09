@@ -1,5 +1,4 @@
 import React from 'react'
-import Button from '../Button/Button'
 
 
 function Footer() {
@@ -7,7 +6,7 @@ function Footer() {
     return (
         <div>
 
-
+            {/* <footer>Footer</footer> */}
 
 
         </div>

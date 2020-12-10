@@ -6,7 +6,7 @@ function AlertWindow({ children, closeWindow }: any) {
       <>
          <div className="alert-con">
             <div className="alert-window">
-               <div className="alert alert-dark" role="alert">
+               <div className="alert alert-light" role="alert">
                   <h4 className="alert-heading">Well done!
                      <span
                         className="delete-quiz-btn"

@@ -29,58 +29,60 @@ function QuizPage({ currentQuiz, match }: any) {
             <h3>{quiz.title}</h3>
             {isSubmit ?
                 <AlertWindow
-                    closeWindow={() => setIsSubmit(!isSubmit)}
+                    closeWindow={() => {
+                        setIsSubmit(!isSubmit)
+                        results.unswers = []
 
+                    }}
                 >
                     {
                         results.unswers.map((resultUnswer, index: number) => {
                             return <div key={index}>
-                                Qestion: {index + 1}<p>{resultUnswer.qestion}</p>
-                                Unswer: <p>{resultUnswer.choosenUnswer}</p>
+                                <strong>Qestion: </strong> {index + 1}<p>{resultUnswer.qestion}</p>
+                                <strong>Unswer: </strong> <p>{resultUnswer.choosenUnswer}</p>
                                 <hr />
                             </div>
                         })
                     }
-                </AlertWindow> : null
-            }
-            <hr />
-            <br />
-            {
-                quiz.qestions.map((qestion, index) => {
-                    return <div key={qestion.qestionId}>
-                        <QestionItem qestion={qestion} />
-                    </div>
-                })
-            }
-
-            {/* <EditIcon
-                        className="edit-quiz-btn"
-                        // data-bs-toggle="modal"
-                        // data-bs-target="#exampleModal"
-                        onClick={() => { alert('עוד לא עובד') }}
-                     /> */}
-
-            <button
-                className="btn btn-primary btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                onClick={() => {
-                    if (results.unswers.length < quiz.qestions.length) {
-                        return alert('חוסר תשובות אנא השלם את השאלון')
+                </AlertWindow> :
+                <>
+                    <hr />
+                    <br />
+                    {
+                        quiz.qestions.map((qestion, index) => {
+                            return <div key={qestion.qestionId}>
+                                <QestionItem results={results} qestion={qestion} />
+                            </div>
+                        })
                     }
-                    setIsSubmit(!isSubmit)
-                    // console.log(results)
-                    // alert(` 
-                    //     Quiz id:  ${JSON.stringify(results.quizId)}
-                    //     Unswers:  ${JSON.stringify(results.unswers)}`
-                    // )
-                }}
-            >
-                Submit
-            </button>
+
+                    {/* <EditIcon
+            className="edit-quiz-btn"
+            // data-bs-toggle="modal"
+            // data-bs-target="#exampleModal"
+            onClick={() => { alert('עוד לא עובד') }}
+         /> */}
+
+                    <button
+                        className="btn btn-primary btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        onClick={() => {
+                            if (results.unswers.length < quiz.qestions.length) {
+                                return alert('חוסר תשובות אנא השלם את השאלון')
+                            }
+                            setIsSubmit(!isSubmit)
+
+                        }}
+                    >
+                        Submit
+                   </button>
+                </>
+            }
         </>
     )
 }
+
 
 
 function mapDispatchToProps(dispatch: Function) {

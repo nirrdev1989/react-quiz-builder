@@ -1,16 +1,17 @@
 import React, { ChangeEvent } from 'react'
 import { connect } from 'react-redux'
-import { Qestion, QuizResultsUnswer } from '../../redux/quiz/model'
+import { Qestion, QuizResultsUnswer, QuizResults } from '../../redux/quiz/model'
 import { setUnswerAction } from '../../redux/quiz/quiz.action'
 
 
 interface QestionItemProps {
     qestion: Qestion
     setUnswer: (unswerResult: QuizResultsUnswer) => void
+    results: QuizResults
 }
 
 
-function QestionItem({ setUnswer, qestion }: QestionItemProps) {
+function QestionItem({ setUnswer, qestion, results }: QestionItemProps) {
 
     function handleUnswerChange(event: ChangeEvent<HTMLInputElement>) {
         const { value } = event.target
@@ -30,6 +31,8 @@ function QestionItem({ setUnswer, qestion }: QestionItemProps) {
             <br />
             {
                 qestion.unswers.map((unswer, index) => {
+                    console.log(results)
+
                     return <div key={index}>
                         <input
                             style={{ marginRight: '0.5rem' }}

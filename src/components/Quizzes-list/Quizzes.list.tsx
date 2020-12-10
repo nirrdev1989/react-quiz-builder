@@ -21,7 +21,7 @@ function QuizzesList() {
                             />
                         </div>
                     })) : (
-                        <span>No Quizzes</span>
+                        <p >No Quizzes</p>
                     )
             }
         </div>

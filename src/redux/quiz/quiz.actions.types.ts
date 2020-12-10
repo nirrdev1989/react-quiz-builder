@@ -57,4 +57,4 @@ export type QuizActionsTypes =
     SetUnswerActionType |
     EditQuizMainActionType |
     RemoveQestionActionType |
-    AddQestionActionType
+    AddQestionActionType 

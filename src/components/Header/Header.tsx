@@ -1,19 +1,28 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { RootState } from '../../redux/store'
 
 function Header() {
+
+   const quizzesCount = useSelector((state: RootState) => Object.keys(state.quizzes).length)
+
    return (
       <div>
-         <nav className="navbar navbar-expand-lg navbar-light bg-light">
+         <nav className="navbar navbar-light bg-light">
             <div className="container-fluid">
                <Link className="navbar-brand" to="/" >Quiz Builder</Link>
-               <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                     <li className="nav-item">
-                        <Link className="nav-link" to="/quizzes-list" >Quizzes list</Link>
-                     </li>
-                  </ul>
-               </div>
+               <ul className="navbar-nav ">
+                  <li className="nav-item">
+                     <Link
+                        className="nav-link mr-5"
+                        to="/quizzes-list" >
+                        Quizzes list
+                        &nbsp;
+                     <span className="badge bg-success"> {quizzesCount}</span>
+                     </Link>
+                  </li>
+               </ul>
             </div>
          </nav>
       </div>

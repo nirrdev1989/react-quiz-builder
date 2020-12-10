@@ -69,16 +69,18 @@ function CreateQuiz({ addQuiz }: CreateQuizProps) {
 
    return (
       <>
-         <h3 className="text-center">Create your quiz</h3>
          <form onSubmit={handleSubmit}>
             <div className="input-ele">
-               <hr />
+               <h5>Create your quiz
                <button
-                  className="btn btn-primary btn-sm"
-                  type="submit"
-               >
-                  Create quiz
+                     style={{ float: 'right' }}
+                     className="btn btn-primary btn-sm"
+                     type="submit"
+                  >
+                     Create quiz
                </button>
+               </h5>
+               <hr />
             </div>
             <div className="input-ele">
                <div className="form-floating mb-3">

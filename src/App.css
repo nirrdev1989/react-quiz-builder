@@ -18,6 +18,10 @@ input[type="number"] {
   cursor: pointer;
 }
 
+.qestion-accordion {
+  overflow: auto;
+}
+
 .edit-quiz-btn {
   cursor: pointer;
   opacity: 0.6;

@@ -42,7 +42,7 @@ function AccordingList({ removeQestion, quizId, qestions }: AccordingListProps) 
                               key={qestion.qestionId}
                               className="list-group-item d-flex justify-content-between align-items-center"
                            >
-                              <strong> Qestion {index} :</strong> <span>{qestion.qestion}</span>
+                              <strong> Qestion {index} :</strong> <span className="qestion-accordion">{qestion.qestion}</span>
                               <span
                                  className="badge bg-danger rounded-pill"
                                  onClick={() => {

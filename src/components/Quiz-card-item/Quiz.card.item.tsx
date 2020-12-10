@@ -20,9 +20,9 @@ function QuizCardItem({ addQestion, removeQuiz, quizId, quiz }: QuizCardItemProp
    // console.log('QUIZ CARD RENDER', quiz)
 
    const [isAddQestion, setIsAddQwestion] = useState<boolean>(false)
+   const [isEdit, setIsEdit] = useState<boolean>(false)
 
    function getQestion(qestion: Qestion) {
-      console.log(qestion, quizId)
 
       addQestion({ quizId: quizId, qestion: qestion })
 
@@ -36,12 +36,13 @@ function QuizCardItem({ addQestion, removeQuiz, quizId, quiz }: QuizCardItemProp
             <div className="card mb-4 shadow-sm">
                <div className="card-header">
                   <h4 >
+                     {/* {isEdit ? (<input type="text" />) : null} */}
                      {quiz.title}
                      {/* <EditIcon
                         className="edit-quiz-btn"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
-                        onClick={() => { }}
+                        // data-bs-toggle="modal"
+                        // data-bs-target="#exampleModal"
+                        onClick={() => { alert('עוד לא עובד') }}
                      /> */}
                      <span
                         className="delete-quiz-btn"
@@ -56,15 +57,17 @@ function QuizCardItem({ addQestion, removeQuiz, quizId, quiz }: QuizCardItemProp
                      >
                         x
                      </span>
+
+
                   </h4>
                </div>
                <div className="card-body">
                   <p>Description:
-                        {/* <EditIcon
-                        className="edit-quiz-btn"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
-                        onClick={() => { }}
+                     {/* <EditIcon
+                        // className="edit-quiz-btn"
+                        // data-bs-toggle="modal"
+                        // data-bs-target="#exampleModal"
+                        onClick={() => { alert('עוד לא עובד') }}
                      /> */}
                   </p>
                   <ul className="list-unstyled mt-3 mb-4">

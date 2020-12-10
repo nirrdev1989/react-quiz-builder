@@ -46,7 +46,7 @@ function AddQestionForm({ addQestion, closeAddQestionForm }: any) {
       console.log(qestion.unswers)
 
       if (qestion.qestion === '' || qestion.numberOfUnswers < 2 || qestion.unswers.length < 2) {
-         return
+         return alert('מספר התשובות חייב להיות יותר מ1 ')
       }
 
       addQestion(qestion)

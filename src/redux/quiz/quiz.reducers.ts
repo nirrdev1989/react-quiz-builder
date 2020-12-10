@@ -87,6 +87,9 @@ export function quizReducer(state = INITIAL_STATE_QUIZZES, action: QuizActionsTy
                 }
             }
 
+            saveLoaclStorage('quizzes', newSateAfterAddQestion)
+
+
             return newSateAfterAddQestion
 
         default:

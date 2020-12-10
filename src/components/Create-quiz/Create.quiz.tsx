@@ -48,7 +48,7 @@ function CreateQuiz({ addQuiz }: CreateQuizProps) {
       event.preventDefault()
 
       if (createQuiz.numberQestions === 0) {
-         return
+         return alert('מספר השאלות חייב להיות יותר מ1')
       }
       alert('CREAT QUIZ')
       // console.log(createQuiz)
@@ -71,15 +71,18 @@ function CreateQuiz({ addQuiz }: CreateQuizProps) {
       <>
          <form onSubmit={handleSubmit}>
             <div className="input-ele">
-               <h5>Create your quiz
-               <button
+               <h6>Create your quiz /
+                  <small style={{ fontSize: '12px' }}>
+                     Qestions <span className="badge bg-success"> {createQuiz.numberQestions}</span>
+                  </small>
+                  <button
                      style={{ float: 'right' }}
                      className="btn btn-primary btn-sm"
                      type="submit"
                   >
                      Create quiz
                </button>
-               </h5>
+               </h6>
                <hr />
             </div>
             <div className="input-ele">

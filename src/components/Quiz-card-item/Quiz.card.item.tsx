@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { addQestionAction, removeQuizAction } from '../../redux/quiz/quiz.action';
-import EditQuizWindow from '../Edit-quiz-window/Edit.quiz.window';
-import { ReactComponent as EditIcon } from "../../icons-svg/edit.svg";
+// import { ReactComponent as EditIcon } from "../../icons-svg/edit.svg";
 import { AddQestion, Qestion, Quiz, QuizEditMain } from '../../redux/quiz/model';
 import AccordingList from '../According-list/According';
 import AddQestionForm from '../Add-qestion-form/Add.qestion.form';
@@ -20,7 +19,7 @@ function QuizCardItem({ addQestion, removeQuiz, quizId, quiz }: QuizCardItemProp
    // console.log('QUIZ CARD RENDER', quiz)
 
    const [isAddQestion, setIsAddQwestion] = useState<boolean>(false)
-   const [isEdit, setIsEdit] = useState<boolean>(false)
+   // const [isEdit, setIsEdit] = useState<boolean>(false)
 
    function getQestion(qestion: Qestion) {
 
@@ -31,7 +30,6 @@ function QuizCardItem({ addQestion, removeQuiz, quizId, quiz }: QuizCardItemProp
 
    return (
       <>
-         <EditQuizWindow quizId={quizId} />
          <div className="col">
             <div className="card mb-4 shadow-sm">
                <div className="card-header">

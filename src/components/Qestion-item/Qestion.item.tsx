@@ -32,6 +32,7 @@ function QestionItem({ setUnswer, qestion }: QestionItemProps) {
                 qestion.unswers.map((unswer, index) => {
                     return <div key={index}>
                         <input
+                            style={{ marginRight: '0.5rem' }}
                             name={qestion.qestion}
                             type="radio"
                             value={unswer}

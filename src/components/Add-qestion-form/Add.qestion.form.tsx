@@ -5,7 +5,7 @@ import { Qestion } from '../../redux/quiz/model'
 
 function AddQestionForm({ addQestion, closeAddQestionForm }: any) {
 
-   console.log('ADD QESTION RENDER')
+   // console.log('ADD QESTION RENDER')
 
    const [qestion, setQestion] = useState<Qestion>({
       qestionId: '',
@@ -17,6 +17,13 @@ function AddQestionForm({ addQestion, closeAddQestionForm }: any) {
 
    function handleQestionChange(event: ChangeEvent<HTMLInputElement>) {
       const { name, value } = event.target
+
+      if (name === 'numberOfUnswers') {
+         if (Number(value) > 6) {
+            return alert('6 תשובות מקסימום')
+         }
+      }
+
       setQestion((prev) => {
          return {
             ...prev,

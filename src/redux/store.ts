@@ -18,8 +18,8 @@ export const store = createStore(rootReducer, applyMiddleware(...middleweres))
 
 
 // const quiz: Quiz = {
-//     title: 'food lover',
-//     description: 'this quiz about what u like to eat',
+//     title: 'a',
+//     description: 'this quiz about a',
 //     numberQestions: 2,
 //     qestions: [
 //        {
@@ -34,3 +34,8 @@ export const store = createStore(rootReducer, applyMiddleware(...middleweres))
 //        }
 //     ]
 //  }
+// const initSate = {
+//     '312312312': quiz,
+//     '31231312': quiz2,
+//     '3123112': quiz3,
+// }

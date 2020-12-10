@@ -1,27 +1,23 @@
 import React, { useEffect } from 'react'
 import { connect, useSelector } from 'react-redux'
 import QestionItem from '../components/Qestion-item/Qestion.item'
-import { Quiz } from '../redux/quiz/model'
 import { setCurrentQuizAction } from '../redux/quiz/quiz.action'
 import { RootState } from '../redux/store'
 
+let results: any
 
 function QuizPage({ currentQuiz, match }: any) {
-    let x: any
     const { quiz } = useSelector((state: RootState) => {
         const { quizId } = match.params
-        const { unswers } = state.currentQuiz
-        x = unswers
+        const quizUnswers = state.currentQuiz
+        results = quizUnswers
         return state.quizzes[quizId]
     })
 
-    // const results = useSelector((state: RootState) => {
-    //     return state.currentQuiz.unswers
-    // })
 
     useEffect(() => {
         currentQuiz(match.params.quizId)
-    }, [])
+    }, [match.params.quizId])
 
 
     return (
@@ -36,12 +32,20 @@ function QuizPage({ currentQuiz, match }: any) {
                 })
             }
 
-            <button className="btn btn-primary btn-sm" onClick={() => {
-                alert(JSON.stringify(x))
-            }}>Submit</button>
+            <button
+                className="btn btn-primary btn-sm"
+                onClick={() => {
+                    alert(` 
+                        Quiz id:  ${JSON.stringify(results.quizId)}
+                        Unswers:  ${JSON.stringify(results.unswers)}`
+                    )
+                }}>
+                Submit
+            </button>
         </>
     )
 }
+
 
 function mapDispatchToProps(dispatch: Function) {
     return {

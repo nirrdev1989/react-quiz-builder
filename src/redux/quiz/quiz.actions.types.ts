@@ -1,11 +1,16 @@
-import { Quiz, QuizResultsUnswer } from "./model";
+import { AddQestion, Quiz, QuizEditMain, QuizResultsUnswer, RemoveQestion } from "./model";
 
 
 export const ADD_QUIZ = 'ADD_QUIZ'
 export const REMOVE_QUIZ = 'REMOVE_QUIZ'
+export const EDIT_QUIZ_MAIN = 'EDIT_QUIZ_MAIN'
+
+export const REMOVE_QESTION = 'REMOVE_QESTION'
+export const ADD_QESTION = 'ADD_QESTION'
 
 export const SET_CURRENT_QUIZ = 'SET_CURRENT_QUIZ'
 export const SET_UNSWER = 'SET_UNSWER'
+
 
 
 
@@ -29,9 +34,27 @@ export interface SetUnswerActionType {
     payload: QuizResultsUnswer
 }
 
+export interface EditQuizMainActionType {
+    type: typeof EDIT_QUIZ_MAIN,
+    payload: QuizEditMain
+}
+
+export interface RemoveQestionActionType {
+    type: typeof REMOVE_QESTION,
+    payload: RemoveQestion
+}
+
+export interface AddQestionActionType {
+    type: typeof ADD_QESTION,
+    payload: AddQestion
+}
+
 
 export type QuizActionsTypes =
     AddQuizActionType |
     RemoveQuizActionType |
     SetCurrentQuizActionType |
-    SetUnswerActionType
+    SetUnswerActionType |
+    EditQuizMainActionType |
+    RemoveQestionActionType |
+    AddQestionActionType

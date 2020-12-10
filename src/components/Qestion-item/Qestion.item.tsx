@@ -13,7 +13,7 @@ interface QestionItemProps {
 function QestionItem({ setUnswer, qestion }: QestionItemProps) {
 
     function handleUnswerChange(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
+        const { value } = event.target
 
         setUnswer({
             qestion: qestion.qestion,
@@ -28,7 +28,6 @@ function QestionItem({ setUnswer, qestion }: QestionItemProps) {
                 <strong> Qestion: </strong> {qestion.qestion}
             </span>
             <br />
-
             {
                 qestion.unswers.map((unswer, index) => {
                     return <div key={index}>

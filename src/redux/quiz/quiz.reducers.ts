@@ -1,5 +1,14 @@
-import { QuizResults, Quizzes } from "./model";
-import { ADD_QUIZ, QuizActionsTypes, REMOVE_QUIZ, SET_CURRENT_QUIZ, SET_UNSWER } from "./quiz.actions.types";
+import { Quiz, QuizResults, Quizzes } from "./model";
+import {
+    QuizActionsTypes,
+    ADD_QUIZ,
+    EDIT_QUIZ_MAIN,
+    REMOVE_QESTION,
+    REMOVE_QUIZ,
+    SET_CURRENT_QUIZ,
+    SET_UNSWER,
+    ADD_QESTION
+} from "./quiz.actions.types";
 
 
 type QuizzesState = Quizzes
@@ -31,6 +40,55 @@ export function quizReducer(state = INITIAL_STATE_QUIZZES, action: QuizActionsTy
             saveLoaclStorage('quizzes', newStateAfterRemove)
 
             return newStateAfterRemove
+        case EDIT_QUIZ_MAIN:
+            const { propery, value, quizId } = action.payload
+            const quizFound = state[quizId].quiz
+            quizFound[propery] = value
+
+            // console.log(quizFound)
+
+            const newStateAfterUpdateMain = {
+                ...state,
+                [quizId]: {
+                    quiz: quizFound
+                }
+            }
+
+            return newStateAfterUpdateMain
+        case REMOVE_QESTION:
+            let currentQuizRemoveQestion = findQuiz(state, action.payload.quizId)
+            const filtredQestions = currentQuizRemoveQestion.qestions.filter((qestion) => {
+                return qestion.qestionId !== action.payload.qestionId
+            })
+
+            currentQuizRemoveQestion.qestions = [...filtredQestions]
+            currentQuizRemoveQestion.numberQestions -= 1
+
+            const newSateAfterRemoveQestion = {
+                ...state,
+                [action.payload.quizId]: {
+                    quiz: { ...currentQuizRemoveQestion }
+                }
+            }
+
+            saveLoaclStorage('quizzes', newSateAfterRemoveQestion)
+
+            return newSateAfterRemoveQestion
+        case ADD_QESTION:
+            let currentQuizAddQestion = findQuiz(state, action.payload.quizId)
+
+            currentQuizAddQestion.qestions = [...currentQuizAddQestion.qestions, action.payload.qestion]
+            currentQuizAddQestion.numberQestions += 1
+
+            const newSateAfterAddQestion = {
+                ...state,
+                [action.payload.quizId]: {
+                    quiz: { ...currentQuizAddQestion }
+                }
+            }
+
+            return newSateAfterAddQestion
+
         default:
             return state
     }
@@ -68,6 +126,11 @@ export function quizResultsReducer(state = INITIAL_STATE_RESULTS, action: QuizAc
         default:
             return state
     }
+}
+
+
+function findQuiz(quizzesObj: Quizzes, quizId: string): Quiz {
+    return quizzesObj[quizId].quiz
 }
 
 

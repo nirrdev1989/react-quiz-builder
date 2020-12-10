@@ -17,9 +17,24 @@ function App() {
          <main>
             <div className="container">
                <Switch>
-                  <Route exact={true} path="/" component={CreateQuizPage} />
-                  <Route exact={true} path="/quizzes-list" component={QuizzesListPage} />
-                  <Route exact={true} path="/quiz/:quizId" component={QuizPage} />
+                  <Route
+                     exact={true}
+                     path="/"
+                     component={CreateQuizPage}
+                  />
+                  <Route
+                     exact={true}
+                     path="/quizzes-list"
+                     component={QuizzesListPage} />
+                  <Route
+                     exact={true}
+                     path="/quiz/:quizId"
+                     component={QuizPage}
+                  />
+                  {/* <Route
+                     exact={true}
+                     path="/quiz/edit/:quizId"
+                  /> */}
                </Switch>
             </div>
          </main>

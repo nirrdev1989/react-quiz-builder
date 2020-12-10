@@ -14,6 +14,25 @@ input[type="number"] {
   align-items: center;
 }
 
+.badge {
+  cursor: pointer;
+}
+
+.edit-quiz-btn {
+  cursor: pointer;
+  opacity: 0.6;
+  font-size: 14px;
+  margin: 0.5rem;
+}
+
+.edit-quiz-btn:hover {
+  opacity: 1;
+}
+
+.btn-close {
+  font-size: 12px;
+}
+
 .delete-quiz-btn {
   cursor: pointer;
   float: right;

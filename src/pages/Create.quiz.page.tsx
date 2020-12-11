@@ -1,10 +1,10 @@
 import React from 'react'
-import CreateQuiz from '../components/Create-quiz/Create.quiz'
+import CreateMainQuiz from '../components/Create.main-quiz/Create.main.quiz'
 
 export default function CreateQuizPage() {
     return (
         <>
-            <CreateQuiz />
+            <CreateMainQuiz />
         </>
     )
 }

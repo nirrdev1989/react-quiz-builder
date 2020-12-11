@@ -1,47 +1,48 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { addQestionAction, removeQuizAction } from '../../redux/quiz/quiz.action';
-// import { ReactComponent as EditIcon } from "../../icons-svg/edit.svg";
-import { AddQestion, Qestion, Quiz, QuizEditMain } from '../../redux/quiz/model';
-import AccordingList from '../According-list/According';
-import AddQestionForm from '../Add-qestion-form/Add.qestion.form';
+import { ReactComponent as EditIcon } from "../../icons-svg/edit.svg";
+import { AddQestion, Quiz } from '../../redux/quiz/model';
+
 
 interface QuizCardItemProps {
    quiz: Quiz
    quizId: string
    removeQuiz: (quizId: string) => void
-   addQestion: (info: AddQestion) => void
 }
 
 
-function QuizCardItem({ addQestion, removeQuiz, quizId, quiz }: QuizCardItemProps) {
-   // console.log('QUIZ CARD RENDER', quiz)
+function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
 
-   const [isAddQestion, setIsAddQwestion] = useState<boolean>(false)
-   // const [isEdit, setIsEdit] = useState<boolean>(false)
+   const [isStatusOk, setIsStatusOk] = useState<boolean>(false)
 
-   function getQestion(qestion: Qestion) {
-
-      addQestion({ quizId: quizId, qestion: qestion })
-
-      setIsAddQwestion(!isAddQestion)
+   function checkStatus() {
+      quiz.qestions.forEach((qestion, index) => {
+         if (qestion.numberOfUnswers > 1) {
+            setIsStatusOk(true)
+         }
+      })
    }
+
+
+   useEffect(() => {
+      checkStatus()
+   }, [])
 
    return (
       <>
          <div className="col">
-            <div className="card mb-4 shadow-sm">
+            <div className={`${!isStatusOk ? 'red-shadow' : ''} card mb-4 shadow-sm`}>
                <div className="card-header">
                   <h4 >
-                     {/* {isEdit ? (<input type="text" />) : null} */}
                      {quiz.title}
-                     {/* <EditIcon
+                     <Link
+                        to={`quiz/edit/${quizId}`}
                         className="edit-quiz-btn"
-                        // data-bs-toggle="modal"
-                        // data-bs-target="#exampleModal"
-                        onClick={() => { alert('עוד לא עובד') }}
-                     /> */}
+                     >
+                        <EditIcon />
+                     </Link>
                      <span
                         className="delete-quiz-btn"
                         onClick={() => {
@@ -55,19 +56,11 @@ function QuizCardItem({ addQestion, removeQuiz, quizId, quiz }: QuizCardItemProp
                      >
                         x
                      </span>
-
-
                   </h4>
                </div>
                <div className="card-body">
-                  <p>Description:
-                     {/* <EditIcon
-                        // className="edit-quiz-btn"
-                        // data-bs-toggle="modal"
-                        // data-bs-target="#exampleModal"
-                        onClick={() => { alert('עוד לא עובד') }}
-                     /> */}
-                  </p>
+                  {!isStatusOk && <small className="text-danger" >Some of qestion missing unswers or no qestions yet</small>}
+                  <p>Description:</p>
                   <ul className="list-unstyled mt-3 mb-4">
                      <li>{quiz.description}</li>
                   </ul>
@@ -78,30 +71,12 @@ function QuizCardItem({ addQestion, removeQuiz, quizId, quiz }: QuizCardItemProp
                         / Qestions
                      </small>
                      &nbsp;
-                     {!isAddQestion ?
-                        (<button
-                           className="btn btn-dark btn-sm"
-                           onClick={() => setIsAddQwestion(!isAddQestion)}
-                        >
-                           +
-                        </button>)
-                        : (null)
-                     }
                   </h6>
-                  {isAddQestion ? (
-                     <AddQestionForm
-                        closeAddQestionForm={() => setIsAddQwestion(!isAddQestion)}
-                        addQestion={getQestion}
-                     />
-                  ) : (null)}
-                  <AccordingList
-                     quizId={quizId}
-                     qestions={quiz.qestions}
-                  />
                   <br />
                   <Link
-                     className="w-100 btn btn-sm btn-primary"
+                     className={`${quiz.qestions.length === 0 || !isStatusOk ? 'disabled-btn' : ''} w-100 btn btn-sm btn-primary`}
                      to={`/quiz/${quizId}`}
+                     type="button"
                   >
                      Get started
                   </Link>

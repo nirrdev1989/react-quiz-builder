@@ -7,7 +7,9 @@ import {
     REMOVE_QUIZ,
     SET_CURRENT_QUIZ,
     SET_UNSWER,
-    ADD_QESTION
+    ADD_QESTION,
+    REMOVE_UNSWER,
+    ADD_UNSWER
 } from "./quiz.actions.types";
 
 
@@ -92,6 +94,57 @@ export function quizReducer(state = INITIAL_STATE_QUIZZES, action: QuizActionsTy
 
             return newSateAfterAddQestion
 
+        case REMOVE_UNSWER:
+            let currentQuizRemoveUnswer = findQuiz(state, action.payload.quizId)
+
+            let findQestionIndexForRemoveUnswer = currentQuizRemoveUnswer.qestions.findIndex((qestion) => {
+                return qestion.qestionId === action.payload.qestionId
+            })
+
+            let qestionsLess = [...currentQuizRemoveUnswer.qestions]
+
+            qestionsLess[findQestionIndexForRemoveUnswer].unswers.splice(action.payload.index, 1)
+
+            qestionsLess[findQestionIndexForRemoveUnswer].numberOfUnswers -= 1
+
+            currentQuizRemoveUnswer.qestions = [...qestionsLess]
+
+            const newStateAfterRemoveUnswer = {
+                ...state,
+                [action.payload.quizId]: {
+                    quiz: { ...currentQuizRemoveUnswer }
+                }
+            }
+
+            saveLoaclStorage('quizzes', newStateAfterRemoveUnswer)
+
+            return newStateAfterRemoveUnswer
+        case ADD_UNSWER:
+            let currentQuizAddUnswer = findQuiz(state, action.payload.quizId)
+
+            let findQestionIndexForAddUnswer = currentQuizAddUnswer.qestions.findIndex((qestion) => {
+                return qestion.qestionId === action.payload.qestionId
+            })
+
+            let qestionsGrow = [...currentQuizAddUnswer.qestions]
+
+            qestionsGrow[findQestionIndexForAddUnswer].unswers =
+                [...qestionsGrow[findQestionIndexForAddUnswer].unswers, action.payload.unswer]
+
+            qestionsGrow[findQestionIndexForAddUnswer].numberOfUnswers += 1
+
+            currentQuizAddUnswer.qestions = [...qestionsGrow]
+
+            const newStateAfterAddUnswer = {
+                ...state,
+                [action.payload.quizId]: {
+                    quiz: { ...currentQuizAddUnswer }
+                }
+            }
+
+            saveLoaclStorage('quizzes', newStateAfterAddUnswer)
+
+            return newStateAfterAddUnswer
         default:
             return state
     }

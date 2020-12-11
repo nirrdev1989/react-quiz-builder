@@ -30,8 +30,9 @@ function QestionItem({ setUnswer, qestion, results }: QestionItemProps) {
             </span>
             <br />
             {
+                qestion.numberOfUnswers > 1 &&
                 qestion.unswers.map((unswer, index) => {
-                    console.log(results)
+                    // console.log(results)
 
                     return <div key={index}>
                         <input

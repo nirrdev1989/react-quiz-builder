@@ -31,8 +31,6 @@ function QuizPage({ currentQuiz, match }: any) {
                 <AlertWindow
                     closeWindow={() => {
                         setIsSubmit(!isSubmit)
-                        results.unswers = []
-
                     }}
                 >
                     {
@@ -44,41 +42,41 @@ function QuizPage({ currentQuiz, match }: any) {
                             </div>
                         })
                     }
-                </AlertWindow> :
-                <>
-                    <hr />
-                    <br />
-                    {
-                        quiz.qestions.map((qestion, index) => {
-                            return <div key={qestion.qestionId}>
-                                <QestionItem results={results} qestion={qestion} />
-                            </div>
-                        })
-                    }
+                </AlertWindow> : null
 
-                    {/* <EditIcon
+            }
+
+            <hr />
+            <br />
+            {
+                quiz.qestions.map((qestion, index) => {
+                    return <div key={qestion.qestionId}>
+                        <QestionItem results={results} qestion={qestion} />
+                    </div>
+                })
+            }
+
+            {/* <EditIcon
             className="edit-quiz-btn"
             // data-bs-toggle="modal"
             // data-bs-target="#exampleModal"
             onClick={() => { alert('עוד לא עובד') }}
          /> */}
 
-                    <button
-                        className="btn btn-primary btn-sm"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
-                        onClick={() => {
-                            if (results.unswers.length < quiz.qestions.length) {
-                                return alert('חוסר תשובות אנא השלם את השאלון')
-                            }
-                            setIsSubmit(!isSubmit)
+            <button
+                className="btn btn-primary btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                onClick={() => {
+                    if (results.unswers.length < quiz.qestions.length) {
+                        return alert('חוסר תשובות אנא השלם את השאלון')
+                    }
+                    setIsSubmit(!isSubmit)
 
-                        }}
-                    >
-                        Submit
-                   </button>
-                </>
-            }
+                }}
+            >
+                Submit
+             </button>
         </>
     )
 }

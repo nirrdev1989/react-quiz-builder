@@ -22,11 +22,17 @@
   overflow: auto;
 }
 
+.red-shadow {
+  box-shadow: 0 0 50px;
+  transition: 0.3s color;
+}
+
 .edit-quiz-btn {
   cursor: pointer;
   opacity: 0.6;
   font-size: 14px;
   margin: 0.5rem;
+  float: left;
 }
 
 .edit-quiz-btn:hover {
@@ -72,4 +78,9 @@ main {
   position: absolute;
   width: 70%;
   top: 10%;
+}
+
+.disabled-btn {
+  pointer-events: none;
+  opacity: 0.5;
 }

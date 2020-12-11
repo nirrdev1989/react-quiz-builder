@@ -74,68 +74,71 @@ function AddQestionForm({ addQestion, closeAddQestionForm }: any) {
    return (
       <div>
          <form onSubmit={handleSubmit} >
-            <div className="input-ele">
-               <div className="form-floating mb-3">
-                  <input
-                     value={qestion.qestion}
-                     className="form-control"
-                     type="text"
-                     name="qestion"
-                     required
-                     placeholder="Qestion"
-                     onChange={handleQestionChange}
-                  />
-                  <label >Qestion*</label>
-               </div>
-            </div>
-            <div className="input-ele">
-               <span>Number of unswers</span>
+            {/* <div className="input-ele"> */}
+            <div className="form-floating mb-3">
                <input
-                  id="count-unswers"
-                  value={qestion.numberOfUnswers}
-                  type="number"
-                  required
-                  min="1"
-                  max="6"
-                  name="numberOfUnswers"
+                  value={qestion.qestion}
                   className="form-control"
-                  placeholder="Number of unswers"
+                  type="text"
+                  name="qestion"
+                  required
+                  placeholder="Qestion"
                   onChange={handleQestionChange}
                />
+               <label >Qestion*</label>
             </div>
+            {/* </div> */}
+            {/* <div className="input-ele"> */}
+            <span>Number of unswers</span>
+            <input
+               id="count-unswers"
+               value={qestion.numberOfUnswers}
+               type="number"
+               required
+               min="1"
+               max="6"
+               name="numberOfUnswers"
+               className="form-control"
+               placeholder="Number of unswers"
+               onChange={handleQestionChange}
+            />
+            {/* </div> */}
+            <br />
             {
                Array.from({ length: qestion.numberOfUnswers }).map((_, index) => {
-                  return <div className="input-ele" key={index}>
+                  return <div key={index}>
                      <input
                         name={`${index}`}
                         // value={qestion.unswers[index]}
                         type="text"
                         required
-                        className="form-control form-control-sm"
+                        className="form-control form-control-sm mb-2"
                         placeholder={`Unswer: ${index + 1}`}
                         onChange={handleUnswersChnage}
                      />
+
                   </div>
                })
             }
-            <div className="input-ele">
-               <button
-                  type="submit"
-                  className="btn btn-primary btn-sm"
-               >
-                  Add qestion
+            {/* <div className="input-ele"> */}
+            <br />
+            <button
+               type="submit"
+               className="btn btn-primary btn-sm"
+            >
+               Add qestion
                </button>
                  &nbsp;
                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => {
-                     resetQestion()
-                     closeAddQestionForm()
-                  }}
-               >
-                  Cencel
+               className="btn btn-danger btn-sm"
+               onClick={() => {
+                  resetQestion()
+                  closeAddQestionForm()
+               }}
+            >
+               Cencel
                </button>
-            </div>
+            {/* </div> */}
          </form>
       </div>
    )

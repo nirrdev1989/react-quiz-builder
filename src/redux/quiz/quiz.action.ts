@@ -1,4 +1,4 @@
-import { AddQestion, Quiz, QuizEditMain, QuizResultsUnswer, RemoveQestion } from "./model";
+import { AddQestion, AddUnswer, Quiz, QuizEditMain, QuizResultsUnswer, RemoveQestion, RemoveUnswer } from "./model";
 import {
     AddQuizActionType,
     ADD_QUIZ,
@@ -13,7 +13,11 @@ import {
     RemoveQestionActionType,
     REMOVE_QESTION,
     AddQestionActionType,
-    ADD_QESTION
+    ADD_QESTION,
+    RemoveUnswerActionType,
+    REMOVE_UNSWER,
+    AddUnswerActionType,
+    ADD_UNSWER
 } from "./quiz.actions.types";
 
 
@@ -62,6 +66,20 @@ export function setUnswerAction(unswerResult: QuizResultsUnswer): SetUnswerActio
 export function editQuizMainAction(info: QuizEditMain): EditQuizMainActionType {
     return {
         type: EDIT_QUIZ_MAIN,
+        payload: info
+    }
+}
+
+export function removeUnswerAction(info: RemoveUnswer): RemoveUnswerActionType {
+    return {
+        type: REMOVE_UNSWER,
+        payload: info
+    }
+}
+
+export function addUnswerAction(info: AddUnswer): AddUnswerActionType {
+    return {
+        type: ADD_UNSWER,
         payload: info
     }
 }

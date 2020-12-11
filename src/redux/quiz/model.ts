@@ -5,6 +5,11 @@ export interface Qestion {
     unswers: string[]
 }
 
+export interface Unswer {
+    unswerId: string
+    unswer: string
+}
+
 export interface Quiz {
     title: string,
     description: string,
@@ -44,5 +49,17 @@ export interface RemoveQestion {
 export interface AddQestion {
     quizId: string
     qestion: Qestion
+}
+
+export interface RemoveUnswer {
+    quizId: string
+    qestionId: string
+    index: number
+}
+
+export interface AddUnswer {
+    quizId: string
+    qestionId: string
+    unswer: string
 }
 

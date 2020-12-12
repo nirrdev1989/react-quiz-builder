@@ -3,8 +3,8 @@ import QuizzesList from '../components/Quizzes-list/Quizzes.list'
 
 export default function QuizzesListPage() {
     return (
-        <div>
+        <React.Fragment>
             <QuizzesList />
-        </div>
+        </React.Fragment>
     )
 }

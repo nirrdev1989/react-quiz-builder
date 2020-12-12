@@ -1,21 +1,21 @@
-export interface Qestion {
-    qestionId: string
-    qestion: string
-    numberOfUnswers: number
-    unswers: string[]
+export interface Question {
+    questionId: string
+    question: string
+    numberOfAnswers: number
+    answers: string[]
 }
 
-export interface Unswer {
-    unswerId: string
-    unswer: string
+export interface Answer {
+    answerId: string
+    answer: string
 }
 
 export interface Quiz {
     quizId: string
     title: string,
     description: string,
-    numberQestions: number,
-    qestions: Qestion[]
+    numberQuestions: number,
+    questions: Question[]
 }
 
 export interface Quizzes {
@@ -26,12 +26,12 @@ export interface Quizzes {
 
 export interface QuizResults {
     quizId: string
-    unswers: QuizResultsUnswer[]
+    answers: QuizResultsAnswer[]
 }
 
-export interface QuizResultsUnswer {
-    qestion: string
-    choosenUnswer: string
+export interface QuizResultsAnswer {
+    question: string
+    choosenAnswer: string
 }
 
 type propertiesQuizEditMain = 'title' | 'description'
@@ -42,30 +42,30 @@ export interface QuizEditMain {
     value: string
 }
 
-export interface RemoveQestion {
-    qestionId: string
+export interface RemoveQuestion {
+    questionId: string
     quizId: string
 }
 
-export interface AddQestion {
+export interface AddQuestion {
     quizId: string
-    qestion: Qestion
+    question: Question
 }
 
-export interface RemoveUnswer {
+export interface RemoveAnswer {
     quizId: string
-    qestionId: string
+    questionId: string
     index: number
 }
 
-export interface AddUnswer {
+export interface AddAnswer {
     quizId: string
-    qestionId: string
+    questionId: string
     value: string
 }
 
-export interface EditQestion {
-    qestionId: string
+export interface EditQuestion {
+    questionId: string
     quizId: string
     value: string
 }

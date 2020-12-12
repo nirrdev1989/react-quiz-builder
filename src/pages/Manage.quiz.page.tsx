@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState } from 'react'
 import { connect, useSelector } from 'react-redux'
 import AccordingList from '../components/According-list/According.list'
-import AddQestionForm from '../components/Add-qestion-form/Add.qestion.form'
-import { AddQestion, Qestion, QuizEditMain } from '../redux/quiz/model'
-import { addQestionAction, editQuizMainAction } from '../redux/quiz/quiz.action'
+import AddQuestionForm from '../components/Add-question-form/Add.question.form'
+import { AddQuestion, Question, QuizEditMain } from '../redux/quiz/model'
+import { addQuestionAction, editQuizMainAction } from '../redux/quiz/quiz.action'
 import { RootState } from '../redux/store'
 import { ReactComponent as EditIcon } from "../icons-svg/edit.svg";
 import AlertWindow from '../components/Alert-window/Alert.window'
@@ -11,17 +11,17 @@ import { firstChartToUpperCase } from '../utils/first.chart.uppercase'
 
 interface ManageQuizPageProps {
     editQuizMain: (info: QuizEditMain) => void
-    addQestion: (info: AddQestion) => void
+    addQuestion: (info: AddQuestion) => void
     match: any
 }
 
 
-function ManageQuizPage({ addQestion, editQuizMain, match }: ManageQuizPageProps) {
+function ManageQuizPage({ addQuestion, editQuizMain, match }: ManageQuizPageProps) {
     const { quizId } = match.params
 
     const { quiz } = useSelector((state: RootState) => state.quizzes[quizId])
 
-    const [isAddQestion, setIsAddQwestion] = useState<boolean>(false)
+    const [isAddQuestion, setIsAddQwuestion] = useState<boolean>(false)
 
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
 
@@ -32,11 +32,11 @@ function ManageQuizPage({ addQestion, editQuizMain, match }: ManageQuizPageProps
     })
 
 
-    function getQestion(qestion: Qestion) {
+    function getQuestion(question: Question) {
 
-        addQestion({ quizId: quizId, qestion: qestion })
+        addQuestion({ quizId: quizId, question: question })
 
-        setIsAddQwestion(!isAddQestion)
+        setIsAddQwuestion(!isAddQuestion)
     }
 
 
@@ -87,7 +87,7 @@ function ManageQuizPage({ addQestion, editQuizMain, match }: ManageQuizPageProps
                             className="btn btn-pink btn-sm"
                             onClick={() => setIsEditMode(!isEditMode)}
                         >
-                            Cencel
+                            Cancel
                     </button>
                     </div>
                 </AlertWindow> :
@@ -105,12 +105,12 @@ function ManageQuizPage({ addQestion, editQuizMain, match }: ManageQuizPageProps
                         }} />
                         Title: {quiz.title}
                         <span style={{ float: 'right' }}>
-                            {!isAddQestion &&
+                            {!isAddQuestion &&
                                 (<button
                                     className="btn btn-balck btn-sm"
-                                    onClick={() => setIsAddQwestion(!isAddQestion)}
+                                    onClick={() => setIsAddQwuestion(!isAddQuestion)}
                                 >
-                                    Add qestion   +
+                                    Add question   +
                                 </button>)
                             }
                         </span>
@@ -126,16 +126,16 @@ function ManageQuizPage({ addQestion, editQuizMain, match }: ManageQuizPageProps
                             }
                         })
                     }} /><strong>Description: </strong> {quiz.description}</p>
-                    {isAddQestion &&
-                        <AddQestionForm
-                            closeAddQestionForm={() => setIsAddQwestion(!isAddQestion)}
-                            addQestion={getQestion}
+                    {isAddQuestion &&
+                        <AddQuestionForm
+                            closeAddQuestionForm={() => setIsAddQwuestion(!isAddQuestion)}
+                            addQuestion={getQuestion}
                         />
                     }
                     <br />
                     <AccordingList
                         quizId={quizId}
-                        qestions={quiz.qestions}
+                        questions={quiz.questions}
                     />
                 </React.Fragment>
             }
@@ -147,7 +147,7 @@ function ManageQuizPage({ addQestion, editQuizMain, match }: ManageQuizPageProps
 
 function mapDispatchToState(dispatch: Function) {
     return {
-        addQestion: (info: AddQestion) => dispatch(addQestionAction(info)),
+        addQuestion: (info: AddQuestion) => dispatch(addQuestionAction(info)),
         editQuizMain: (info: QuizEditMain) => dispatch(editQuizMainAction(info))
     }
 }

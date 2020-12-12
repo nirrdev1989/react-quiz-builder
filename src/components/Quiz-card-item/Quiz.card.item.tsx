@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
-import { addQestionAction, removeQuizAction } from '../../redux/quiz/quiz.action';
+import { addQuestionAction, removeQuizAction } from '../../redux/quiz/quiz.action';
 import { ReactComponent as EditIcon } from "../../icons-svg/edit.svg";
-import { AddQestion, Quiz } from '../../redux/quiz/model';
+import { AddQuestion, Quiz } from '../../redux/quiz/model';
 
 
 interface QuizCardItemProps {
@@ -21,9 +21,9 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
 
    useEffect(() => {
       function checkStatus() {
-         quiz.qestions.forEach((qestion) => {
-            console.log(qestion)
-            if (qestion.numberOfUnswers > 1) {
+         quiz.questions.forEach((question) => {
+            console.log(question)
+            if (question.numberOfAnswers > 1) {
                setIsStatusOk(true)
             }
          })
@@ -40,7 +40,7 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                      {quiz.title}
                      <Link
                         to={`quiz/edit/${quizId}`}
-                        className="edit-quiz-btn"
+                        className="edit-quiz-btn edit-icon"
                      >
                         <EditIcon />
                      </Link>
@@ -62,22 +62,22 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                <div className="card-body">
                   {!isStatusOk &&
                      <small className="text-danger" >
-                        Some of qestion missing unswers or no qestions yet
+                        Some of the questions are missing answers or there are no questions yet
                      </small>
                   }
                   <p><strong>Description:</strong></p>
                   <span>{quiz.description}</span>
                   <h6
                      className="card-title pricing-card-title">
-                     {quiz.numberQestions}
+                     {quiz.numberQuestions}
                      <small className="text-muted">
-                        / Qestions
+                        / Questions
                      </small>
                      &nbsp;
                   </h6>
                   <br />
                   <Link
-                     className={`${quiz.qestions.length === 0 || !isStatusOk ? 'disabled-btn' : ''} w-100 btn btn-sm btn-blue`}
+                     className={`${quiz.questions.length === 0 || !isStatusOk ? 'disabled-btn' : ''} w-100 btn btn-sm btn-blue`}
                      to={`/quiz/${quizId}`}
                      type="button"
                   >
@@ -94,7 +94,7 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
 function mapDispatchToState(dispatch: Function) {
    return {
       removeQuiz: (quizId: string) => dispatch(removeQuizAction(quizId)),
-      addQestion: (info: AddQestion) => dispatch(addQestionAction(info))
+      addQuestion: (info: AddQuestion) => dispatch(addQuestionAction(info))
    }
 }
 

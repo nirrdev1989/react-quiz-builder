@@ -1,36 +1,32 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { connect } from 'react-redux'
-import { AddUnswer, EditQestion, Qestion, RemoveQestion, RemoveUnswer } from '../../redux/quiz/model'
-import { addUnswerAction, editQestionAction, removeQestionAction, removeUnswerAction } from '../../redux/quiz/quiz.action'
+import { AddAnswer, EditQuestion, Question, RemoveQuestion, RemoveAnswer } from '../../redux/quiz/model'
+import { addAnswerAction, editQuestionAction, removeQuestionAction, removeAnswerAction } from '../../redux/quiz/quiz.action'
 import { ReactComponent as EditIcon } from "../../icons-svg/edit.svg";
-import UnswerItem from '../Answer-item/Answer.item';
+import AnswerItem from '../Answer-item/Answer.item';
 import AlertWindow from '../Alert-window/Alert.window';
 import { firstChartToUpperCase } from '../../utils/first.chart.uppercase';
 
 
 interface AccordingListProps {
    quizId: string
-   qestions: Qestion[],
-   removeQestion: (info: RemoveQestion) => void
-   removeUnswer: (info: RemoveUnswer) => void
-   addUnswer: (info: AddUnswer) => void
-   editQestion: (info: EditQestion) => void
+   questions: Question[],
+   removeQuestion: (info: RemoveQuestion) => void
+   removeAnswer: (info: RemoveAnswer) => void
+   addAnswer: (info: AddAnswer) => void
+   editQuestion: (info: EditQuestion) => void
 }
 
-function AccordingList({ editQestion, removeUnswer, removeQestion, addUnswer, quizId, qestions }: AccordingListProps) {
+function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, quizId, questions }: AccordingListProps) {
 
    const [isEditMode, setIsEditMode] = useState<boolean>(false)
    const [currentFiled, setCurrentField] = useState<string>('')
 
-   const [editInfo, setEditInfo] = useState<EditQestion | AddUnswer>({
+   const [editInfo, setEditInfo] = useState<EditQuestion | AddAnswer>({
       quizId: quizId,
-      qestionId: '',
+      questionId: '',
       value: ''
    })
-
-   function handleEditQuiz(info: EditQestion) {
-      editQestion(info)
-   }
 
    function handelEditChange(event: ChangeEvent<HTMLInputElement>) {
       const { value } = event.target
@@ -38,7 +34,7 @@ function AccordingList({ editQestion, removeUnswer, removeQestion, addUnswer, qu
       setEditInfo((prev) => {
          return {
             ...prev,
-            qestionId: editInfo.qestionId,
+            questionId: editInfo.questionId,
             value: value
          }
       })
@@ -48,39 +44,39 @@ function AccordingList({ editQestion, removeUnswer, removeQestion, addUnswer, qu
       <React.Fragment>
          <div className="accordion" id="accordionExample">
             {
-               qestions.map((qestion, index) => {
-                  return <div key={qestion.qestionId}>
+               questions.map((question, index) => {
+                  return <div key={question.questionId}>
                      <div className="accordion-item">
-                        <h2 className="accordion-header" id={qestion.qestionId}>
-                           {qestion.numberOfUnswers < 2 &&
+                        <h2 className="accordion-header" id={question.questionId}>
+                           {question.numberOfAnswers < 2 &&
                               <small
                                  className="text-danger"
                                  style={{ fontSize: '12px' }}
                               >
-                                 This qestion missing unswer
+                                 This question is missing an answer
                            </small>
                            }
                            <button
                               className="accordion-button"
                               type="button"
                               data-bs-toggle="collapse"
-                              data-bs-target={`#collapse${qestion.qestionId + 1}`}
+                              data-bs-target={`#collapse${question.questionId + 1}`}
                               // aria-expanded="false"
-                              aria-controls={`collapse${qestion.qestionId + 1}`}
+                              aria-controls={`collapse${question.questionId + 1}`}
                            >
-                              <strong>Qestion:</strong> &nbsp; {qestion.qestion}
+                              <strong>Question:</strong> &nbsp; {question.question}
                            </button>
                         </h2>
                         <div
-                           id={`collapse${qestion.qestionId + 1}`}
+                           id={`collapse${question.questionId + 1}`}
                            className="accordion-collapse collapse"
-                           aria-labelledby={qestion.qestionId}
+                           aria-labelledby={question.questionId}
                            data-bs-parent="#accordionExample"
                         >
                            <div className="accordion-body">
                               {isEditMode ?
                                  (<AlertWindow
-                                    color={'warning'}
+                                    color={'light'}
                                  >
                                     <label className="mb-1">{firstChartToUpperCase(currentFiled)}*</label>
                                     <div className="center-element">
@@ -99,12 +95,12 @@ function AccordingList({ editQestion, removeUnswer, removeQestion, addUnswer, qu
                                           className="btn btn-blue btn-sm"
                                           onClick={() => {
                                              if (editInfo.value !== '' && editInfo.value !== null) {
-                                                if (currentFiled === 'edit-qestion') {
-                                                   editQestion(editInfo)
+                                                if (currentFiled === 'edit-question') {
+                                                   editQuestion(editInfo)
                                                    setIsEditMode(!isEditMode)
                                                 }
-                                                else if (currentFiled === 'add-unswer') {
-                                                   addUnswer(editInfo)
+                                                else if (currentFiled === 'add-answer') {
+                                                   addAnswer(editInfo)
                                                    setIsEditMode(!isEditMode)
                                                 }
                                              }
@@ -117,7 +113,7 @@ function AccordingList({ editQestion, removeUnswer, removeQestion, addUnswer, qu
                                           className="btn btn-pink btn-sm"
                                           onClick={() => setIsEditMode(!isEditMode)}
                                        >
-                                          Cencel
+                                          Cancel
                                       </button>
                                     </div>
                                  </AlertWindow>) : (
@@ -125,64 +121,64 @@ function AccordingList({ editQestion, removeUnswer, removeQestion, addUnswer, qu
                                        <button
                                           className="btn btn-pink btn-sm"
                                           onClick={() => {
-                                             removeQestion({
+                                             removeQuestion({
                                                 quizId: quizId,
-                                                qestionId: qestion.qestionId
+                                                questionId: question.questionId
                                              })
                                           }}
                                        >
-                                          Delete qestion
+                                          Delete question
                                        </button>
                                        &nbsp;
                                        <EditIcon className="edit-icon"
                                           onClick={() => {
                                              setIsEditMode(!isEditMode)
-                                             setCurrentField('edit-qestion')
+                                             setCurrentField('edit-question')
                                              setEditInfo({
                                                 quizId: quizId,
-                                                qestionId: qestion.qestionId,
+                                                questionId: question.questionId,
                                                 value: ''
                                              })
                                           }} />
                                        <button
                                           style={{ float: 'right' }}
-                                          className={`${qestion.numberOfUnswers >= 6 ? 'disabled-btn' : ''} btn btn-balck btn-sm`}
+                                          className={`${question.numberOfAnswers >= 6 ? 'disabled-btn' : ''} btn btn-balck btn-sm`}
                                           onClick={() => {
                                              setIsEditMode(!isEditMode)
-                                             setCurrentField('add-unswer')
+                                             setCurrentField('add-answer')
                                              setEditInfo({
                                                 quizId: quizId,
-                                                qestionId: qestion.qestionId,
+                                                questionId: question.questionId,
                                                 value: ''
                                              })
                                           }}
                                        >
-                                          Add unswer
+                                          Add answer
                                        </button>
                                        <br />
                                        <br />
                                        <ul className="list-group">
                                           {
-                                             qestion.unswers.map((unswer, index) => {
-                                                return <UnswerItem
-                                                   key={index + qestion.qestionId}
-                                                   unswer={unswer}
+                                             question.answers.map((answer, index) => {
+                                                return <AnswerItem
+                                                   key={index + question.questionId}
+                                                   answer={answer}
                                                    index={index}
                                                 >
                                                    <span
-                                                      className="badge  rounded-pill"
+                                                      className="badge rounded-pill"
                                                       style={{ backgroundColor: 'rgb(236, 12, 87)' }}
                                                       onClick={() => {
-                                                         removeUnswer({
+                                                         removeAnswer({
                                                             quizId: quizId,
-                                                            qestionId: qestion.qestionId,
+                                                            questionId: question.questionId,
                                                             index: index
                                                          })
                                                       }}
                                                    >
                                                       x
                                               </span>
-                                                </UnswerItem>
+                                                </AnswerItem>
                                              })
                                           }
                                        </ul>
@@ -202,10 +198,10 @@ function AccordingList({ editQestion, removeUnswer, removeQestion, addUnswer, qu
 
 function mapDispatchToProps(dispatch: Function) {
    return {
-      removeQestion: (info: RemoveQestion) => dispatch(removeQestionAction(info)),
-      removeUnswer: (info: RemoveUnswer) => dispatch(removeUnswerAction(info)),
-      addUnswer: (info: AddUnswer) => dispatch(addUnswerAction(info)),
-      editQestion: (info: EditQestion) => dispatch(editQestionAction(info))
+      removeQuestion: (info: RemoveQuestion) => dispatch(removeQuestionAction(info)),
+      removeAnswer: (info: RemoveAnswer) => dispatch(removeAnswerAction(info)),
+      addAnswer: (info: AddAnswer) => dispatch(addAnswerAction(info)),
+      editQuestion: (info: EditQuestion) => dispatch(editQuestionAction(info))
    }
 }
 

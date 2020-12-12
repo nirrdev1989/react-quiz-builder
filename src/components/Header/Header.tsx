@@ -9,19 +9,19 @@ function Header() {
 
    return (
       <React.Fragment>
-         <nav className="navbar navbar-light bg-light">
+         <nav className="navbar navbar-dark bg-dark">
             <div className="container-fluid">
                <Link
                   className="navbar-brand"
                   to="/" >
-                  <strong>Quiz Builder</strong>
+                  <span style={{ fontWeight: 500 }}>Quiz Builder</span>
                </Link>
                <ul className="navbar-nav ">
                   <li className="nav-item">
                      <Link
                         className="nav-link mr-5"
                         to="/quizzes-list" >
-                        <strong>Quizzes list</strong>
+                        <span style={{ fontWeight: 500 }}>Quizzes list</span>
                         &nbsp;
                          <span
                            className="badge"

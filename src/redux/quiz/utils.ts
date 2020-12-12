@@ -1,15 +1,15 @@
 import { Quiz, QuizResults, Quizzes } from "./model"
 import {
-    AddQestionActionType,
+    AddQuestionActionType,
     AddQuizActionType,
-    AddUnswerActionType,
-    EditQestionActionType,
+    AddAnswerActionType,
+    EditQuestionActionType,
     EditQuizMainActionType,
-    RemoveQestionActionType,
+    RemoveQuestionActionType,
     RemoveQuizActionType,
-    RemoveUnswerActionType,
+    RemoveAnswerActionType,
     SetCurrentQuizActionType,
-    SetUnswerActionType
+    SetAnswerActionType
 } from "./quiz.actions.types"
 import { QuizzesState } from "./quiz.reducers"
 
@@ -18,14 +18,14 @@ export function findQuiz(quizzesObj: Quizzes, quizId: string): Quiz {
 }
 
 
-export function removeQestionUtil(currentState: QuizzesState, action: RemoveQestionActionType) {
-    const { quizId, qestionId } = action.payload
+export function removeQuestionUtil(currentState: QuizzesState, action: RemoveQuestionActionType) {
+    const { quizId, questionId } = action.payload
     const quiz = findQuiz(currentState, quizId)
 
-    const filtredQestions = quiz.qestions.filter((qestion) => qestion.qestionId !== qestionId)
+    const filtredQuestions = quiz.questions.filter((question) => question.questionId !== questionId)
 
-    quiz.qestions = filtredQestions
-    quiz.numberQestions -= 1
+    quiz.questions = filtredQuestions
+    quiz.numberQuestions -= 1
 
     const newState = updateState(currentState, quizId, quiz)
 
@@ -33,72 +33,72 @@ export function removeQestionUtil(currentState: QuizzesState, action: RemoveQest
 
 }
 
-export function addQestionUtil(currentState: QuizzesState, action: AddQestionActionType) {
-    const { quizId, qestion } = action.payload
+export function addQuestionUtil(currentState: QuizzesState, action: AddQuestionActionType) {
+    const { quizId, question } = action.payload
     const quiz = findQuiz(currentState, quizId)
 
-    quiz.qestions = [...quiz.qestions, qestion]
-    quiz.numberQestions += 1
+    quiz.questions = [...quiz.questions, question]
+    quiz.numberQuestions += 1
 
     const newState = updateState(currentState, quizId, quiz)
 
     return { ...newState }
 }
 
-export function removeUnswerUtil(currentState: QuizzesState, action: RemoveUnswerActionType) {
-    const { quizId, qestionId, index } = action.payload
+export function removeAnswerUtil(currentState: QuizzesState, action: RemoveAnswerActionType) {
+    const { quizId, questionId, index } = action.payload
     const quiz = findQuiz(currentState, quizId)
 
-    const qestionIndex = quiz.qestions.findIndex((qestion) => qestion.qestionId === qestionId)
+    const questionIndex = quiz.questions.findIndex((question) => question.questionId === questionId)
 
-    const qestionsLess = [...quiz.qestions]
+    const questionsLess = [...quiz.questions]
 
-    qestionsLess[qestionIndex].unswers.splice(index, 1)
+    questionsLess[questionIndex].answers.splice(index, 1)
 
-    qestionsLess[qestionIndex].numberOfUnswers -= 1
+    questionsLess[questionIndex].numberOfAnswers -= 1
 
-    quiz.qestions = qestionsLess
+    quiz.questions = questionsLess
 
     const newState = updateState(currentState, quizId, quiz)
 
     return { ...newState }
 }
 
-export function addUnswerUtil(currentState: QuizzesState, action: AddUnswerActionType) {
-    const { quizId, value, qestionId } = action.payload
+export function addAnswerUtil(currentState: QuizzesState, action: AddAnswerActionType) {
+    const { quizId, value, questionId } = action.payload
     const quiz = findQuiz(currentState, quizId)
 
-    const qestionIndex = quiz.qestions.findIndex((qestion) => {
-        return qestion.qestionId === qestionId
+    const questionIndex = quiz.questions.findIndex((question) => {
+        return question.questionId === questionId
     })
 
-    const qestionsNew = [...quiz.qestions]
+    const questionsNew = [...quiz.questions]
 
-    qestionsNew[qestionIndex].unswers =
-        [...qestionsNew[qestionIndex].unswers, value]
+    questionsNew[questionIndex].answers =
+        [...questionsNew[questionIndex].answers, value]
 
-    qestionsNew[qestionIndex].numberOfUnswers += 1
+    questionsNew[questionIndex].numberOfAnswers += 1
 
-    quiz.qestions = qestionsNew
+    quiz.questions = questionsNew
 
     const newState = updateState(currentState, quizId, quiz)
 
     return { ...newState }
 }
 
-export function editQestionUtil(currentState: QuizzesState, action: EditQestionActionType) {
-    const { quizId, value, qestionId } = action.payload
+export function editQuestionUtil(currentState: QuizzesState, action: EditQuestionActionType) {
+    const { quizId, value, questionId } = action.payload
     const quiz = findQuiz(currentState, quizId)
 
-    const qestionIndex = quiz.qestions.findIndex((qestion) => {
-        return qestion.qestionId === qestionId
+    const questionIndex = quiz.questions.findIndex((question) => {
+        return question.questionId === questionId
     })
 
-    const qestionsNew = [...quiz.qestions]
+    const questionsNew = [...quiz.questions]
 
-    qestionsNew[qestionIndex].qestion = value
+    questionsNew[questionIndex].question = value
 
-    quiz.qestions = qestionsNew
+    quiz.questions = questionsNew
 
     const newState = updateState(currentState, quizId, quiz)
 
@@ -153,22 +153,22 @@ export function setCurrentQuizUtil(currentState: QuizResults, action: SetCurrent
     return {
         ...currentState,
         quizId: action.payload,
-        unswers: []
+        answers: []
     }
 }
 
-export function setUnswerUtil(currentState: QuizResults, action: SetUnswerActionType) {
-    let newUnswersState = [...currentState.unswers]
-    const index = currentState.unswers.findIndex((unswer) => unswer.qestion === action.payload.qestion)
+export function setAnswerUtil(currentState: QuizResults, action: SetAnswerActionType) {
+    let newAnswersState = [...currentState.answers]
+    const index = currentState.answers.findIndex((answer) => answer.question === action.payload.question)
 
     if (index !== -1) {
-        newUnswersState[index] = action.payload
+        newAnswersState[index] = action.payload
     } else {
-        newUnswersState = [...newUnswersState, action.payload]
+        newAnswersState = [...newAnswersState, action.payload]
     }
 
     return {
         ...currentState,
-        unswers: newUnswersState
+        answers: newAnswersState
     }
 }

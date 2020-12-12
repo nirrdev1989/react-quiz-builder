@@ -4,14 +4,14 @@ import {
     QuizActionsTypes,
     ADD_QUIZ,
     EDIT_QUIZ_MAIN,
-    REMOVE_QESTION,
+    REMOVE_Question,
     REMOVE_QUIZ,
     SET_CURRENT_QUIZ,
     SET_UNSWER,
-    ADD_QESTION,
+    ADD_Question,
     REMOVE_UNSWER,
     ADD_UNSWER,
-    EDIT_QESTION,
+    EDIT_Question,
 } from "./quiz.actions.types";
 
 
@@ -41,32 +41,32 @@ export function quizReducer(state = INITIAL_STATE_QUIZZES, action: QuizActionsTy
             saveLoaclStorage('quizzes', newStateAfterUpdateMain)
 
             return newStateAfterUpdateMain
-        case REMOVE_QESTION:
-            const newSateAfterRemoveQestion = QuizzesUtils.removeQestionUtil(state, action)
-            saveLoaclStorage('quizzes', newSateAfterRemoveQestion)
+        case REMOVE_Question:
+            const newSateAfterRemoveQuestion = QuizzesUtils.removeQuestionUtil(state, action)
+            saveLoaclStorage('quizzes', newSateAfterRemoveQuestion)
 
-            return newSateAfterRemoveQestion
-        case ADD_QESTION:
-            const newSateAfterAddQestion = QuizzesUtils.addQestionUtil(state, action)
-            saveLoaclStorage('quizzes', newSateAfterAddQestion)
+            return newSateAfterRemoveQuestion
+        case ADD_Question:
+            const newSateAfterAddQuestion = QuizzesUtils.addQuestionUtil(state, action)
+            saveLoaclStorage('quizzes', newSateAfterAddQuestion)
 
-            return newSateAfterAddQestion
+            return newSateAfterAddQuestion
 
         case REMOVE_UNSWER:
-            const newStateAfterRemoveUnswer = QuizzesUtils.removeUnswerUtil(state, action)
-            saveLoaclStorage('quizzes', newStateAfterRemoveUnswer)
+            const newStateAfterRemoveAnswer = QuizzesUtils.removeAnswerUtil(state, action)
+            saveLoaclStorage('quizzes', newStateAfterRemoveAnswer)
 
-            return newStateAfterRemoveUnswer
+            return newStateAfterRemoveAnswer
         case ADD_UNSWER:
-            const newStateAfterAddUnswer = QuizzesUtils.addUnswerUtil(state, action)
-            saveLoaclStorage('quizzes', newStateAfterAddUnswer)
+            const newStateAfterAddAnswer = QuizzesUtils.addAnswerUtil(state, action)
+            saveLoaclStorage('quizzes', newStateAfterAddAnswer)
 
-            return newStateAfterAddUnswer
-        case EDIT_QESTION:
-            const newStateAfterEditQestion = QuizzesUtils.editQestionUtil(state, action)
-            saveLoaclStorage('quizzes', newStateAfterEditQestion)
+            return newStateAfterAddAnswer
+        case EDIT_Question:
+            const newStateAfterEditQuestion = QuizzesUtils.editQuestionUtil(state, action)
+            saveLoaclStorage('quizzes', newStateAfterEditQuestion)
 
-            return newStateAfterEditQestion
+            return newStateAfterEditQuestion
         default:
             return state
     }
@@ -76,7 +76,7 @@ export function quizReducer(state = INITIAL_STATE_QUIZZES, action: QuizActionsTy
 
 const INITIAL_STATE_RESULTS: QuizResults = {
     quizId: '',
-    unswers: []
+    answers: []
 }
 
 
@@ -85,7 +85,7 @@ export function quizResultsReducer(state = INITIAL_STATE_RESULTS, action: QuizAc
         case SET_CURRENT_QUIZ:
             return QuizzesUtils.setCurrentQuizUtil(state, action)
         case SET_UNSWER:
-            return QuizzesUtils.setUnswerUtil(state, action)
+            return QuizzesUtils.setAnswerUtil(state, action)
         default:
             return state
     }

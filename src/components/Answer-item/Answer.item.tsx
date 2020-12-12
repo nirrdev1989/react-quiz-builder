@@ -1,17 +1,17 @@
 import React, { PropsWithChildren } from 'react'
 
-interface UnswerItemProps extends PropsWithChildren<any> {
-    unswer: string
+interface AnswerItemProps extends PropsWithChildren<any> {
+    answer: string
     index: number
 }
 
-function UnswerItem({ children, unswer, index }: UnswerItemProps) {
+function AnswerItem({ children, answer, index }: AnswerItemProps) {
     return (
         <React.Fragment>
             <li className="list-group-item d-flex justify-content-between align-items-center">
                 <div>
                     <strong> {index + 1} : &nbsp;</strong>
-                    <span className="qestion-accordion">{unswer}</span>
+                    <span className="question-accordion">{answer}</span>
                 </div>
                 {children}
             </li>
@@ -19,4 +19,4 @@ function UnswerItem({ children, unswer, index }: UnswerItemProps) {
     )
 }
 
-export default UnswerItem
+export default AnswerItem

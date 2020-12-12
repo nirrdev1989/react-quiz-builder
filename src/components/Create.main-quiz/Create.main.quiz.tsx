@@ -18,8 +18,8 @@ function CreateMainQuiz({ addQuiz }: CreateQuizProps) {
       quizId: String(Date.now()),
       title: '',
       description: '',
-      numberQestions: 0,
-      qestions: [],
+      numberQuestions: 0,
+      questions: [],
    })
 
 
@@ -37,7 +37,6 @@ function CreateMainQuiz({ addQuiz }: CreateQuizProps) {
 
    function handleSubmit(event: FormEvent) {
       event.preventDefault()
-      // alert('CREAT QUIZ')
       addQuiz(createQuiz)
       setQuizIsCreated(true)
    }
@@ -48,8 +47,8 @@ function CreateMainQuiz({ addQuiz }: CreateQuizProps) {
    //       quizId: '',
    //       title: '',
    //       description: '',
-   //       numberQestions: 0,
-   //       qestions: []
+   //       numberQuestions: 0,
+   //       questions: []
    //    })
    // }
 

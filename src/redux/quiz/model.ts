@@ -61,11 +61,11 @@ export interface RemoveUnswer {
 export interface AddUnswer {
     quizId: string
     qestionId: string
-    unswer: string
+    value: string
 }
 
 export interface EditQestion {
     qestionId: string
     quizId: string
-    qestion: string
+    value: string
 }

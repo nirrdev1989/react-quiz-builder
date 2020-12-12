@@ -1,10 +1,11 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { AddUnswer, EditQestion, Qestion, RemoveQestion, RemoveUnswer } from '../../redux/quiz/model'
 import { addUnswerAction, editQestionAction, removeQestionAction, removeUnswerAction } from '../../redux/quiz/quiz.action'
 import { ReactComponent as EditIcon } from "../../icons-svg/edit.svg";
 import UnswerItem from '../Answer-item/Answer.item';
 import AlertWindow from '../Alert-window/Alert.window';
+import { firstChartToUpperCase } from '../../utils/first.chart.uppercase';
 
 
 interface AccordingListProps {
@@ -19,11 +20,12 @@ interface AccordingListProps {
 function AccordingList({ editQestion, removeUnswer, removeQestion, addUnswer, quizId, qestions }: AccordingListProps) {
 
    const [isEditMode, setIsEditMode] = useState<boolean>(false)
+   const [currentFiled, setCurrentField] = useState<string>('')
 
-   const [editInfo, setEditInfo] = useState<EditQestion>({
+   const [editInfo, setEditInfo] = useState<EditQestion | AddUnswer>({
       quizId: quizId,
       qestionId: '',
-      qestion: ''
+      value: ''
    })
 
    function handleEditQuiz(info: EditQestion) {
@@ -32,11 +34,12 @@ function AccordingList({ editQestion, removeUnswer, removeQestion, addUnswer, qu
 
    function handelEditChange(event: ChangeEvent<HTMLInputElement>) {
       const { value } = event.target
+      console.log(value)
       setEditInfo((prev) => {
          return {
             ...prev,
             qestionId: editInfo.qestionId,
-            qestion: value
+            value: value
          }
       })
    }
@@ -46,7 +49,6 @@ function AccordingList({ editQestion, removeUnswer, removeQestion, addUnswer, qu
          <div className="accordion" id="accordionExample">
             {
                qestions.map((qestion, index) => {
-                  console.log(qestion.numberOfUnswers)
                   return <div key={qestion.qestionId}>
                      <div className="accordion-item">
                         <h2 className="accordion-header" id={qestion.qestionId}>
@@ -80,15 +82,15 @@ function AccordingList({ editQestion, removeUnswer, removeQestion, addUnswer, qu
                                  (<AlertWindow
                                     color={'warning'}
                                  >
-                                    <label className="mb-1">Qestion*</label>
+                                    <label className="mb-1">{firstChartToUpperCase(currentFiled)}*</label>
                                     <div className="center-element">
                                        <input
                                           required
                                           className="form-control"
                                           onChange={handelEditChange}
                                           type="text"
-                                          name={editInfo.qestion}
-                                          placeholder="Qestion"
+                                          name={editInfo.value}
+                                          placeholder={firstChartToUpperCase(currentFiled)}
                                        />
                                     </div>
                                     <div className="mt-3">
@@ -96,9 +98,15 @@ function AccordingList({ editQestion, removeUnswer, removeQestion, addUnswer, qu
                                           type="submit"
                                           className="btn btn-blue btn-sm"
                                           onClick={() => {
-                                             if (editInfo.qestion !== '' && editInfo.qestion !== null) {
-                                                editQestion(editInfo)
-                                                setIsEditMode(!isEditMode)
+                                             if (editInfo.value !== '' && editInfo.value !== null) {
+                                                if (currentFiled === 'edit-qestion') {
+                                                   editQestion(editInfo)
+                                                   setIsEditMode(!isEditMode)
+                                                }
+                                                else if (currentFiled === 'add-unswer') {
+                                                   addUnswer(editInfo)
+                                                   setIsEditMode(!isEditMode)
+                                                }
                                              }
                                           }}
                                        >
@@ -126,27 +134,27 @@ function AccordingList({ editQestion, removeUnswer, removeQestion, addUnswer, qu
                                           Delete qestion
                                        </button>
                                        &nbsp;
-                                       <EditIcon className="edit-icon" onClick={() => {
-                                          setIsEditMode(!isEditMode)
-                                          setEditInfo({
-                                             quizId: quizId,
-                                             qestionId: qestion.qestionId,
-                                             qestion: ''
-                                          })
-                                       }} />
+                                       <EditIcon className="edit-icon"
+                                          onClick={() => {
+                                             setIsEditMode(!isEditMode)
+                                             setCurrentField('edit-qestion')
+                                             setEditInfo({
+                                                quizId: quizId,
+                                                qestionId: qestion.qestionId,
+                                                value: ''
+                                             })
+                                          }} />
                                        <button
                                           style={{ float: 'right' }}
                                           className={`${qestion.numberOfUnswers >= 6 ? 'disabled-btn' : ''} btn btn-balck btn-sm`}
                                           onClick={() => {
-                                             // setIsEditMode(!isEditMode)
-                                             const unswer = window.prompt('הכנס תשובה') as string
-                                             if (unswer !== '' && unswer !== null) {
-                                                addUnswer({
-                                                   quizId: quizId,
-                                                   qestionId: qestion.qestionId,
-                                                   unswer: unswer
-                                                })
-                                             }
+                                             setIsEditMode(!isEditMode)
+                                             setCurrentField('add-unswer')
+                                             setEditInfo({
+                                                quizId: quizId,
+                                                qestionId: qestion.qestionId,
+                                                value: ''
+                                             })
                                           }}
                                        >
                                           Add unswer

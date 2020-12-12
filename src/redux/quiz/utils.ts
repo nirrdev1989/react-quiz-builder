@@ -65,7 +65,7 @@ export function removeUnswerUtil(currentState: QuizzesState, action: RemoveUnswe
 }
 
 export function addUnswerUtil(currentState: QuizzesState, action: AddUnswerActionType) {
-    const { quizId, unswer, qestionId } = action.payload
+    const { quizId, value, qestionId } = action.payload
     const quiz = findQuiz(currentState, quizId)
 
     const qestionIndex = quiz.qestions.findIndex((qestion) => {
@@ -75,7 +75,7 @@ export function addUnswerUtil(currentState: QuizzesState, action: AddUnswerActio
     const qestionsNew = [...quiz.qestions]
 
     qestionsNew[qestionIndex].unswers =
-        [...qestionsNew[qestionIndex].unswers, unswer]
+        [...qestionsNew[qestionIndex].unswers, value]
 
     qestionsNew[qestionIndex].numberOfUnswers += 1
 
@@ -87,7 +87,7 @@ export function addUnswerUtil(currentState: QuizzesState, action: AddUnswerActio
 }
 
 export function editQestionUtil(currentState: QuizzesState, action: EditQestionActionType) {
-    const { quizId, qestion, qestionId } = action.payload
+    const { quizId, value, qestionId } = action.payload
     const quiz = findQuiz(currentState, quizId)
 
     const qestionIndex = quiz.qestions.findIndex((qestion) => {
@@ -96,7 +96,7 @@ export function editQestionUtil(currentState: QuizzesState, action: EditQestionA
 
     const qestionsNew = [...quiz.qestions]
 
-    qestionsNew[qestionIndex].qestion = qestion
+    qestionsNew[qestionIndex].qestion = value
 
     quiz.qestions = qestionsNew
 

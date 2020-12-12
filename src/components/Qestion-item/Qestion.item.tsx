@@ -24,7 +24,7 @@ function QestionItem({ setUnswer, qestion, results }: QestionItemProps) {
     }
 
     return (
-        <div>
+        <React.Fragment>
             <span>
                 <strong> Qestion: </strong> {qestion.qestion}
             </span>
@@ -33,7 +33,6 @@ function QestionItem({ setUnswer, qestion, results }: QestionItemProps) {
                 qestion.numberOfUnswers > 1 &&
                 qestion.unswers.map((unswer, index) => {
                     // console.log(results)
-
                     return <div key={index}>
                         <input
                             style={{ marginRight: '0.5rem' }}
@@ -47,7 +46,7 @@ function QestionItem({ setUnswer, qestion, results }: QestionItemProps) {
                 })
             }
             <hr />
-        </div>
+        </React.Fragment>
     )
 }
 

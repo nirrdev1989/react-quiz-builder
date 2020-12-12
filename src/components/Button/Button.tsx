@@ -7,9 +7,9 @@ import React from 'react'
 function Button({ children, ...rest }: any) {
 
     return (
-        <div>
+        <React.Fragment>
             <button {...rest}>{children}</button>
-        </div>
+        </React.Fragment>
     )
 }
 

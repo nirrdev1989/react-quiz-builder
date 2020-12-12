@@ -1,29 +1,28 @@
 import React from 'react'
-// import { connect } from 'react-redux'
 
-function AlertWindow({ children, closeWindow }: any) {
+function AlertWindow({ children, closeWindow, color }: any) {
    return (
-      <>
-         <div className="alert-con">
-            <div className="alert-window">
-               <div className="alert alert-light" role="alert">
-                  <h4 className="alert-heading">Well done!
-                     <span
-                        className="delete-quiz-btn"
-                        onClick={() => closeWindow()}
-                     >
-                        x
-                     </span>
-                  </h4>
-                  <hr />
-                  {children}
-               </div>
-            </div>
+      <React.Fragment>
+         <div
+            className={`alert alert-${color}  fade show`}
+            role="alert"
+         >
+            {closeWindow &&
+               <h4 className="alert-heading">
+                  <button
+                     type="button"
+                     className="btn-close"
+                     data-bs-dismiss="alert"
+                     aria-label="Close">
+                  </button>
+               </h4>
+            }
+
+            {children}
+
          </div>
-      </>
+      </React.Fragment >
    )
 }
-
-
 
 export default AlertWindow

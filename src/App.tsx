@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import { Route, Switch, withRouter } from 'react-router';
+import { Route, Switch } from 'react-router';
 import CreateQuizPage from './pages/Create.quiz.page';
 import QuizzesListPage from './pages/Quizzes.list.page';
 import QuizPage from './pages/Quiz.page';
@@ -44,10 +44,5 @@ function App() {
       </div>
    );
 }
-
-
-
-
-
 
 export default App;

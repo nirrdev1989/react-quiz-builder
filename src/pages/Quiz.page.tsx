@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect, useSelector } from 'react-redux'
-import AlertWindow from '../components/Alert-window/Alert.window'
+// import AlertWindow from '../components/Alert-window/Alert.window'
 import QestionItem from '../components/Qestion-item/Qestion.item'
 import { QuizResults } from '../redux/quiz/model'
 import { setCurrentQuizAction } from '../redux/quiz/quiz.action'
@@ -16,7 +16,7 @@ function QuizPage({ currentQuiz, match }: any) {
         return state.quizzes[quizId]
     })
 
-    const [isSubmit, setIsSubmit] = useState<boolean>(false)
+    // const [isSubmit, setIsSubmit] = useState<boolean>(false)
 
 
     useEffect(() => {
@@ -25,25 +25,8 @@ function QuizPage({ currentQuiz, match }: any) {
 
 
     return (
-        <>
+        <React.Fragment>
             <h3>{quiz.title}</h3>
-            {isSubmit ?
-                <AlertWindow
-                    closeWindow={() => {
-                        setIsSubmit(!isSubmit)
-                    }}
-                >
-                    {
-                        results.unswers.map((resultUnswer, index: number) => {
-                            return <div key={index}>
-                                <strong>Qestion: </strong> {index + 1}<p>{resultUnswer.qestion}</p>
-                                <strong>Unswer: </strong> <p>{resultUnswer.choosenUnswer}</p>
-                                <hr />
-                            </div>
-                        })
-                    }
-                </AlertWindow> : null
-            }
             <hr />
             <br />
             {
@@ -53,28 +36,21 @@ function QuizPage({ currentQuiz, match }: any) {
                     </div>
                 })
             }
-
-            {/* <EditIcon
-            className="edit-quiz-btn"
-            // data-bs-toggle="modal"
-            // data-bs-target="#exampleModal"
-            onClick={() => { alert('עוד לא עובד') }}
-         /> */}
-
             <button
-                className="btn btn-primary btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
+                className="btn btn-blue btn-sm"
                 onClick={() => {
                     if (results.unswers.length < quiz.qestions.length) {
                         return alert('חוסר תשובות אנא השלם את השאלון')
                     }
-                    setIsSubmit(!isSubmit)
+                    alert(`${results.unswers.map((unswer, index) => {
+                        return `${index}. ${unswer.qestion}:  ${unswer.choosenUnswer} /`
+                    })}`)
+                    // setIsSubmit(!isSubmit)
                 }}
             >
                 Submit
              </button>
-        </>
+        </React.Fragment>
     )
 }
 

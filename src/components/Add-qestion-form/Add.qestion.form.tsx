@@ -50,7 +50,7 @@ function AddQestionForm({ addQestion, closeAddQestionForm }: any) {
 
    function handleSubmit(event: FormEvent) {
       event.preventDefault()
-      console.log(qestion.unswers)
+      // console.log(qestion.unswers)
 
       if (qestion.qestion === '' || qestion.numberOfUnswers < 2 || qestion.unswers.length < 2) {
          return alert('מספר התשובות חייב להיות יותר מ1 ')
@@ -58,7 +58,6 @@ function AddQestionForm({ addQestion, closeAddQestionForm }: any) {
 
       addQestion(qestion)
       resetQestion()
-
    }
 
 
@@ -72,9 +71,8 @@ function AddQestionForm({ addQestion, closeAddQestionForm }: any) {
    }
 
    return (
-      <div>
+      <React.Fragment>
          <form onSubmit={handleSubmit} >
-            {/* <div className="input-ele"> */}
             <div className="form-floating mb-3">
                <input
                   value={qestion.qestion}
@@ -87,8 +85,6 @@ function AddQestionForm({ addQestion, closeAddQestionForm }: any) {
                />
                <label >Qestion*</label>
             </div>
-            {/* </div> */}
-            {/* <div className="input-ele"> */}
             <span>Number of unswers</span>
             <input
                id="count-unswers"
@@ -102,14 +98,12 @@ function AddQestionForm({ addQestion, closeAddQestionForm }: any) {
                placeholder="Number of unswers"
                onChange={handleQestionChange}
             />
-            {/* </div> */}
             <br />
             {
                Array.from({ length: qestion.numberOfUnswers }).map((_, index) => {
                   return <div key={index}>
                      <input
                         name={`${index}`}
-                        // value={qestion.unswers[index]}
                         type="text"
                         required
                         className="form-control form-control-sm mb-2"
@@ -120,17 +114,16 @@ function AddQestionForm({ addQestion, closeAddQestionForm }: any) {
                   </div>
                })
             }
-            {/* <div className="input-ele"> */}
             <br />
             <button
                type="submit"
-               className="btn btn-primary btn-sm"
+               className="btn btn-blue btn-sm"
             >
                Add qestion
                </button>
                  &nbsp;
                <button
-               className="btn btn-danger btn-sm"
+               className="btn btn-pink btn-sm"
                onClick={() => {
                   resetQestion()
                   closeAddQestionForm()
@@ -138,9 +131,8 @@ function AddQestionForm({ addQestion, closeAddQestionForm }: any) {
             >
                Cencel
                </button>
-            {/* </div> */}
          </form>
-      </div>
+      </React.Fragment>
    )
 }
 

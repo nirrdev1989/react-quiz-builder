@@ -1,5 +1,16 @@
 import { Quiz, QuizResults, Quizzes } from "./model"
-import { AddQestionActionType, AddQuizActionType, AddUnswerActionType, RemoveQestionActionType, RemoveQuizActionType, RemoveUnswerActionType, SetCurrentQuizActionType, SetUnswerActionType } from "./quiz.actions.types"
+import {
+    AddQestionActionType,
+    AddQuizActionType,
+    AddUnswerActionType,
+    EditQestionActionType,
+    EditQuizMainActionType,
+    RemoveQestionActionType,
+    RemoveQuizActionType,
+    RemoveUnswerActionType,
+    SetCurrentQuizActionType,
+    SetUnswerActionType
+} from "./quiz.actions.types"
 import { QuizzesState } from "./quiz.reducers"
 
 export function findQuiz(quizzesObj: Quizzes, quizId: string): Quiz {
@@ -75,10 +86,29 @@ export function addUnswerUtil(currentState: QuizzesState, action: AddUnswerActio
     return { ...newState }
 }
 
+export function editQestionUtil(currentState: QuizzesState, action: EditQestionActionType) {
+    const { quizId, qestion, qestionId } = action.payload
+    const quiz = findQuiz(currentState, quizId)
+
+    const qestionIndex = quiz.qestions.findIndex((qestion) => {
+        return qestion.qestionId === qestionId
+    })
+
+    const qestionsNew = [...quiz.qestions]
+
+    qestionsNew[qestionIndex].qestion = qestion
+
+    quiz.qestions = qestionsNew
+
+    const newState = updateState(currentState, quizId, quiz)
+
+    return { ...newState }
+}
+
 export function createQuizUtil(currentState: QuizzesState, action: AddQuizActionType) {
     return {
         ...currentState,
-        [String(Date.now())]: {
+        [action.payload.quizId]: {
             quiz: action.payload
         }
     }
@@ -89,6 +119,18 @@ export function removeQuizUtil(currentState: QuizzesState, action: RemoveQuizAct
     return {
         ...currentState
     }
+}
+
+export function editQuizMainUtil(currentState: QuizzesState, action: EditQuizMainActionType) {
+    const { propery, value, quizId } = action.payload
+    // const quizFound = state[quizId].quiz
+    const quiz = findQuiz(currentState, quizId)
+
+    quiz[propery] = value
+
+    const newState = updateState(currentState, quizId, quiz)
+
+    return { ...newState }
 }
 
 export function updateState(

@@ -2,15 +2,9 @@
   margin: 1rem;
 }
 
-/* input[type="number"] {
-  width: 4rem;
-} */
-
 .plus-btn {
-  /* border-radius: 50%; */
   color: white;
   font-weight: bold;
-  /* font-size: 18px; */
   align-items: center;
 }
 
@@ -61,7 +55,7 @@ main {
   margin: 0.3rem;
 }
 
-.alert-con {
+/* .alert-con {
   position: fixed;
   left: 0;
   top: 0;
@@ -78,9 +72,70 @@ main {
   position: absolute;
   width: 70%;
   top: 10%;
-}
+} */
 
 .disabled-btn {
   pointer-events: none;
   opacity: 0.5;
+}
+
+.accordion-button {
+  outline: 0 !important;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255) !important;
+  border-color: rgb(207, 207, 207) !important;
+}
+
+.accordion-button:focus {
+  outline: 0 !important;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255) !important;
+  border-color: rgb(207, 207, 207) !important;
+  /* border-bottom-color: rgb(0, 0, 0) !important; */
+}
+
+.btn-blue {
+  color: white;
+  background-color: rgb(61, 12, 236);
+}
+
+.btn-pink {
+  color: white;
+  background-color: rgb(236, 12, 87);
+}
+
+.btn-balck {
+  background-color: black;
+  color: white;
+}
+
+.btn-pink, .btn-blue, .btn-balck {
+  font-weight: 500;
+}
+
+.btn-blue:hover, .btn-pink:hover, .btn-balck:hover {
+  color: white;
+  opacity: 0.8;
+}
+
+.edit-icon {
+  font-size: 14px;
+  cursor: pointer;
+  margin: 0.3rem;
+}
+
+.edit-icon {
+  opacity: 0.6;
+}
+
+.edit-icon:hover {
+  opacity: 1;
+}
+
+.center-element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

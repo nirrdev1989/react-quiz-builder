@@ -8,24 +8,33 @@ function Header() {
    const quizzesCount = useSelector((state: RootState) => Object.keys(state.quizzes).length)
 
    return (
-      <div>
+      <React.Fragment>
          <nav className="navbar navbar-light bg-light">
             <div className="container-fluid">
-               <Link className="navbar-brand" to="/" >Quiz Builder</Link>
+               <Link
+                  className="navbar-brand"
+                  to="/" >
+                  <strong>Quiz Builder</strong>
+               </Link>
                <ul className="navbar-nav ">
                   <li className="nav-item">
                      <Link
                         className="nav-link mr-5"
                         to="/quizzes-list" >
-                        Quizzes list
+                        <strong>Quizzes list</strong>
                         &nbsp;
-                     <span className="badge bg-success"> {quizzesCount}</span>
+                         <span
+                           className="badge"
+                           style={{ backgroundColor: 'rgb(236, 12, 87)' }}
+                        >
+                           {quizzesCount}
+                        </span>
                      </Link>
                   </li>
                </ul>
             </div>
          </nav>
-      </div>
+      </React.Fragment>
    )
 }
 

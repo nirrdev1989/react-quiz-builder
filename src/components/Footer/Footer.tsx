@@ -4,12 +4,10 @@ import React from 'react'
 function Footer() {
 
     return (
-        <div>
+        <React.Fragment>
 
             {/* <footer>Footer</footer> */}
-
-
-        </div>
+        </React.Fragment>
     )
 }
 

@@ -1,6 +1,7 @@
 import {
     AddQestion,
     AddUnswer,
+    EditQestion,
     Quiz,
     QuizEditMain,
     QuizResultsUnswer,
@@ -17,6 +18,7 @@ export const REMOVE_QESTION = 'REMOVE_QESTION'
 export const ADD_QESTION = 'ADD_QESTION'
 export const REMOVE_UNSWER = 'REMOVE_UNSWER'
 export const ADD_UNSWER = 'ADD_UNSWER'
+export const EDIT_QESTION = 'EDIT_QESTION'
 
 export const SET_CURRENT_QUIZ = 'SET_CURRENT_QUIZ'
 export const SET_UNSWER = 'SET_UNSWER'
@@ -67,6 +69,10 @@ export interface AddUnswerActionType {
     payload: AddUnswer
 }
 
+export interface EditQestionActionType {
+    type: typeof EDIT_QESTION
+    payload: EditQestion
+}
 
 export type QuizActionsTypes =
     AddQuizActionType |
@@ -77,4 +83,5 @@ export type QuizActionsTypes =
     RemoveQestionActionType |
     AddQestionActionType |
     RemoveUnswerActionType |
-    AddUnswerActionType
+    AddUnswerActionType |
+    EditQestionActionType

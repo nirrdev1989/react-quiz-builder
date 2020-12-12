@@ -11,12 +11,11 @@ import {
     ADD_QESTION,
     REMOVE_UNSWER,
     ADD_UNSWER,
+    EDIT_QESTION,
 } from "./quiz.actions.types";
 
 
-
 import * as QuizzesUtils from './utils'
-
 
 
 export type QuizzesState = Quizzes
@@ -38,16 +37,8 @@ export function quizReducer(state = INITIAL_STATE_QUIZZES, action: QuizActionsTy
 
             return newStateAfterRemove
         case EDIT_QUIZ_MAIN:
-            const { propery, value, quizId } = action.payload
-            const quizFound = state[quizId].quiz
-            quizFound[propery] = value
-
-            const newStateAfterUpdateMain = {
-                ...state,
-                [quizId]: {
-                    quiz: quizFound
-                }
-            }
+            const newStateAfterUpdateMain = QuizzesUtils.editQuizMainUtil(state, action)
+            saveLoaclStorage('quizzes', newStateAfterUpdateMain)
 
             return newStateAfterUpdateMain
         case REMOVE_QESTION:
@@ -71,6 +62,11 @@ export function quizReducer(state = INITIAL_STATE_QUIZZES, action: QuizActionsTy
             saveLoaclStorage('quizzes', newStateAfterAddUnswer)
 
             return newStateAfterAddUnswer
+        case EDIT_QESTION:
+            const newStateAfterEditQestion = QuizzesUtils.editQestionUtil(state, action)
+            saveLoaclStorage('quizzes', newStateAfterEditQestion)
+
+            return newStateAfterEditQestion
         default:
             return state
     }

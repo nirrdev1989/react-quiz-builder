@@ -64,3 +64,8 @@ export interface AddUnswer {
     unswer: string
 }
 
+export interface EditQestion {
+    qestionId: string
+    quizId: string
+    qestion: string
+}

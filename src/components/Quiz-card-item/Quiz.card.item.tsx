@@ -17,21 +17,22 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
 
    const [isStatusOk, setIsStatusOk] = useState<boolean>(false)
 
-   function checkStatus() {
-      quiz.qestions.forEach((qestion) => {
-         if (qestion.numberOfUnswers > 1) {
-            setIsStatusOk(true)
-         }
-      })
-   }
 
 
    useEffect(() => {
+      function checkStatus() {
+         quiz.qestions.forEach((qestion) => {
+            console.log(qestion)
+            if (qestion.numberOfUnswers > 1) {
+               setIsStatusOk(true)
+            }
+         })
+      }
       checkStatus()
    }, [])
 
    return (
-      <>
+      <React.Fragment>
          <div className="col">
             <div className={`card mb-4 shadow-sm`}>
                <div className="card-header">
@@ -60,12 +61,12 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                </div>
                <div className="card-body">
                   {!isStatusOk &&
-                     <small className="text-danger" >Some of qestion missing unswers or no qestions yet</small>
+                     <small className="text-danger" >
+                        Some of qestion missing unswers or no qestions yet
+                     </small>
                   }
-                  <p>Description:</p>
-                  {/* <ul className="list-unstyled mt-3 mb-4"> */}
-                  <p>{quiz.description}</p>
-                  {/* </ul> */}
+                  <p><strong>Description:</strong></p>
+                  <span>{quiz.description}</span>
                   <h6
                      className="card-title pricing-card-title">
                      {quiz.numberQestions}
@@ -76,7 +77,7 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                   </h6>
                   <br />
                   <Link
-                     className={`${quiz.qestions.length === 0 || !isStatusOk ? 'disabled-btn' : ''} w-100 btn btn-sm btn-primary`}
+                     className={`${quiz.qestions.length === 0 || !isStatusOk ? 'disabled-btn' : ''} w-100 btn btn-sm btn-blue`}
                      to={`/quiz/${quizId}`}
                      type="button"
                   >
@@ -85,7 +86,7 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                </div>
             </div>
          </div>
-      </>
+      </React.Fragment>
    )
 }
 

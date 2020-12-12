@@ -7,8 +7,6 @@ import QuizCardItem from '../Quiz-card-item/Quiz.card.item'
 function QuizzesList() {
     const quizzes = useSelector((state: RootState) => state.quizzes)
 
-    // console.log('QUIZZES LIST RENDER', quizzes)
-
     return (
         <div className="row row-cols-1 row-cols-md-3 mb-3 text-center">
             {

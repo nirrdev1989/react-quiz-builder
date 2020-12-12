@@ -18,7 +18,7 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
    const [isStatusOk, setIsStatusOk] = useState<boolean>(false)
 
    function checkStatus() {
-      quiz.qestions.forEach((qestion, index) => {
+      quiz.qestions.forEach((qestion) => {
          if (qestion.numberOfUnswers > 1) {
             setIsStatusOk(true)
          }
@@ -33,7 +33,7 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
    return (
       <>
          <div className="col">
-            <div className={`${!isStatusOk ? 'red-shadow' : ''} card mb-4 shadow-sm`}>
+            <div className={`card mb-4 shadow-sm`}>
                <div className="card-header">
                   <h4 >
                      {quiz.title}
@@ -59,11 +59,13 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                   </h4>
                </div>
                <div className="card-body">
-                  {!isStatusOk && <small className="text-danger" >Some of qestion missing unswers or no qestions yet</small>}
+                  {!isStatusOk &&
+                     <small className="text-danger" >Some of qestion missing unswers or no qestions yet</small>
+                  }
                   <p>Description:</p>
-                  <ul className="list-unstyled mt-3 mb-4">
-                     <li>{quiz.description}</li>
-                  </ul>
+                  {/* <ul className="list-unstyled mt-3 mb-4"> */}
+                  <p>{quiz.description}</p>
+                  {/* </ul> */}
                   <h6
                      className="card-title pricing-card-title">
                      {quiz.numberQestions}

@@ -28,7 +28,7 @@ function AccordingList({ removeUnswer, removeQestion, addUnswer, quizId, qestion
                               className="text-danger"
                               style={{ fontSize: '12px' }}
                            >
-                              This qestion missin unswer
+                              This qestion missing unswer
                            </small>
                         }
                         <button
@@ -65,8 +65,9 @@ function AccordingList({ removeUnswer, removeQestion, addUnswer, quizId, qestion
                               className="btn btn-dark btn-sm"
                               onClick={() => {
                                  const unswer = window.prompt('הכנס תשובה') as string
+                                 console.log(unswer === null)
 
-                                 if (unswer !== '') {
+                                 if (unswer !== '' && unswer !== null) {
                                     addUnswer({
                                        quizId: quizId,
                                        qestionId: qestion.qestionId,
@@ -86,8 +87,10 @@ function AccordingList({ removeUnswer, removeQestion, addUnswer, quizId, qestion
                                        key={index + qestion.qestionId}
                                        className="list-group-item d-flex justify-content-between align-items-center"
                                     >
-                                       <strong> Unswer {index} :</strong>
-                                       <span className="qestion-accordion">{unswer}</span>
+                                       <div>
+                                          <strong> Unswer {index} :</strong>
+                                          <span className="qestion-accordion">{unswer}</span>
+                                       </div>
                                        <span
                                           className="badge bg-danger rounded-pill"
                                           onClick={() => {

@@ -22,8 +22,6 @@ export const SET_CURRENT_QUIZ = 'SET_CURRENT_QUIZ'
 export const SET_UNSWER = 'SET_UNSWER'
 
 
-
-
 export interface AddQuizActionType {
     type: typeof ADD_QUIZ,
     payload: Quiz

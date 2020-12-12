@@ -1,4 +1,5 @@
-import { Quiz, QuizResults, Quizzes } from "./model";
+import { getLocalStorage, saveLoaclStorage } from "../localstorage";
+import { QuizResults, Quizzes } from "./model";
 import {
     QuizActionsTypes,
     ADD_QUIZ,
@@ -9,11 +10,16 @@ import {
     SET_UNSWER,
     ADD_QESTION,
     REMOVE_UNSWER,
-    ADD_UNSWER
+    ADD_UNSWER,
 } from "./quiz.actions.types";
 
 
-type QuizzesState = Quizzes
+
+import * as QuizzesUtils from './utils'
+
+
+
+export type QuizzesState = Quizzes
 
 
 const INITIAL_STATE_QUIZZES: QuizzesState = getLocalStorage('quizzes')
@@ -22,23 +28,12 @@ const INITIAL_STATE_QUIZZES: QuizzesState = getLocalStorage('quizzes')
 export function quizReducer(state = INITIAL_STATE_QUIZZES, action: QuizActionsTypes): QuizzesState {
     switch (action.type) {
         case ADD_QUIZ:
-            const newStateAfterAdd = {
-                ...state,
-                [String(Date.now())]: {
-                    quiz: action.payload
-                }
-            }
-
+            const newStateAfterAdd = QuizzesUtils.createQuizUtil(state, action)
             saveLoaclStorage('quizzes', newStateAfterAdd)
 
             return newStateAfterAdd
         case REMOVE_QUIZ:
-            delete state[action.payload]
-
-            const newStateAfterRemove = {
-                ...state
-            }
-
+            const newStateAfterRemove = QuizzesUtils.removeQuizUtil(state, action)
             saveLoaclStorage('quizzes', newStateAfterRemove)
 
             return newStateAfterRemove
@@ -46,8 +41,6 @@ export function quizReducer(state = INITIAL_STATE_QUIZZES, action: QuizActionsTy
             const { propery, value, quizId } = action.payload
             const quizFound = state[quizId].quiz
             quizFound[propery] = value
-
-            // console.log(quizFound)
 
             const newStateAfterUpdateMain = {
                 ...state,
@@ -58,90 +51,23 @@ export function quizReducer(state = INITIAL_STATE_QUIZZES, action: QuizActionsTy
 
             return newStateAfterUpdateMain
         case REMOVE_QESTION:
-            let currentQuizRemoveQestion = findQuiz(state, action.payload.quizId)
-            const filtredQestions = currentQuizRemoveQestion.qestions.filter((qestion) => {
-                return qestion.qestionId !== action.payload.qestionId
-            })
-
-            currentQuizRemoveQestion.qestions = [...filtredQestions]
-            currentQuizRemoveQestion.numberQestions -= 1
-
-            const newSateAfterRemoveQestion = {
-                ...state,
-                [action.payload.quizId]: {
-                    quiz: { ...currentQuizRemoveQestion }
-                }
-            }
-
+            const newSateAfterRemoveQestion = QuizzesUtils.removeQestionUtil(state, action)
             saveLoaclStorage('quizzes', newSateAfterRemoveQestion)
 
             return newSateAfterRemoveQestion
         case ADD_QESTION:
-            let currentQuizAddQestion = findQuiz(state, action.payload.quizId)
-
-            currentQuizAddQestion.qestions = [...currentQuizAddQestion.qestions, action.payload.qestion]
-            currentQuizAddQestion.numberQestions += 1
-
-            const newSateAfterAddQestion = {
-                ...state,
-                [action.payload.quizId]: {
-                    quiz: { ...currentQuizAddQestion }
-                }
-            }
-
+            const newSateAfterAddQestion = QuizzesUtils.addQestionUtil(state, action)
             saveLoaclStorage('quizzes', newSateAfterAddQestion)
-
 
             return newSateAfterAddQestion
 
         case REMOVE_UNSWER:
-            let currentQuizRemoveUnswer = findQuiz(state, action.payload.quizId)
-
-            let findQestionIndexForRemoveUnswer = currentQuizRemoveUnswer.qestions.findIndex((qestion) => {
-                return qestion.qestionId === action.payload.qestionId
-            })
-
-            let qestionsLess = [...currentQuizRemoveUnswer.qestions]
-
-            qestionsLess[findQestionIndexForRemoveUnswer].unswers.splice(action.payload.index, 1)
-
-            qestionsLess[findQestionIndexForRemoveUnswer].numberOfUnswers -= 1
-
-            currentQuizRemoveUnswer.qestions = [...qestionsLess]
-
-            const newStateAfterRemoveUnswer = {
-                ...state,
-                [action.payload.quizId]: {
-                    quiz: { ...currentQuizRemoveUnswer }
-                }
-            }
-
+            const newStateAfterRemoveUnswer = QuizzesUtils.removeUnswerUtil(state, action)
             saveLoaclStorage('quizzes', newStateAfterRemoveUnswer)
 
             return newStateAfterRemoveUnswer
         case ADD_UNSWER:
-            let currentQuizAddUnswer = findQuiz(state, action.payload.quizId)
-
-            let findQestionIndexForAddUnswer = currentQuizAddUnswer.qestions.findIndex((qestion) => {
-                return qestion.qestionId === action.payload.qestionId
-            })
-
-            let qestionsGrow = [...currentQuizAddUnswer.qestions]
-
-            qestionsGrow[findQestionIndexForAddUnswer].unswers =
-                [...qestionsGrow[findQestionIndexForAddUnswer].unswers, action.payload.unswer]
-
-            qestionsGrow[findQestionIndexForAddUnswer].numberOfUnswers += 1
-
-            currentQuizAddUnswer.qestions = [...qestionsGrow]
-
-            const newStateAfterAddUnswer = {
-                ...state,
-                [action.payload.quizId]: {
-                    quiz: { ...currentQuizAddUnswer }
-                }
-            }
-
+            const newStateAfterAddUnswer = QuizzesUtils.addUnswerUtil(state, action)
             saveLoaclStorage('quizzes', newStateAfterAddUnswer)
 
             return newStateAfterAddUnswer
@@ -161,40 +87,10 @@ const INITIAL_STATE_RESULTS: QuizResults = {
 export function quizResultsReducer(state = INITIAL_STATE_RESULTS, action: QuizActionsTypes): QuizResults {
     switch (action.type) {
         case SET_CURRENT_QUIZ:
-            return {
-                ...state,
-                quizId: action.payload,
-                unswers: []
-            }
+            return QuizzesUtils.setCurrentQuizUtil(state, action)
         case SET_UNSWER:
-            let newUnswersState = [...state.unswers]
-            const index = state.unswers.findIndex((unswer) => unswer.qestion === action.payload.qestion)
-            if (index !== -1) {
-                newUnswersState[index] = action.payload
-            } else {
-                newUnswersState = [...newUnswersState, action.payload]
-            }
-
-            return {
-                ...state,
-                unswers: newUnswersState
-            }
+            return QuizzesUtils.setUnswerUtil(state, action)
         default:
             return state
     }
-}
-
-
-function findQuiz(quizzesObj: Quizzes, quizId: string): Quiz {
-    return quizzesObj[quizId].quiz
-}
-
-
-function saveLoaclStorage(key: string, value: any) {
-    localStorage.setItem(key, JSON.stringify(value))
-}
-
-function getLocalStorage(key: string) {
-    const localQuizzes = localStorage.getItem(key)
-    return localQuizzes ? JSON.parse(localQuizzes) : {}
 }

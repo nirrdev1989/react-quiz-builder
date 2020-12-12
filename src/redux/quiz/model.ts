@@ -11,6 +11,7 @@ export interface Unswer {
 }
 
 export interface Quiz {
+    quizId: string
     title: string,
     description: string,
     numberQestions: number,

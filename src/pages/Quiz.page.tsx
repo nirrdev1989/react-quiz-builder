@@ -43,9 +43,7 @@ function QuizPage({ currentQuiz, match }: any) {
                         })
                     }
                 </AlertWindow> : null
-
             }
-
             <hr />
             <br />
             {
@@ -72,7 +70,6 @@ function QuizPage({ currentQuiz, match }: any) {
                         return alert('חוסר תשובות אנא השלם את השאלון')
                     }
                     setIsSubmit(!isSubmit)
-
                 }}
             >
                 Submit

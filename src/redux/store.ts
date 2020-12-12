@@ -8,7 +8,8 @@ const middleweres = [logger]
 
 const rootReducer = combineReducers({
     quizzes: quizReducer,
-    currentQuiz: quizResultsReducer
+    currentQuiz: quizResultsReducer,
+    // quizzesMain: quizzesReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>
@@ -17,25 +18,23 @@ export type RootState = ReturnType<typeof rootReducer>
 export const store = createStore(rootReducer, applyMiddleware(...middleweres))
 
 
-// const quiz: Quiz = {
+// const quiz = {
 //     title: 'a',
 //     description: 'this quiz about a',
 //     numberQestions: 2,
-//     qestions: [
-//        {
-//           qestion: 'what do u like eat',
-//           numberOfUnswers: 3,
-//           unswers: ['banana', 'apple', 'watermelon']
-//        },
-//        {
-//           qestion: 'what do u drink eat',
-//           numberOfUnswers: 4,
-//           unswers: ['cola', 'sprite', 'water', 'fanta']
-//        }
-//     ]
-//  }
-// const initSate = {
-//     '312312312': quiz,
-//     '31231312': quiz2,
-//     '3123112': quiz3,
+//     qestions: {
+//         '249863': {
+//             qestion: 'what do u like eat',
+//             numberOfUnswers: 3,
+//             unswers: ['banana', 'apple', 'watermelon']
+//         },
+//         '48263492863': {
+//             qestion: 'what do u drink eat',
+//             numberOfUnswers: 4,
+//             unswers: ['cola', 'sprite', 'water', 'fanta']
+//         }
+//     }
 // }
+
+// console.log(Object.values(quiz.qestions))
+// console.log(quiz.qestions['249863'])

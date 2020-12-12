@@ -5,8 +5,6 @@ import { Question } from '../../redux/quiz/model'
 
 function AddQuestionForm({ addQuestion, closeAddQuestionForm }: any) {
 
-   // console.log('ADD Question RENDER')
-
    const [question, setQuestion] = useState<Question>({
       questionId: '',
       question: '',
@@ -50,7 +48,6 @@ function AddQuestionForm({ addQuestion, closeAddQuestionForm }: any) {
 
    function handleSubmit(event: FormEvent) {
       event.preventDefault()
-      // console.log(question.answers)
 
       if (question.question === '' || question.numberOfAnswers < 2 || question.answers.length < 2) {
          return alert('מספר התשובות חייב להיות יותר מ1 ')
@@ -81,8 +78,7 @@ function AddQuestionForm({ addQuestion, closeAddQuestionForm }: any) {
                   name="question"
                   required
                   placeholder="Question"
-                  onChange={handleQuestionChange}
-               />
+                  onChange={handleQuestionChange} />
                <label >Question*</label>
             </div>
             <span>Number of answers</span>
@@ -96,8 +92,7 @@ function AddQuestionForm({ addQuestion, closeAddQuestionForm }: any) {
                name="numberOfAnswers"
                className="form-control"
                placeholder="Number of answers"
-               onChange={handleQuestionChange}
-            />
+               onChange={handleQuestionChange} />
             <br />
             {
                Array.from({ length: question.numberOfAnswers }).map((_, index) => {
@@ -108,17 +103,14 @@ function AddQuestionForm({ addQuestion, closeAddQuestionForm }: any) {
                         required
                         className="form-control form-control-sm mb-2"
                         placeholder={`Answer: ${index + 1}`}
-                        onChange={handleAnswersChnage}
-                     />
-
+                        onChange={handleAnswersChnage} />
                   </div>
                })
             }
             <br />
             <button
                type="submit"
-               className="btn btn-blue btn-sm"
-            >
+               className="btn btn-blue btn-sm">
                Add question
                </button>
                  &nbsp;
@@ -127,8 +119,7 @@ function AddQuestionForm({ addQuestion, closeAddQuestionForm }: any) {
                onClick={() => {
                   resetQuestion()
                   closeAddQuestionForm()
-               }}
-            >
+               }}>
                Cancel
                </button>
          </form>

@@ -17,7 +17,6 @@ export function findQuiz(quizzesObj: Quizzes, quizId: string): Quiz {
     return quizzesObj[quizId].quiz
 }
 
-
 export function removeQuestionUtil(currentState: QuizzesState, action: RemoveQuestionActionType) {
     const { quizId, questionId } = action.payload
     const quiz = findQuiz(currentState, quizId)

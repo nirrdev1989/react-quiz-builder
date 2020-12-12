@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { connect } from 'react-redux'
 import { AddAnswer, EditQuestion, Question, RemoveQuestion, RemoveAnswer } from '../../redux/quiz/model'
 import { addAnswerAction, editQuestionAction, removeQuestionAction, removeAnswerAction } from '../../redux/quiz/quiz.action'
@@ -6,6 +6,7 @@ import { ReactComponent as EditIcon } from "../../icons-svg/edit.svg";
 import AnswerItem from '../Answer-item/Answer.item';
 import AlertWindow from '../Alert-window/Alert.window';
 import { firstChartToUpperCase } from '../../utils/first.chart.uppercase';
+import EditForm from '../Edit-form/Edit.form';
 
 
 interface AccordingListProps {
@@ -30,7 +31,7 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
 
    function handelEditChange(event: ChangeEvent<HTMLInputElement>) {
       const { value } = event.target
-      console.log(value)
+      // console.log(value)
       setEditInfo((prev) => {
          return {
             ...prev,
@@ -38,6 +39,19 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
             value: value
          }
       })
+   }
+
+   function handelEditSubmit(event: FormEvent) {
+      event.preventDefault()
+      if (currentFiled === 'edit-question') {
+         editQuestion(editInfo)
+         setIsEditMode(!isEditMode)
+      }
+      else if (currentFiled === 'add-answer') {
+         addAnswer(editInfo)
+         setIsEditMode(!isEditMode)
+      }
+
    }
 
    return (
@@ -51,8 +65,7 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
                            {question.numberOfAnswers < 2 &&
                               <small
                                  className="text-danger"
-                                 style={{ fontSize: '12px' }}
-                              >
+                                 style={{ fontSize: '12px' }}>
                                  This question is missing an answer
                            </small>
                            }
@@ -62,8 +75,7 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
                               data-bs-toggle="collapse"
                               data-bs-target={`#collapse${question.questionId + 1}`}
                               // aria-expanded="false"
-                              aria-controls={`collapse${question.questionId + 1}`}
-                           >
+                              aria-controls={`collapse${question.questionId + 1}`}>
                               <strong>Question:</strong> &nbsp; {question.question}
                            </button>
                         </h2>
@@ -71,62 +83,29 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
                            id={`collapse${question.questionId + 1}`}
                            className="accordion-collapse collapse"
                            aria-labelledby={question.questionId}
-                           data-bs-parent="#accordionExample"
-                        >
+                           data-bs-parent="#accordionExample" >
                            <div className="accordion-body">
                               {isEditMode ?
                                  (<AlertWindow
-                                    color={'light'}
-                                 >
-                                    <label className="mb-1">{firstChartToUpperCase(currentFiled)}*</label>
-                                    <div className="center-element">
-                                       <input
-                                          required
-                                          className="form-control"
-                                          onChange={handelEditChange}
-                                          type="text"
-                                          name={editInfo.value}
-                                          placeholder={firstChartToUpperCase(currentFiled)}
-                                       />
-                                    </div>
-                                    <div className="mt-3">
-                                       <button
-                                          type="submit"
-                                          className="btn btn-blue btn-sm"
-                                          onClick={() => {
-                                             if (editInfo.value !== '' && editInfo.value !== null) {
-                                                if (currentFiled === 'edit-question') {
-                                                   editQuestion(editInfo)
-                                                   setIsEditMode(!isEditMode)
-                                                }
-                                                else if (currentFiled === 'add-answer') {
-                                                   addAnswer(editInfo)
-                                                   setIsEditMode(!isEditMode)
-                                                }
-                                             }
-                                          }}
-                                       >
-                                          Save
-                                       </button>
-                                          &nbsp;
-                                          <button
-                                          className="btn btn-pink btn-sm"
-                                          onClick={() => setIsEditMode(!isEditMode)}
-                                       >
-                                          Cancel
-                                      </button>
-                                    </div>
+                                    color={'light'} >
+                                    <EditForm
+                                       propery={currentFiled}
+                                       closeEditForm={() => setIsEditMode(!isEditMode)}
+                                       handleChange={handelEditChange}
+                                       handleSubmit={handelEditSubmit} />
                                  </AlertWindow>) : (
                                     <React.Fragment>
                                        <button
                                           className="btn btn-pink btn-sm"
                                           onClick={() => {
-                                             removeQuestion({
-                                                quizId: quizId,
-                                                questionId: question.questionId
-                                             })
-                                          }}
-                                       >
+                                             const con = window.confirm('בטוח שתרצה למחוק את השאלה?')
+                                             if (con) {
+                                                removeQuestion({
+                                                   quizId: quizId,
+                                                   questionId: question.questionId
+                                                })
+                                             }
+                                          }}>
                                           Delete question
                                        </button>
                                        &nbsp;
@@ -142,7 +121,7 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
                                           }} />
                                        <button
                                           style={{ float: 'right' }}
-                                          className={`${question.numberOfAnswers >= 6 ? 'disabled-btn' : ''} btn btn-balck btn-sm`}
+                                          className={`${question.numberOfAnswers >= 6 ? 'disabled-btn' : ''} btn btn-blue btn-sm`}
                                           onClick={() => {
                                              setIsEditMode(!isEditMode)
                                              setCurrentField('add-answer')
@@ -151,8 +130,7 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
                                                 questionId: question.questionId,
                                                 value: ''
                                              })
-                                          }}
-                                       >
+                                          }}>
                                           Add answer
                                        </button>
                                        <br />
@@ -163,8 +141,7 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
                                                 return <AnswerItem
                                                    key={index + question.questionId}
                                                    answer={answer}
-                                                   index={index}
-                                                >
+                                                   index={index}>
                                                    <span
                                                       className="badge rounded-pill"
                                                       style={{ backgroundColor: 'rgb(236, 12, 87)' }}
@@ -174,10 +151,9 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
                                                             questionId: question.questionId,
                                                             index: index
                                                          })
-                                                      }}
-                                                   >
+                                                      }}>
                                                       x
-                                              </span>
+                                                   </span>
                                                 </AnswerItem>
                                              })
                                           }

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { connect, useSelector } from 'react-redux'
 import AccordingList from '../components/According-list/According.list'
 import AddQuestionForm from '../components/Add-question-form/Add.question.form'
@@ -7,7 +7,7 @@ import { addQuestionAction, editQuizMainAction } from '../redux/quiz/quiz.action
 import { RootState } from '../redux/store'
 import { ReactComponent as EditIcon } from "../icons-svg/edit.svg";
 import AlertWindow from '../components/Alert-window/Alert.window'
-import { firstChartToUpperCase } from '../utils/first.chart.uppercase'
+import EditForm from '../components/Edit-form/Edit.form'
 
 interface ManageQuizPageProps {
     editQuizMain: (info: QuizEditMain) => void
@@ -41,7 +41,7 @@ function ManageQuizPage({ addQuestion, editQuizMain, match }: ManageQuizPageProp
 
 
     function handelEditChange(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target
+        const { value } = event.target
         setEditInfo((prev) => {
             return {
                 ...prev,
@@ -51,45 +51,25 @@ function ManageQuizPage({ addQuestion, editQuizMain, match }: ManageQuizPageProp
         })
     }
 
+
+    function handelEditSubmit(event: FormEvent) {
+        event.preventDefault()
+
+        if (editInfo.value !== '' && editInfo.value !== null) {
+            editQuizMain(editInfo)
+            setIsEditMode(!isEditMode)
+        }
+    }
+
     return (
         <React.Fragment>
             { isEditMode ?
-                <AlertWindow
-                    color={'warning'}
-                >
-                    <label className="mb-1">{firstChartToUpperCase(editInfo.propery)}*</label>
-                    <div className="center-element">
-                        <input
-                            required
-                            className="form-control"
-                            onChange={handelEditChange}
-                            type="text"
-                            name={editInfo.propery}
-                            placeholder={firstChartToUpperCase(editInfo.propery)}
-                        />
-
-                    </div>
-                    <div className="mt-3">
-                        <button
-                            type="submit"
-                            className="btn btn-blue btn-sm"
-                            onClick={() => {
-                                if (editInfo.value !== '' && editInfo.value !== null) {
-                                    editQuizMain(editInfo)
-                                    setIsEditMode(!isEditMode)
-                                }
-                            }}
-                        >
-                            Save
-                    </button>
-                     &nbsp;
-                     <button
-                            className="btn btn-pink btn-sm"
-                            onClick={() => setIsEditMode(!isEditMode)}
-                        >
-                            Cancel
-                    </button>
-                    </div>
+                <AlertWindow color={'warning'}>
+                    <EditForm
+                        propery={editInfo.propery}
+                        handleChange={handelEditChange}
+                        closeEditForm={() => setIsEditMode(!isEditMode)}
+                        handleSubmit={handelEditSubmit} />
                 </AlertWindow> :
                 <React.Fragment>
                     <h4>
@@ -107,36 +87,36 @@ function ManageQuizPage({ addQuestion, editQuizMain, match }: ManageQuizPageProp
                         <span style={{ float: 'right' }}>
                             {!isAddQuestion &&
                                 (<button
-                                    className="btn btn-balck btn-sm"
-                                    onClick={() => setIsAddQwuestion(!isAddQuestion)}
-                                >
-                                    Add question   +
+                                    className="btn btn-blue btn-sm"
+                                    onClick={() => setIsAddQwuestion(!isAddQuestion)}>
+                                    Add question <strong>+</strong>
                                 </button>)
                             }
                         </span>
                     </h4>
                     <hr />
-                    <p> <EditIcon className="edit-icon" onClick={() => {
-                        setIsEditMode(!isEditMode)
-                        setEditInfo((prev) => {
-                            return {
-                                ...prev,
-                                propery: 'description',
-                                value: ''
-                            }
-                        })
-                    }} /><strong>Description: </strong> {quiz.description}</p>
+                    <p>
+                        <EditIcon className="edit-icon" onClick={() => {
+                            setIsEditMode(!isEditMode)
+                            setEditInfo((prev) => {
+                                return {
+                                    ...prev,
+                                    propery: 'description',
+                                    value: ''
+                                }
+                            })
+                        }} />
+                        <strong>Description: </strong> {quiz.description}
+                    </p>
                     {isAddQuestion &&
                         <AddQuestionForm
                             closeAddQuestionForm={() => setIsAddQwuestion(!isAddQuestion)}
-                            addQuestion={getQuestion}
-                        />
+                            addQuestion={getQuestion} />
                     }
                     <br />
                     <AccordingList
                         quizId={quizId}
-                        questions={quiz.questions}
-                    />
+                        questions={quiz.questions} />
                 </React.Fragment>
             }
         </React.Fragment>

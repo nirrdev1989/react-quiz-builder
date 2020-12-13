@@ -7,6 +7,10 @@ main {
   /* background-color: whitesmoke; */
 }
 
+footer {
+  bottom: 0;
+}
+
 .plus-btn {
   color: white;
   font-weight: bold;

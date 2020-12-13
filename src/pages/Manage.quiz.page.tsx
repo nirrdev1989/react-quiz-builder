@@ -66,14 +66,14 @@ function ManageQuizPage({ addQuestion, editQuizMain, match }: ManageQuizPageProp
         <React.Fragment>
             { isEditMode ?
                 <CardContainer>
-                    <AlertWindow color={'light'}>
-                        <EditForm
-                            // hight={`${editInfo.propery === 'title' ? '2rem' : '5rem'}`}
-                            propery={editInfo.propery}
-                            handleChange={handelEditChange}
-                            closeEditForm={() => setIsEditMode(!isEditMode)}
-                            handleSubmit={handelEditSubmit} />
-                    </AlertWindow>
+                    {/* <AlertWindow color={'light'}> */}
+                    <EditForm
+                        // hight={`${editInfo.propery === 'title' ? '2rem' : '5rem'}`}
+                        propery={editInfo.propery}
+                        handleChange={handelEditChange}
+                        closeEditForm={() => setIsEditMode(!isEditMode)}
+                        handleSubmit={handelEditSubmit} />
+                    {/* </AlertWindow> */}
                 </CardContainer> :
                 <React.Fragment>
                     <CardContainer>
@@ -111,7 +111,7 @@ function ManageQuizPage({ addQuestion, editQuizMain, match }: ManageQuizPageProp
                                         value: ''
                                     }
                                 })
-                            }} />
+                            }} />&nbsp;
                             <strong>Description: </strong>
                             <span>{quiz.description}</span>
                         </p>
@@ -121,7 +121,6 @@ function ManageQuizPage({ addQuestion, editQuizMain, match }: ManageQuizPageProp
                                 addQuestion={getQuestion} />
                         }
                         <br />
-
                     </CardContainer>
                     {quiz.questions.length > 0 &&
                         <AccordingList
@@ -132,7 +131,6 @@ function ManageQuizPage({ addQuestion, editQuizMain, match }: ManageQuizPageProp
             }
         </React.Fragment>
     )
-
 }
 
 

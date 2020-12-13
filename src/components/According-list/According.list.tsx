@@ -60,6 +60,16 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
             {
                questions.map((question, index) => {
                   return <CardContainer >
+                     {/* <EditIcon className="edit-icon"
+                        onClick={() => {
+                           setIsEditMode(!isEditMode)
+                           setCurrentField('edit-question')
+                           setEditInfo({
+                              quizId: quizId,
+                              questionId: question.questionId,
+                              value: ''
+                           })
+                        }} /> */}
                      <div key={question.questionId}>
                         <div className="accordion-item ">
                            <h2 className="accordion-header" id={question.questionId}>
@@ -89,8 +99,7 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
                               data-bs-parent="#accordionExample" >
                               <div className="accordion-body">
                                  {isEditMode ?
-                                    (<AlertWindow
-                                       color={'light'} >
+                                    (
                                        <CardContainer>
                                           <EditForm
                                              propery={currentFiled}
@@ -98,7 +107,7 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
                                              handleChange={handelEditChange}
                                              handleSubmit={handelEditSubmit} />
                                        </CardContainer>
-                                    </AlertWindow>) : (
+                                    ) : (
                                        <React.Fragment>
                                           <button
                                              className="btn btn-pink btn-sm"
@@ -113,7 +122,7 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
                                              }}>
                                              Delete question
                                        </button>
-                                       &nbsp;
+                                       &nbsp;  &nbsp;  &nbsp;
                                           <EditIcon className="edit-icon"
                                              onClick={() => {
                                                 setIsEditMode(!isEditMode)

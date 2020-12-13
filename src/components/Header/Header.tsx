@@ -22,11 +22,10 @@ function Header() {
                         className="nav-link mr-5"
                         to="/quizzes-list" >
                         <span style={{ fontWeight: 500 }}>Quizzes list</span>
-                        &nbsp;
+                        &nbsp; &nbsp;
                          <span
                            className="badge"
-                           style={{ backgroundColor: 'rgb(236, 12, 87)' }}
-                        >
+                           style={{ backgroundColor: 'rgb(236, 12, 87)' }}>
                            {quizzesCount}
                         </span>
                      </Link>

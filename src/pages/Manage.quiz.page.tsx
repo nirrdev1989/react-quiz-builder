@@ -8,6 +8,7 @@ import { RootState } from '../redux/store'
 import { ReactComponent as EditIcon } from "../icons-svg/edit.svg";
 import AlertWindow from '../components/Alert-window/Alert.window'
 import EditForm from '../components/Edit-form/Edit.form'
+import CardContainer from '../components/Card-container/Card.container'
 
 interface ManageQuizPageProps {
     editQuizMain: (info: QuizEditMain) => void
@@ -64,59 +65,69 @@ function ManageQuizPage({ addQuestion, editQuizMain, match }: ManageQuizPageProp
     return (
         <React.Fragment>
             { isEditMode ?
-                <AlertWindow color={'warning'}>
-                    <EditForm
-                        propery={editInfo.propery}
-                        handleChange={handelEditChange}
-                        closeEditForm={() => setIsEditMode(!isEditMode)}
-                        handleSubmit={handelEditSubmit} />
-                </AlertWindow> :
+                <CardContainer>
+                    <AlertWindow color={'light'}>
+                        <EditForm
+                            // hight={`${editInfo.propery === 'title' ? '2rem' : '5rem'}`}
+                            propery={editInfo.propery}
+                            handleChange={handelEditChange}
+                            closeEditForm={() => setIsEditMode(!isEditMode)}
+                            handleSubmit={handelEditSubmit} />
+                    </AlertWindow>
+                </CardContainer> :
                 <React.Fragment>
-                    <h4>
-                        <EditIcon className="edit-icon" onClick={() => {
-                            setIsEditMode(!isEditMode)
-                            setEditInfo((prev) => {
-                                return {
-                                    ...prev,
-                                    propery: 'title',
-                                    value: ''
+                    <CardContainer>
+                        <h4>
+                            <EditIcon className="edit-icon" onClick={() => {
+                                setIsEditMode(!isEditMode)
+                                setEditInfo((prev) => {
+                                    return {
+                                        ...prev,
+                                        propery: 'title',
+                                        value: ''
+                                    }
+                                })
+                            }} />
+                            <strong>Title: </strong>
+                            <span>{quiz.title}</span>
+                            <span style={{ float: 'right' }}>
+                                {!isAddQuestion &&
+                                    (<button
+                                        className="btn btn-blue btn-sm"
+                                        onClick={() => setIsAddQwuestion(!isAddQuestion)}>
+                                        Add question <strong>+</strong>
+                                    </button>)
                                 }
-                            })
-                        }} />
-                        Title: {quiz.title}
-                        <span style={{ float: 'right' }}>
-                            {!isAddQuestion &&
-                                (<button
-                                    className="btn btn-blue btn-sm"
-                                    onClick={() => setIsAddQwuestion(!isAddQuestion)}>
-                                    Add question <strong>+</strong>
-                                </button>)
-                            }
-                        </span>
-                    </h4>
-                    <hr />
-                    <p>
-                        <EditIcon className="edit-icon" onClick={() => {
-                            setIsEditMode(!isEditMode)
-                            setEditInfo((prev) => {
-                                return {
-                                    ...prev,
-                                    propery: 'description',
-                                    value: ''
-                                }
-                            })
-                        }} />
-                        <strong>Description: </strong> {quiz.description}
-                    </p>
-                    {isAddQuestion &&
-                        <AddQuestionForm
-                            closeAddQuestionForm={() => setIsAddQwuestion(!isAddQuestion)}
-                            addQuestion={getQuestion} />
+                            </span>
+                        </h4>
+                        <hr />
+                        <p>
+                            <EditIcon className="edit-icon" onClick={() => {
+                                setIsEditMode(!isEditMode)
+                                setEditInfo((prev) => {
+                                    return {
+                                        ...prev,
+                                        propery: 'description',
+                                        value: ''
+                                    }
+                                })
+                            }} />
+                            <strong>Description: </strong>
+                            <span>{quiz.description}</span>
+                        </p>
+                        {isAddQuestion &&
+                            <AddQuestionForm
+                                closeAddQuestionForm={() => setIsAddQwuestion(!isAddQuestion)}
+                                addQuestion={getQuestion} />
+                        }
+                        <br />
+
+                    </CardContainer>
+                    {quiz.questions.length > 0 &&
+                        <AccordingList
+                            quizId={quizId}
+                            questions={quiz.questions} />
                     }
-                    <br />
-                    <AccordingList
-                        quizId={quizId}
-                        questions={quiz.questions} />
                 </React.Fragment>
             }
         </React.Fragment>

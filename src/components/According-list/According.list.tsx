@@ -5,8 +5,8 @@ import { addAnswerAction, editQuestionAction, removeQuestionAction, removeAnswer
 import { ReactComponent as EditIcon } from "../../icons-svg/edit.svg";
 import AnswerItem from '../Answer-item/Answer.item';
 import AlertWindow from '../Alert-window/Alert.window';
-import { firstChartToUpperCase } from '../../utils/first.chart.uppercase';
 import EditForm from '../Edit-form/Edit.form';
+import CardContainer from '../Card-container/Card.container';
 
 
 interface AccordingListProps {
@@ -59,111 +59,119 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
          <div className="accordion" id="accordionExample">
             {
                questions.map((question, index) => {
-                  return <div key={question.questionId}>
-                     <div className="accordion-item">
-                        <h2 className="accordion-header" id={question.questionId}>
-                           {question.numberOfAnswers < 2 &&
-                              <small
-                                 className="text-danger"
-                                 style={{ fontSize: '12px' }}>
-                                 This question is missing an answer
-                           </small>
-                           }
-                           <button
-                              className="accordion-button"
-                              type="button"
-                              data-bs-toggle="collapse"
-                              data-bs-target={`#collapse${question.questionId + 1}`}
-                              // aria-expanded="false"
-                              aria-controls={`collapse${question.questionId + 1}`}>
-                              <strong>Question:</strong> &nbsp; {question.question}
-                           </button>
-                        </h2>
-                        <div
-                           id={`collapse${question.questionId + 1}`}
-                           className="accordion-collapse collapse"
-                           aria-labelledby={question.questionId}
-                           data-bs-parent="#accordionExample" >
-                           <div className="accordion-body">
-                              {isEditMode ?
-                                 (<AlertWindow
-                                    color={'light'} >
-                                    <EditForm
-                                       propery={currentFiled}
-                                       closeEditForm={() => setIsEditMode(!isEditMode)}
-                                       handleChange={handelEditChange}
-                                       handleSubmit={handelEditSubmit} />
-                                 </AlertWindow>) : (
-                                    <React.Fragment>
-                                       <button
-                                          className="btn btn-pink btn-sm"
-                                          onClick={() => {
-                                             const con = window.confirm('בטוח שתרצה למחוק את השאלה?')
-                                             if (con) {
-                                                removeQuestion({
-                                                   quizId: quizId,
-                                                   questionId: question.questionId
-                                                })
-                                             }
-                                          }}>
-                                          Delete question
+                  return <CardContainer >
+                     <div key={question.questionId}>
+                        <div className="accordion-item ">
+                           <h2 className="accordion-header" id={question.questionId}>
+                              {question.numberOfAnswers < 2 &&
+                                 <small
+                                    className="text-danger"
+                                    style={{ fontSize: '12px' }}>
+                                    This question is missing an answer
+                                 </small>
+                              }
+                              <button
+                                 // onClick={() => setIsEditMode(!isEditMode)}
+                                 className="accordion-button"
+                                 type="button"
+                                 data-bs-toggle="collapse"
+                                 data-bs-target={`#collapse${question.questionId + 1}`}
+                                 aria-expanded="true"
+                                 aria-controls={`collapse${question.questionId + 1}`}>
+                                 <strong>Question:</strong> &nbsp; {question.question}
+                              </button>
+                              {/* <hr /> */}
+                           </h2>
+                           <div
+                              id={`collapse${question.questionId + 1}`}
+                              className="accordion-collapse collapse"
+                              aria-labelledby={question.questionId}
+                              data-bs-parent="#accordionExample" >
+                              <div className="accordion-body">
+                                 {isEditMode ?
+                                    (<AlertWindow
+                                       color={'light'} >
+                                       <CardContainer>
+                                          <EditForm
+                                             propery={currentFiled}
+                                             closeEditForm={() => setIsEditMode(!isEditMode)}
+                                             handleChange={handelEditChange}
+                                             handleSubmit={handelEditSubmit} />
+                                       </CardContainer>
+                                    </AlertWindow>) : (
+                                       <React.Fragment>
+                                          <button
+                                             className="btn btn-pink btn-sm"
+                                             onClick={() => {
+                                                const con = window.confirm('בטוח שתרצה למחוק את השאלה?')
+                                                if (con) {
+                                                   removeQuestion({
+                                                      quizId: quizId,
+                                                      questionId: question.questionId
+                                                   })
+                                                }
+                                             }}>
+                                             Delete question
                                        </button>
                                        &nbsp;
-                                       <EditIcon className="edit-icon"
-                                          onClick={() => {
-                                             setIsEditMode(!isEditMode)
-                                             setCurrentField('edit-question')
-                                             setEditInfo({
-                                                quizId: quizId,
-                                                questionId: question.questionId,
-                                                value: ''
-                                             })
-                                          }} />
-                                       <button
-                                          style={{ float: 'right' }}
-                                          className={`${question.numberOfAnswers >= 6 ? 'disabled-btn' : ''} btn btn-blue btn-sm`}
-                                          onClick={() => {
-                                             setIsEditMode(!isEditMode)
-                                             setCurrentField('add-answer')
-                                             setEditInfo({
-                                                quizId: quizId,
-                                                questionId: question.questionId,
-                                                value: ''
-                                             })
-                                          }}>
-                                          Add answer
+                                          <EditIcon className="edit-icon"
+                                             onClick={() => {
+                                                setIsEditMode(!isEditMode)
+                                                setCurrentField('edit-question')
+                                                setEditInfo({
+                                                   quizId: quizId,
+                                                   questionId: question.questionId,
+                                                   value: ''
+                                                })
+                                             }} />
+                                          <button
+                                             style={{ float: 'right' }}
+                                             className={`${question.numberOfAnswers >= 6 ? 'disabled-btn' : ''} btn btn-blue btn-sm`}
+                                             onClick={() => {
+                                                setIsEditMode(!isEditMode)
+                                                setCurrentField('add-answer')
+                                                setEditInfo({
+                                                   quizId: quizId,
+                                                   questionId: question.questionId,
+                                                   value: ''
+                                                })
+                                             }}>
+                                             Add answer
                                        </button>
-                                       <br />
-                                       <br />
-                                       <ul className="list-group">
-                                          {
-                                             question.answers.map((answer, index) => {
-                                                return <AnswerItem
-                                                   key={index + question.questionId}
-                                                   answer={answer}
-                                                   index={index}>
-                                                   <span
-                                                      className="badge rounded-pill"
-                                                      style={{ backgroundColor: 'rgb(236, 12, 87)' }}
-                                                      onClick={() => {
-                                                         removeAnswer({
-                                                            quizId: quizId,
-                                                            questionId: question.questionId,
-                                                            index: index
-                                                         })
-                                                      }}>
-                                                      x
+                                          <br />
+                                          <br />
+                                          <ul className="list-group">
+                                             {
+                                                question.answers.map((answer, index) => {
+                                                   return <CardContainer>
+                                                      <AnswerItem
+                                                         key={index + question.questionId}
+                                                         answer={answer}
+                                                         index={index}>
+                                                         <span
+                                                            className="badge"
+                                                            style={{ backgroundColor: 'rgb(236, 12, 87)' }}
+                                                            onClick={() => {
+                                                               removeAnswer({
+                                                                  quizId: quizId,
+                                                                  questionId: question.questionId,
+                                                                  index: index
+                                                               })
+                                                            }}>
+                                                            x
                                                    </span>
-                                                </AnswerItem>
-                                             })
-                                          }
-                                       </ul>
-                                    </React.Fragment>)
-                              }
+                                                      </AnswerItem>
+                                                   </CardContainer>
+                                                })
+                                             }
+                                          </ul>
+                                       </React.Fragment>)
+                                 }
+                              </div>
                            </div>
                         </div>
                      </div>
-                  </div>
+                  </CardContainer>
                })
             }
          </div>

@@ -61,9 +61,9 @@ function CreateMainQuiz({ addQuiz }: CreateQuizProps) {
                   to={`quiz/edit/${createQuiz.quizId}`}
                   onClick={() => setQuizIsCreated(false)}
                >
-                  <span> here </span>
+                  <span className="text-primary"> here </span>
                </Link>
-               to edit
+               <strong>to edit</strong>
             </AlertWindow>) : (
                <form onSubmit={handleSubmit}>
                   <h6>Create your quiz

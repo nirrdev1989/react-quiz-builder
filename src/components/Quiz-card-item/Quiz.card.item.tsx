@@ -63,7 +63,7 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                   {!isStatusOk &&
                      <small className="text-danger" >
                         Some of the questions are missing answers or there are no questions yet
-                     </small>
+                    </small>
                   }
                   <p><strong>Description:</strong></p>
                   <span>{quiz.description}</span>

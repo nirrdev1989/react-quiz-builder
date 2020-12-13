@@ -1,4 +1,4 @@
-import { getLocalStorage, saveLoaclStorage } from "../localstorage";
+import { getSessionStorage, saveSessionStorage } from "../localstorage";
 import { QuizResults, Quizzes } from "./model";
 import {
     QuizActionsTypes,
@@ -21,50 +21,50 @@ import * as QuizzesUtils from './utils'
 export type QuizzesState = Quizzes
 
 
-const INITIAL_STATE_QUIZZES: QuizzesState = getLocalStorage('quizzes')
+const INITIAL_STATE_QUIZZES: QuizzesState = getSessionStorage('quizzes')
 
 
 export function quizReducer(state = INITIAL_STATE_QUIZZES, action: QuizActionsTypes): QuizzesState {
     switch (action.type) {
         case ADD_QUIZ:
             const newStateAfterAdd = QuizzesUtils.createQuizUtil(state, action)
-            saveLoaclStorage('quizzes', newStateAfterAdd)
+            saveSessionStorage('quizzes', newStateAfterAdd)
 
             return newStateAfterAdd
         case REMOVE_QUIZ:
             const newStateAfterRemove = QuizzesUtils.removeQuizUtil(state, action)
-            saveLoaclStorage('quizzes', newStateAfterRemove)
+            saveSessionStorage('quizzes', newStateAfterRemove)
 
             return newStateAfterRemove
         case EDIT_QUIZ_MAIN:
             const newStateAfterUpdateMain = QuizzesUtils.editQuizMainUtil(state, action)
-            saveLoaclStorage('quizzes', newStateAfterUpdateMain)
+            saveSessionStorage('quizzes', newStateAfterUpdateMain)
 
             return newStateAfterUpdateMain
         case REMOVE_Question:
             const newSateAfterRemoveQuestion = QuizzesUtils.removeQuestionUtil(state, action)
-            saveLoaclStorage('quizzes', newSateAfterRemoveQuestion)
+            saveSessionStorage('quizzes', newSateAfterRemoveQuestion)
 
             return newSateAfterRemoveQuestion
         case ADD_Question:
             const newSateAfterAddQuestion = QuizzesUtils.addQuestionUtil(state, action)
-            saveLoaclStorage('quizzes', newSateAfterAddQuestion)
+            saveSessionStorage('quizzes', newSateAfterAddQuestion)
 
             return newSateAfterAddQuestion
 
         case REMOVE_UNSWER:
             const newStateAfterRemoveAnswer = QuizzesUtils.removeAnswerUtil(state, action)
-            saveLoaclStorage('quizzes', newStateAfterRemoveAnswer)
+            saveSessionStorage('quizzes', newStateAfterRemoveAnswer)
 
             return newStateAfterRemoveAnswer
         case ADD_UNSWER:
             const newStateAfterAddAnswer = QuizzesUtils.addAnswerUtil(state, action)
-            saveLoaclStorage('quizzes', newStateAfterAddAnswer)
+            saveSessionStorage('quizzes', newStateAfterAddAnswer)
 
             return newStateAfterAddAnswer
         case EDIT_Question:
             const newStateAfterEditQuestion = QuizzesUtils.editQuestionUtil(state, action)
-            saveLoaclStorage('quizzes', newStateAfterEditQuestion)
+            saveSessionStorage('quizzes', newStateAfterEditQuestion)
 
             return newStateAfterEditQuestion
         default:

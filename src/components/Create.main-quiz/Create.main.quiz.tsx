@@ -5,6 +5,8 @@ import { addQuizAction } from '../../redux/quiz/quiz.action';
 import { withRouter } from 'react-router';
 import AlertWindow from '../Alert-window/Alert.window';
 import { Link } from 'react-router-dom';
+import CardContainer from '../Card-container/Card.container'
+
 
 interface CreateQuizProps {
    addQuiz: (quiz: Quiz) => void
@@ -24,7 +26,6 @@ function CreateMainQuiz({ addQuiz }: CreateQuizProps) {
 
 
    function handleChange(event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
-      // console.log(createQuiz)
       const { name, value } = event.target
       setQuiz((prev) => {
          return {
@@ -41,71 +42,57 @@ function CreateMainQuiz({ addQuiz }: CreateQuizProps) {
       setQuizIsCreated(true)
    }
 
-
-   // function resetQuiz() {
-   //    setQuiz({
-   //       quizId: '',
-   //       title: '',
-   //       description: '',
-   //       numberQuestions: 0,
-   //       questions: []
-   //    })
-   // }
-
    return (
-      <>
+      <React.Fragment>
          {quizIsCreated ?
             (<AlertWindow color="warning">
                <strong>Your quiz was created click</strong>
                <Link
                   to={`quiz/edit/${createQuiz.quizId}`}
-                  onClick={() => setQuizIsCreated(false)}
-               >
+                  onClick={() => setQuizIsCreated(false)}>
                   <span className="text-primary"> here </span>
                </Link>
                <strong>to edit</strong>
             </AlertWindow>) : (
-               <form onSubmit={handleSubmit}>
-                  <h6>Create your quiz
-                  <button
-                        style={{ float: 'right' }}
-                        className="btn  btn-sm btn-blue"
-                        type="submit"
-                     >
-                        Create quiz
-                  </button>
-                  </h6>
-                  <hr />
-                  <div className="form-floating mb-3">
-                     <input
-                        name="title"
-                        type="text"
-                        className="form-control"
-                        placeholder="Title*"
-                        required
-                        value={createQuiz.title}
-                        onChange={handleChange}
-                     />
-                     <label >Title*</label>
-                  </div>
-                  <div className="form-floating mb-3">
-                     <textarea
-                        style={{ height: "150px" }}
-                        rows={5}
-                        cols={5}
-                        required
-                        name="description"
-                        value={createQuiz.description}
-                        className="form-control"
-                        placeholder="Description*"
-                        onChange={handleChange}
-                     />
-                     <label >Description*</label>
-                  </div>
-               </form>
-            )
-         }
-      </>
+               <CardContainer>
+                  <form onSubmit={handleSubmit}>
+                     <h6>Create your quiz
+                        <button
+                           style={{ float: 'right' }}
+                           className="btn  btn-sm btn-blue"
+                           type="submit">
+                           Create quiz
+                        </button>
+                     </h6>
+                     <hr />
+                     <div className="form-floating mb-3">
+                        <input
+                           name="title"
+                           type="text"
+                           className="form-control"
+                           placeholder="Title*"
+                           required
+                           value={createQuiz.title}
+                           onChange={handleChange} />
+                        <label >Title*</label>
+                     </div>
+                     <div className="form-floating mb-3">
+                        <textarea
+                           style={{ height: "150px" }}
+                           rows={5}
+                           cols={5}
+                           required
+                           name="description"
+                           value={createQuiz.description}
+                           className="form-control"
+                           placeholder="Description*"
+                           onChange={handleChange} />
+                        <label >Description*</label>
+                     </div>
+                  </form>
+               </CardContainer>
+            )}
+      </React.Fragment>
    )
 }
 

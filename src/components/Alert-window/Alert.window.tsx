@@ -15,11 +15,8 @@ function AlertWindow({ children, closeWindow, color }: any) {
                      data-bs-dismiss="alert"
                      aria-label="Close">
                   </button>
-               </h4>
-            }
-
+               </h4>}
             {children}
-
          </div>
       </React.Fragment >
    )

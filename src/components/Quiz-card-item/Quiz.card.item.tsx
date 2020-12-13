@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { addQuestionAction, removeQuizAction } from '../../redux/quiz/quiz.action';
 import { ReactComponent as EditIcon } from "../../icons-svg/edit.svg";
 import { AddQuestion, Quiz } from '../../redux/quiz/model';
+import ErrorMessage from '../Error-message/Error.message';
 
 
 interface QuizCardItemProps {
@@ -40,8 +41,7 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                      {quiz.title}
                      <Link
                         to={`quiz/edit/${quizId}`}
-                        className="edit-quiz-btn edit-icon"
-                     >
+                        className="edit-quiz-btn edit-icon">
                         <EditIcon />
                      </Link>
                      <span
@@ -53,18 +53,15 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                               return
                            }
                            removeQuiz(quizId)
-                        }}
-                     >
+                        }}>
                         x
                      </span>
                   </h4>
                </div>
                <div className="card-body">
-                  {!isStatusOk &&
-                     <small className="text-danger" >
-                        Some of the questions are missing answers or there are no questions yet
-                    </small>
-                  }
+                  <ErrorMessage
+                     message={'Some of the questions are missing answers or there are no questions yet'}
+                     show={!isStatusOk} />
                   <p><strong>Description:</strong></p>
                   <span>{quiz.description}</span>
                   <h6
@@ -79,9 +76,8 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                   <Link
                      className={`${quiz.questions.length === 0 || !isStatusOk ? 'disabled-btn' : ''} w-100 btn btn-sm btn-blue`}
                      to={`/quiz/${quizId}`}
-                     type="button"
-                  >
-                     Get started
+                     type="button">
+                     Try Quiz
                   </Link>
                </div>
             </div>

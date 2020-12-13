@@ -94,34 +94,32 @@ function AddQuestionForm({ addQuestion, closeAddQuestionForm }: any) {
                placeholder="Number of answers"
                onChange={handleQuestionChange} />
             <br />
-            {
-               Array.from({ length: question.numberOfAnswers }).map((_, index) => {
-                  return <div key={index}>
-                     <input
-                        name={`${index}`}
-                        type="text"
-                        required
-                        className="form-control form-control-sm mb-2"
-                        placeholder={`Answer: ${index + 1}`}
-                        onChange={handleAnswersChnage} />
-                  </div>
-               })
-            }
+            {Array.from({ length: question.numberOfAnswers }).map((_, index) => {
+               return <div key={index}>
+                  <input
+                     name={`${index}`}
+                     type="text"
+                     required
+                     className="form-control form-control-sm mb-2"
+                     placeholder={`Answer: ${index + 1}`}
+                     onChange={handleAnswersChnage} />
+               </div>
+            })}
             <br />
             <button
                type="submit"
                className="btn btn-blue btn-sm">
-               Add question
-               </button>
+               Save
+            </button>
                  &nbsp;
-               <button
+            <button
                className="btn btn-pink btn-sm"
                onClick={() => {
                   resetQuestion()
                   closeAddQuestionForm()
                }}>
                Cancel
-               </button>
+            </button>
          </form>
       </React.Fragment>
    )

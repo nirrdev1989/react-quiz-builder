@@ -7,9 +7,17 @@ main {
   /* background-color: whitesmoke; */
 }
 
-footer {
-  bottom: 0;
+/* .form-control {
+  border: none;
+  border-color: rgb(255, 255, 255) !important;
 }
+
+.form-control:focus {
+  border: none;
+  border-color: rgb(255, 255, 255) !important;
+} */
+
+footer {}
 
 .plus-btn {
   color: white;

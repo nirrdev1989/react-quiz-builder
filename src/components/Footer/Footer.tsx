@@ -4,7 +4,7 @@ import React from 'react'
 function Footer() {
     return (
         <React.Fragment>
-            <footer className="text-muted bg-dark py-3">
+            <footer style={{ backgroundColor: 'white' }} className="text-muted py-3 shadow">
                 <div className="container">
                     <p className="float-end mb-1">
                         <a href="#">Back to top</a>

@@ -7,7 +7,6 @@ interface EditFormProps {
     handleChange: (event: ChangeEvent<HTMLInputElement>) => void
     handleSubmit: (event: FormEvent) => void
     closeEditForm: () => void
-    hight?: string
 }
 
 function EditForm({ propery, handleChange, handleSubmit, closeEditForm }: EditFormProps) {
@@ -17,7 +16,6 @@ function EditForm({ propery, handleChange, handleSubmit, closeEditForm }: EditFo
             <label className="mb-3">{firstChartToUpperCase(propery)}*</label>
             <div className="center-element">
                 <input
-                    // style={{ height: hight }}
                     required
                     placeholder={firstChartToUpperCase(propery)}
                     className="form-control"

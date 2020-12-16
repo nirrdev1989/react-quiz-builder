@@ -28,7 +28,7 @@ function WithInput(Component: React.FC<any>) {
                 />}
             {isEditMode ?
                 (<form onSubmit={handleSubmit}>
-                    <label className="mb-3">{firstChartToUpperCase(property)}*</label>
+                    <label className="mb-1">{firstChartToUpperCase(property)}*</label>
                     <div className="center-element">
                         <input
                             placeholder={firstChartToUpperCase(property)}

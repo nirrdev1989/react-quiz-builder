@@ -9,7 +9,7 @@ import AccordingItem from '../According-item/According.item';
 import { confirmAlert } from '../../utils/confirm.alert';
 import WithInput from '../With-input/With.input';
 import { QuestionHeader } from '../Question-item/Question.item';
-import AddAnswerForm from '../Add-answer-form/Add.answer,form';
+import AddAnswerForm from '../Add-answer-form/Add.answer.form';
 
 const QuestionHeaderWhitInput = WithInput(QuestionHeader)
 
@@ -63,18 +63,21 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
                               Add answer +
                           </button>
                         </div>
-                        <QuestionHeaderWhitInput
-                           value={question.question}
-                           property={'qestion'}
-                           outPutNewValue={(value: string) => {
-                              editQuestion({
-                                 questionId: question.questionId,
-                                 value: value,
-                                 quizId: quizId
-                              })
-                           }}
-                        />
-                        <hr />
+                        {!isAddAnswer &&
+                           <React.Fragment>
+                              <QuestionHeaderWhitInput
+                                 value={question.question}
+                                 property={'qestion'}
+                                 outPutNewValue={(value: string) => {
+                                    editQuestion({
+                                       questionId: question.questionId,
+                                       value: value,
+                                       quizId: quizId
+                                    })
+                                 }}
+                              />
+                              <hr />
+                           </React.Fragment>}
                         {isAddAnswer &&
                            <React.Fragment>
                               <AddAnswerForm
@@ -90,7 +93,6 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
                               />
                               <hr />
                            </React.Fragment>}
-                        <br />
                         <br />
                         <small><strong>Answers:</strong></small>
                         <ul className="list-group">

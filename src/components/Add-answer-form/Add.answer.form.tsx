@@ -16,7 +16,7 @@ function AddAnswerForm({ addAnswer, closeAddAnswerForm }: any) {
 
     return <React.Fragment>
         <form onSubmit={handleSubmit} className="mt-3">
-            <label>Answer*</label>
+            <label className="mb-1">Answer*</label>
             <div className="center-element">
                 <input
                     required

@@ -95,7 +95,7 @@ function AddQuestionForm({ addQuestion, closeAddQuestionForm }: any) {
                onChange={handleQuestionChange} />
             <br />
             {Array.from({ length: question.numberOfAnswers }).map((_, index) => {
-               return <div key={index}>
+               return <div key={index + 10}>
                   <input
                      name={`${index}`}
                      type="text"

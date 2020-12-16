@@ -1,5 +1,7 @@
 import React, { PropsWithChildren } from 'react'
 
+
+
 interface AccordingItemProps extends PropsWithChildren<any> {
     headerId: string
     collapseTarget: string
@@ -33,6 +35,9 @@ function AccordingItem({ headerId, collapseTarget, children, headerContent, head
         </div>
     </React.Fragment>
 }
+
+
+
 
 
 export default AccordingItem

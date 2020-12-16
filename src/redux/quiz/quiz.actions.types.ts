@@ -14,14 +14,29 @@ export const ADD_QUIZ = 'ADD_QUIZ'
 export const REMOVE_QUIZ = 'REMOVE_QUIZ'
 export const EDIT_QUIZ_MAIN = 'EDIT_QUIZ_MAIN'
 
-export const REMOVE_Question = 'REMOVE_Question'
-export const ADD_Question = 'ADD_Question'
+export const REMOVE_QUESTION = 'REMOVE_QUESTION'
+export const ADD_QUESTION = 'ADD_QUESTION'
 export const REMOVE_UNSWER = 'REMOVE_UNSWER'
 export const ADD_UNSWER = 'ADD_UNSWER'
-export const EDIT_Question = 'EDIT_Question'
+export const EDIT_QUESTION = 'EDIT_QUESTION'
 
 export const SET_CURRENT_QUIZ = 'SET_CURRENT_QUIZ'
 export const SET_UNSWER = 'SET_UNSWER'
+
+
+
+// export const QUIZ_ACTIONS_TYPES = {
+//     ADD_QUIZ: 'ADD_QUIZ',
+//     REMOVE_QUIZ: 'REMOVE_QUIZ',
+//     EDIT_QUIZ_MAIN: 'EDIT_QUIZ_MAIN',
+//     REMOVE_Question: 'REMOVE_Question',
+//     ADD_Question: 'ADD_Question',
+//     REMOVE_UNSWER: 'REMOVE_UNSWER',
+//     ADD_UNSWER: 'ADD_UNSWER',
+//     EDIT_Question: 'EDIT_Question',
+//     SET_CURRENT_QUIZ: 'SET_CURRENT_QUIZ',
+//     SET_UNSWER: 'SET_UNSWER',
+// }
 
 
 export interface AddQuizActionType {
@@ -50,12 +65,12 @@ export interface EditQuizMainActionType {
 }
 
 export interface RemoveQuestionActionType {
-    type: typeof REMOVE_Question,
+    type: typeof REMOVE_QUESTION,
     payload: RemoveQuestion
 }
 
 export interface AddQuestionActionType {
-    type: typeof ADD_Question,
+    type: typeof ADD_QUESTION,
     payload: AddQuestion
 }
 
@@ -70,7 +85,7 @@ export interface AddAnswerActionType {
 }
 
 export interface EditQuestionActionType {
-    type: typeof EDIT_Question
+    type: typeof EDIT_QUESTION
     payload: EditQuestion
 }
 

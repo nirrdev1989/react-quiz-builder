@@ -10,16 +10,15 @@ interface QuestionItemProps {
    setAnswer: (answerResult: QuizResultsAnswer) => void
 }
 
+interface QuestionHeaderProps {
+   value: string
+}
+
 
 function QuestionItem({ setAnswer, question }: QuestionItemProps) {
 
-
-
    function handleAnswerChange(event: ChangeEvent<HTMLInputElement>) {
       const { value } = event.target
-
-
-
       setAnswer({
          question: question.question,
          choosenAnswer: value
@@ -29,11 +28,7 @@ function QuestionItem({ setAnswer, question }: QuestionItemProps) {
 
    return (
       <React.Fragment>
-         <p>
-            <span className="mb-5" >
-               <strong> Question: </strong> {question.question}
-            </span>
-         </p>
+         <QuestionHeader value={question.question} />
          <small> <strong>Options:</strong> </small>
          {question.numberOfAnswers > 1 &&
             question.answers.map((answer, index) => {
@@ -44,7 +39,6 @@ function QuestionItem({ setAnswer, question }: QuestionItemProps) {
                      name={question.question}
                      type="radio"
                      value={answer}
-                     // checked={results.answers ? true : false}
                      onChange={handleAnswerChange} />
                   {answer}
                </div>
@@ -52,6 +46,15 @@ function QuestionItem({ setAnswer, question }: QuestionItemProps) {
          <hr style={{ color: 'black', height: '0.1rem' }} />
       </React.Fragment>
    )
+}
+
+
+export function QuestionHeader({ value }: QuestionHeaderProps) {
+   return <React.Fragment>
+      <span className="mb-5" >
+         <strong> Question: </strong> {value}
+      </span>
+   </React.Fragment>
 }
 
 

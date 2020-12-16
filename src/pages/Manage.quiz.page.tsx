@@ -1,13 +1,19 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { useState } from 'react'
 import { connect, useSelector } from 'react-redux'
 import AccordingList from '../components/According-list/According.list'
 import AddQuestionForm from '../components/Add-question-form/Add.question.form'
-import { AddQuestion, Question, QuizEditMain } from '../redux/quiz/model'
+import { AddQuestion, propertiesQuizEditMain, Question, QuizEditMain } from '../redux/quiz/model'
 import { addQuestionAction, editQuizMainAction } from '../redux/quiz/quiz.action'
 import { RootState } from '../redux/store'
-import { ReactComponent as EditIcon } from "../icons-svg/edit.svg";
-import EditForm from '../components/Edit-form/Edit.form'
 import CardContainer from '../components/Card-container/Card.container'
+import WithInput from '../components/With-input/With.input'
+import { QuizDescription, QuizTitle } from '../components/Quiz-main/Quiz.main'
+// import { Redirect } from 'react-router'
+
+
+const QuizTitleWithInput = WithInput(QuizTitle)
+const QuizDescriptionWithInput = WithInput(QuizDescription)
+
 
 interface ManageQuizPageProps {
    editQuizMain: (info: QuizEditMain) => void
@@ -23,108 +29,75 @@ function ManageQuizPage({ addQuestion, editQuizMain, match }: ManageQuizPageProp
 
    const [isAddQuestion, setIsAddQwuestion] = useState<boolean>(false)
 
-   const [isEditMode, setIsEditMode] = useState<boolean>(false)
-
-   const [editInfo, setEditInfo] = useState<QuizEditMain>({
-      quizId: quizId,
-      propery: 'title' || 'description',
-      value: ''
-   })
-
-
    function getQuestion(question: Question) {
-
       addQuestion({ quizId: quizId, question: question })
-
       setIsAddQwuestion(!isAddQuestion)
    }
 
 
-   function handelEditChange(event: ChangeEvent<HTMLInputElement>) {
-      const { value } = event.target
-      setEditInfo((prev) => {
-         return {
-            ...prev,
-            propery: editInfo.propery,
-            value: value
-         }
-      })
-   }
-
-
-   function handelEditSubmit(event: FormEvent) {
-      event.preventDefault()
-
-      if (editInfo.value !== '' && editInfo.value !== null) {
-         editQuizMain(editInfo)
-         setIsEditMode(!isEditMode)
+   function getEditNewValue(value: string, property: propertiesQuizEditMain) {
+      if (value !== '' && value !== null) {
+         editQuizMain({
+            quizId: quizId,
+            value: value,
+            property: property,
+         })
       }
    }
 
+
    return (
       <React.Fragment>
-         { isEditMode ?
-            <CardContainer>
-               <EditForm
-                  propery={editInfo.propery}
-                  handleChange={handelEditChange}
-                  closeEditForm={() => setIsEditMode(!isEditMode)}
-                  handleSubmit={handelEditSubmit} />
-            </CardContainer> :
-            <React.Fragment>
-               <CardContainer>
-                  <h4>
-                     <EditIcon className="edit-icon" onClick={() => {
-                        setIsEditMode(!isEditMode)
-                        setEditInfo((prev) => {
-                           return {
-                              ...prev,
-                              propery: 'title',
-                              value: ''
-                           }
-                        })
-                     }} />
-                     <strong>Title: </strong>
-                     <span>{quiz.title}</span>
-                     <span style={{ float: 'right' }}>
-                        {!isAddQuestion &&
-                           (<button
-                              className="btn btn-blue btn-sm"
-                              onClick={() => setIsAddQwuestion(!isAddQuestion)}>
-                              Add question <strong>+</strong>
-                           </button>)
-                        }
-                     </span>
-                  </h4>
+         {/* {!quizId && <Redirect to="/quizzes-list" />} */}
+         <CardContainer>
+            <div className="quiz-nav-btns">
+               <button
+                  onClick={() => setIsAddQwuestion(!isAddQuestion)}
+                  className={`${isAddQuestion ? 'disabled-btn' : ''} btn btn-blue btn-sm`}
+                  type="button">
+                  Add question +
+               </button>
+               <div>
+                  <button
+                     type="button"
+                     className="btn btn-sm btn-blue">
+                     Publish
+                   </button>
+                        &nbsp;
+                   <button
+                     type="button"
+                     className="btn btn-sm btn-pink">
+                     Delete
+                  </button>
+               </div>
+            </div>
+         </CardContainer>
+         <CardContainer>
+            {isAddQuestion ?
+               <AddQuestionForm
+                  closeAddQuestionForm={() => setIsAddQwuestion(!isAddQuestion)}
+                  addQuestion={getQuestion}
+               /> :
+               <React.Fragment>
+                  <QuizTitleWithInput
+                     property={'title'}
+                     value={quiz.title}
+                     dateCreated={quiz.dateCreated}
+                     outPutNewValue={getEditNewValue}
+                  />
                   <hr />
-                  <p>
-                     <EditIcon className="edit-icon" onClick={() => {
-                        setIsEditMode(!isEditMode)
-                        setEditInfo((prev) => {
-                           return {
-                              ...prev,
-                              propery: 'description',
-                              value: ''
-                           }
-                        })
-                     }} />&nbsp;
-                            <strong>Description: </strong>
-                     <span>{quiz.description}</span>
-                  </p>
-                  {isAddQuestion &&
-                     <AddQuestionForm
-                        closeAddQuestionForm={() => setIsAddQwuestion(!isAddQuestion)}
-                        addQuestion={getQuestion} />
-                  }
-                  <br />
-               </CardContainer>
-               {quiz.questions.length > 0 &&
-                  <AccordingList
-                     quizId={quizId}
-                     questions={quiz.questions} />
-               }
-            </React.Fragment>
-         }
+                  <QuizDescriptionWithInput
+                     value={quiz.description}
+                     property={'description'}
+                     outPutNewValue={getEditNewValue}
+                  />
+               </React.Fragment>}
+         </CardContainer>
+         {quiz.questions.length > 0 &&
+            <AccordingList
+               quizId={quizId}
+               questions={quiz.questions}
+            />}
       </React.Fragment>
    )
 }

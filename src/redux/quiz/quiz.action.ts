@@ -1,25 +1,34 @@
-import { AddQuestion, AddAnswer, EditQuestion, Quiz, QuizEditMain, QuizResultsAnswer, RemoveQuestion, RemoveAnswer } from "./model";
+import {
+    AddQuestion,
+    AddAnswer,
+    EditQuestion,
+    Quiz,
+    QuizEditMain,
+    QuizResultsAnswer,
+    RemoveQuestion,
+    RemoveAnswer
+} from "./model";
 import {
     AddQuizActionType,
-    ADD_QUIZ,
     RemoveQuizActionType,
-    REMOVE_QUIZ,
     SetCurrentQuizActionType,
     SetAnswerActionType,
-    SET_CURRENT_QUIZ,
-    SET_UNSWER,
-    EDIT_QUIZ_MAIN,
     EditQuizMainActionType,
     RemoveQuestionActionType,
-    REMOVE_Question,
     AddQuestionActionType,
-    ADD_Question,
     RemoveAnswerActionType,
-    REMOVE_UNSWER,
     AddAnswerActionType,
-    ADD_UNSWER,
     EditQuestionActionType,
-    EDIT_Question
+    EDIT_QUESTION,
+    ADD_UNSWER,
+    REMOVE_UNSWER,
+    EDIT_QUIZ_MAIN,
+    SET_UNSWER,
+    ADD_QUESTION,
+    REMOVE_QUESTION,
+    SET_CURRENT_QUIZ,
+    REMOVE_QUIZ,
+    ADD_QUIZ,
 } from "./quiz.actions.types";
 
 
@@ -46,14 +55,14 @@ export function setCurrentQuizAction(quizId: string): SetCurrentQuizActionType {
 
 export function removeQuestionAction(questionId: RemoveQuestion): RemoveQuestionActionType {
     return {
-        type: REMOVE_Question,
+        type: REMOVE_QUESTION,
         payload: questionId
     }
 }
 
 export function addQuestionAction(info: AddQuestion): AddQuestionActionType {
     return {
-        type: ADD_Question,
+        type: ADD_QUESTION,
         payload: info
     }
 }
@@ -88,7 +97,7 @@ export function addAnswerAction(info: AddAnswer): AddAnswerActionType {
 
 export function editQuestionAction(info: EditQuestion): EditQuestionActionType {
     return {
-        type: EDIT_Question,
+        type: EDIT_QUESTION,
         payload: info
     }
 }

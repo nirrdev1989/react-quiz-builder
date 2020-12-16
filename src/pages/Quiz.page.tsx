@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { connect, useSelector } from 'react-redux'
 import CardContainer from '../components/Card-container/Card.container'
-// import AlertWindow from '../components/Alert-window/Alert.window'
 import QuestionItem from '../components/Question-item/Question.item'
 import QuizFinalResults from '../components/Quiz-final-results/Quiz.final.results'
 import { QuizResults } from '../redux/quiz/model'
 import { setCurrentQuizAction } from '../redux/quiz/quiz.action'
 import { RootState } from '../redux/store'
+import { QuizDescription, QuizTitle } from '../components/Quiz-main/Quiz.main'
 
 
 let results: QuizResults
@@ -28,10 +28,13 @@ function QuizPage({ currentQuiz, match }: any) {
     return (
         <React.Fragment>
             <CardContainer>
-                <h3>Title: {quiz.title}</h3>
+                <QuizTitle
+                    value={quiz.title}
+                    dateCreated={quiz.dateCreated}
+                />
                 <hr />
-                <p><strong>Description:</strong> {quiz.description}</p>
-                <br />
+                <QuizDescription value={quiz.description} />
+
             </CardContainer>
             { isSubmit ?
                 <QuizFinalResults

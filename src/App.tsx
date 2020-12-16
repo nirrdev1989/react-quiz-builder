@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import { Route, Switch } from 'react-router';
@@ -8,6 +8,8 @@ import QuizPage from './pages/Quiz.page';
 import ManageQuizPage from './pages/Manage.quiz.page';
 // import Footer from './components/Footer/Footer'
 
+// const CreateQuizPage = React.lazy(() => import('./pages/Create.quiz.page'))
+
 
 function App() {
    return (
@@ -16,11 +18,14 @@ function App() {
          <main>
             <div className="container">
                <Switch>
+                  {/* <Suspense fallback={'...load'}> */}
                   <Route
                      exact={true}
                      path="/"
                      component={CreateQuizPage}
                   />
+
+                  {/* </Suspense> */}
                   <Route
                      exact={true}
                      path="/quizzes-list"

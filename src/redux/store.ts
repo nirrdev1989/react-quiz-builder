@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
 import { combineReducers } from "redux";
 import { quizReducer, quizResultsReducer } from "./quiz/quiz.reducers";
-// import {logger} from 'redux-logger'
+import { toggleReducer } from './toggler/toggle.reducer'
 import logger from 'redux-logger'
 
 const middleweres = [logger]
@@ -9,6 +9,7 @@ const middleweres = [logger]
 const rootReducer = combineReducers({
     quizzes: quizReducer,
     currentQuiz: quizResultsReducer,
+    // toggle: toggleReducer
     // quizzesMain: quizzesReducer
 })
 

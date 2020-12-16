@@ -5,6 +5,7 @@ import { addQuestionAction, removeQuizAction } from '../../redux/quiz/quiz.actio
 import { ReactComponent as EditIcon } from "../../icons-svg/edit.svg";
 import { AddQuestion, Quiz } from '../../redux/quiz/model';
 import ErrorMessage from '../Error-message/Error.message';
+import { confirmAlert } from '../../utils/confirm.alert';
 
 
 interface QuizCardItemProps {
@@ -47,22 +48,22 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                      <span
                         className="delete-quiz-btn"
                         onClick={() => {
-                           const con = window.confirm('?בטוח שברצונך למחוק סקר זה')
-
-                           if (!con) {
-                              return
+                           if (confirmAlert('quiz')) {
+                              removeQuiz(quizId)
                            }
-                           removeQuiz(quizId)
                         }}>
                         x
                      </span>
                   </h4>
                </div>
                <div className="card-body">
-                  <ErrorMessage
-                     message={'Some of the questions are missing answers or there are no questions yet'}
-                     show={!isStatusOk} />
-                  <p><strong>Description:</strong></p>
+                  <div>
+                     <small style={{ float: 'left', fontSize: '12px' }}>{quiz.dateCreated}</small>
+                  </div>
+                  <br />
+                  <div >
+                     <strong >Description:</strong>
+                  </div>
                   <span>{quiz.description}</span>
                   <h6
                      className="card-title pricing-card-title">
@@ -79,6 +80,9 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                      type="button">
                      Try Quiz
                   </Link>
+                  <ErrorMessage
+                     message={'Some of the questions are missing answers or there are no questions yet'}
+                     show={!isStatusOk} />
                </div>
             </div>
          </div>

@@ -2,16 +2,16 @@ import { getSessionStorage, saveSessionStorage } from "../localstorage";
 import { QuizResults, Quizzes } from "./model";
 import {
     QuizActionsTypes,
-    ADD_QUIZ,
-    EDIT_QUIZ_MAIN,
-    REMOVE_Question,
-    REMOVE_QUIZ,
-    SET_CURRENT_QUIZ,
-    SET_UNSWER,
-    ADD_Question,
-    REMOVE_UNSWER,
+    EDIT_QUESTION,
     ADD_UNSWER,
-    EDIT_Question,
+    REMOVE_UNSWER,
+    EDIT_QUIZ_MAIN,
+    SET_UNSWER,
+    ADD_QUESTION,
+    REMOVE_QUESTION,
+    SET_CURRENT_QUIZ,
+    REMOVE_QUIZ,
+    ADD_QUIZ,
 } from "./quiz.actions.types";
 
 
@@ -41,12 +41,12 @@ export function quizReducer(state = INITIAL_STATE_QUIZZES, action: QuizActionsTy
             saveSessionStorage('quizzes', newStateAfterUpdateMain)
 
             return newStateAfterUpdateMain
-        case REMOVE_Question:
+        case REMOVE_QUESTION:
             const newSateAfterRemoveQuestion = QuizzesUtils.removeQuestionUtil(state, action)
             saveSessionStorage('quizzes', newSateAfterRemoveQuestion)
 
             return newSateAfterRemoveQuestion
-        case ADD_Question:
+        case ADD_QUESTION:
             const newSateAfterAddQuestion = QuizzesUtils.addQuestionUtil(state, action)
             saveSessionStorage('quizzes', newSateAfterAddQuestion)
 
@@ -62,7 +62,7 @@ export function quizReducer(state = INITIAL_STATE_QUIZZES, action: QuizActionsTy
             saveSessionStorage('quizzes', newStateAfterAddAnswer)
 
             return newStateAfterAddAnswer
-        case EDIT_Question:
+        case EDIT_QUESTION:
             const newStateAfterEditQuestion = QuizzesUtils.editQuestionUtil(state, action)
             saveSessionStorage('quizzes', newStateAfterEditQuestion)
 

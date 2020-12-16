@@ -1,13 +1,17 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { AddAnswer, EditQuestion, Question, RemoveQuestion, RemoveAnswer } from '../../redux/quiz/model'
 import { addAnswerAction, editQuestionAction, removeQuestionAction, removeAnswerAction } from '../../redux/quiz/quiz.action'
-import { ReactComponent as EditIcon } from "../../icons-svg/edit.svg";
 import AnswerItem from '../Answer-item/Answer.item';
-import EditForm from '../Edit-form/Edit.form';
 import CardContainer from '../Card-container/Card.container';
 import ErrorMessage from '../Error-message/Error.message';
 import AccordingItem from '../According-item/According.item';
+import { confirmAlert } from '../../utils/confirm.alert';
+import WithInput from '../With-input/With.input';
+import { QuestionHeader } from '../Question-item/Question.item';
+import AddAnswerForm from '../Add-answer-form/Add.answer,form';
+
+const QuestionHeaderWhitInput = WithInput(QuestionHeader)
 
 
 interface AccordingListProps {
@@ -21,39 +25,7 @@ interface AccordingListProps {
 
 function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, quizId, questions }: AccordingListProps) {
 
-   const [isEditMode, setIsEditMode] = useState<boolean>(false)
-   const [currentFiled, setCurrentField] = useState<string>('')
-
-   const [editInfo, setEditInfo] = useState<EditQuestion | AddAnswer>({
-      quizId: quizId,
-      questionId: '',
-      value: ''
-   })
-
-   function handelEditChange(event: ChangeEvent<HTMLInputElement>) {
-      const { value } = event.target
-      // console.log(value)
-      setEditInfo((prev) => {
-         return {
-            ...prev,
-            questionId: editInfo.questionId,
-            value: value
-         }
-      })
-   }
-
-   function handelEditSubmit(event: FormEvent) {
-      event.preventDefault()
-      if (currentFiled === 'edit-question') {
-         editQuestion(editInfo)
-         setIsEditMode(!isEditMode)
-      }
-      else if (currentFiled === 'add-answer') {
-         addAnswer(editInfo)
-         setIsEditMode(!isEditMode)
-      }
-
-   }
+   const [isAddAnswer, setIsAddAnswer] = useState<boolean>(false)
 
    return (
       <React.Fragment>
@@ -69,80 +41,80 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
                         collapseTarget={question.questionId + 1}
                         headerContent={question.question}
                         headerName={'Question'}>
-                        {isEditMode ?
-                           (<CardContainer>
-                              <EditForm
-                                 propery={currentFiled}
-                                 closeEditForm={() => setIsEditMode(!isEditMode)}
-                                 handleChange={handelEditChange}
-                                 handleSubmit={handelEditSubmit} />
-                           </CardContainer>
-                           ) : (
-                              <React.Fragment>
-                                 <button
-                                    className="btn btn-pink btn-sm"
-                                    onClick={() => {
-                                       const con = window.confirm('בטוח שתרצה למחוק את השאלה?')
-                                       if (con) {
-                                          removeQuestion({
+                        <div className="mt-3 mb-3">
+                           <button
+                              className="btn btn-pink btn-sm"
+                              onClick={() => {
+                                 if (confirmAlert('question')) {
+                                    removeQuestion({
+                                       quizId: quizId,
+                                       questionId: question.questionId
+                                    })
+                                 }
+                              }}>
+                              Delete question
+                           </button>
+                           <button
+                              style={{ float: 'right' }}
+                              className={`${question.numberOfAnswers >= 6 || isAddAnswer ? 'disabled-btn' : ''} btn btn-blue btn-sm`}
+                              onClick={() => {
+                                 setIsAddAnswer(!isAddAnswer)
+                              }}>
+                              Add answer +
+                          </button>
+                        </div>
+                        <QuestionHeaderWhitInput
+                           value={question.question}
+                           property={'qestion'}
+                           outPutNewValue={(value: string) => {
+                              editQuestion({
+                                 questionId: question.questionId,
+                                 value: value,
+                                 quizId: quizId
+                              })
+                           }}
+                        />
+                        <hr />
+                        {isAddAnswer &&
+                           <React.Fragment>
+                              <AddAnswerForm
+                                 addAnswer={(value: string) => {
+                                    addAnswer({
+                                       quizId: quizId,
+                                       value: value,
+                                       questionId: question.questionId
+                                    })
+                                    setIsAddAnswer(!isAddAnswer)
+                                 }}
+                                 closeAddAnswerForm={() => setIsAddAnswer(!isAddAnswer)}
+                              />
+                              <hr />
+                           </React.Fragment>}
+                        <br />
+                        <br />
+                        <small><strong>Answers:</strong></small>
+                        <ul className="list-group">
+                           {question.answers.map((answer, index) => {
+                              return <CardContainer key={index + question.questionId}>
+                                 <AnswerItem
+                                    answer={answer}
+                                    index={index}>
+                                    <span
+                                       className="badge badge-center"
+                                       style={{ backgroundColor: 'rgb(236, 12, 87)' }}
+                                       onClick={() => {
+                                          removeAnswer({
                                              quizId: quizId,
-                                             questionId: question.questionId
+                                             questionId: question.questionId,
+                                             index: index
                                           })
-                                       }
-                                    }}>
-                                    Delete question
-                                 </button>
-                                 &nbsp;  &nbsp;  &nbsp;
-                                 <EditIcon className="edit-icon"
-                                    onClick={() => {
-                                       setIsEditMode(!isEditMode)
-                                       setCurrentField('edit-question')
-                                       setEditInfo({
-                                          quizId: quizId,
-                                          questionId: question.questionId,
-                                          value: ''
-                                       })
-                                    }} />
-                                 <button
-                                    style={{ float: 'right' }}
-                                    className={`${question.numberOfAnswers >= 6 ? 'disabled-btn' : ''} btn btn-blue btn-sm`}
-                                    onClick={() => {
-                                       setIsEditMode(!isEditMode)
-                                       setCurrentField('add-answer')
-                                       setEditInfo({
-                                          quizId: quizId,
-                                          questionId: question.questionId,
-                                          value: ''
-                                       })
-                                    }}>
-                                    Add answer +
-                                 </button>
-                                 <br />
-                                 <br />
-                                 <small><strong>Answers:</strong></small>
-                                 <ul className="list-group">
-                                    {question.answers.map((answer, index) => {
-                                       return <CardContainer key={index + question.questionId}>
-                                          <AnswerItem
-                                             answer={answer}
-                                             index={index}>
-                                             <span
-                                                className="badge"
-                                                style={{ backgroundColor: 'rgb(236, 12, 87)' }}
-                                                onClick={() => {
-                                                   removeAnswer({
-                                                      quizId: quizId,
-                                                      questionId: question.questionId,
-                                                      index: index
-                                                   })
-                                                }}>
-                                                x
-                                             </span>
-                                          </AnswerItem>
-                                       </CardContainer>
-                                    })}
-                                 </ul>
-                              </React.Fragment>)}
+                                       }}>
+                                       x
+                                    </span>
+                                 </AnswerItem>
+                              </CardContainer>
+                           })}
+                        </ul>
                      </AccordingItem>
                   </div>
                </CardContainer>
@@ -151,6 +123,8 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
       </React.Fragment>
    )
 }
+
+
 
 
 function mapDispatchToProps(dispatch: Function) {

@@ -4,12 +4,13 @@ import { firstChartToUpperCase } from '../../utils/first.chart.uppercase'
 
 interface EditFormProps {
     propery: string
+    currentValue?: string
     handleChange: (event: ChangeEvent<HTMLInputElement>) => void
     handleSubmit: (event: FormEvent) => void
-    closeEditForm: () => void
+    closeEditForm?: () => void
 }
 
-function EditForm({ propery, handleChange, handleSubmit, closeEditForm }: EditFormProps) {
+function EditForm({ currentValue, propery, handleChange, handleSubmit, closeEditForm }: EditFormProps) {
 
     return <React.Fragment>
         <form onSubmit={handleSubmit}>
@@ -21,6 +22,7 @@ function EditForm({ propery, handleChange, handleSubmit, closeEditForm }: EditFo
                     className="form-control"
                     onChange={handleChange}
                     type="text"
+                    value={currentValue}
                     name={propery} />
             </div>
             <div className="mt-3">

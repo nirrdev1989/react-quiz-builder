@@ -6,3 +6,7 @@ export function getSessionStorage(key: string) {
     const localQuizzes = sessionStorage.getItem(key)
     return localQuizzes ? JSON.parse(localQuizzes) : {}
 }
+
+
+
+

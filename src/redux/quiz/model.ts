@@ -10,7 +10,17 @@ export interface Answer {
     answer: string
 }
 
+export interface OwnerQuiz {
+    quizId: string
+    owner: string
+    ownerEmail: string
+    password?: string
+}
+
 export interface Quiz {
+    dateCreated: string
+    owner?: OwnerQuiz
+    published: boolean
     quizId: string
     title: string,
     description: string,
@@ -34,11 +44,11 @@ export interface QuizResultsAnswer {
     choosenAnswer: string
 }
 
-type propertiesQuizEditMain = 'title' | 'description'
+export type propertiesQuizEditMain = 'title' | 'description'
 
 export interface QuizEditMain {
     quizId: string
-    propery: propertiesQuizEditMain
+    property: propertiesQuizEditMain
     value: string
 }
 

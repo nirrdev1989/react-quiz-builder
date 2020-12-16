@@ -1,4 +1,4 @@
-import { Quiz, QuizResults, Quizzes } from "./model"
+import { Quiz, QuizEditMain, QuizResults, Quizzes } from "./model"
 import {
     AddQuestionActionType,
     AddQuizActionType,
@@ -121,11 +121,11 @@ export function removeQuizUtil(currentState: QuizzesState, action: RemoveQuizAct
 }
 
 export function editQuizMainUtil(currentState: QuizzesState, action: EditQuizMainActionType) {
-    const { propery, value, quizId } = action.payload
-    // const quizFound = state[quizId].quiz
+    const { property, value, quizId } = action.payload
+
     const quiz = findQuiz(currentState, quizId)
 
-    quiz[propery] = value
+    quiz[property] = value
 
     const newState = updateState(currentState, quizId, quiz)
 

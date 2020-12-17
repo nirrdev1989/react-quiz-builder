@@ -2,6 +2,14 @@
   margin: 1rem;
 }
 
+.form-control {
+  border-radius: 0 !important;
+}
+
+.alert {
+  border-radius: 0 !important;
+}
+
 main {
   min-height: 35rem;
 }
@@ -239,4 +247,13 @@ a {
 
 .progress-bar {
   height: 0.5rem;
+}
+
+a.active {
+  color: rgb(255, 255, 255) !important;
+}
+
+#brand {
+  /* color: rgb(27, 171, 255) !important; */
+  color: rgb(255, 255, 255) !important;
 }

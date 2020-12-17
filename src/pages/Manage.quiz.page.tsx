@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect, useSelector } from 'react-redux'
 import AccordingList from '../components/According-list/According.list'
 import AddQuestionForm from '../components/Add-question-form/Add.question.form'
@@ -7,13 +7,18 @@ import { addQuestionAction, editQuizMainAction, removeQuizAction } from '../redu
 import { RootState } from '../redux/store'
 import CardContainer from '../components/Card-container/Card.container'
 import WithInput from '../components/With-input/With.input'
-import { QuizDescription, QuizTitle } from '../components/Quiz-main/Quiz.main'
+import { QuizMainItem } from '../components/Quiz-main-item/Quiz.main.item'
 import { useHistory, useParams } from 'react-router'
 import FadeAnimateContainer from '../components/Fade-animate-container/Fade.animate.container'
+import { confirmAlert } from '../utils/confirm.alert'
+import AlertWindow from '../components/Alert-window/Alert.window'
+import SmallMessage from '../components/Small-massage/Small.message'
+import { filterObject } from '../utils/filter.object'
 
 
-const QuizTitleWithInput = WithInput(QuizTitle)
-const QuizDescriptionWithInput = WithInput(QuizDescription)
+
+const QuizMainItemWithInput = WithInput(QuizMainItem)
+
 
 
 interface ManageQuizPageProps {
@@ -30,7 +35,6 @@ function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz }: ManageQuizPag
    const { quiz } = useSelector((state: RootState) => state.quizzes[quizId])
 
    const history = useHistory()
-
 
    const [isAddQuestion, setIsAddQwuestion] = useState<boolean>(false)
 
@@ -50,6 +54,9 @@ function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz }: ManageQuizPag
       }
    }
 
+   // useEffect(() => {
+   //    console.log(filterObject(['title', 'description', 'ownerName', 'ownerEmail', 'password'], quiz))
+   // }, [])
 
    return (
       <React.Fragment>
@@ -61,7 +68,7 @@ function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz }: ManageQuizPag
                      className={`${isAddQuestion ? 'disabled-btn' : ''} btn btn-blue btn-sm`}
                      type="button">
                      Add question +
-               </button>
+                  </button>
                   <div>
                      {/* <button
                      type="button"
@@ -69,15 +76,17 @@ function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz }: ManageQuizPag
                      Publish
                    </button> */}
                         &nbsp;
-                   <button
+                     <button
                         onClick={() => {
-                           removeQuiz(quizId)
-                           history.push('/quizzes-list')
+                           if (confirmAlert('Quiz')) {
+                              removeQuiz(quizId)
+                              history.push('/quizzes-list')
+                           }
                         }}
                         type="button"
                         className="btn btn-sm btn-pink">
                         Delete
-                  </button>
+                     </button>
                   </div>
                </div>
             </CardContainer>
@@ -88,18 +97,45 @@ function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz }: ManageQuizPag
                      addQuestion={getQuestion}
                   /> :
                   <React.Fragment>
-                     <QuizTitleWithInput
+                     <h6>
+                        <small style={{ fontSize: '12px', float: 'right' }}>{quiz.dateCreated}</small>
+                     </h6>
+                     <QuizMainItemWithInput
                         property={'title'}
                         value={quiz.title}
-                        dateCreated={quiz.dateCreated}
                         outPutNewValue={getEditNewValue}
                      />
                      <hr />
-                     <QuizDescriptionWithInput
+                     <QuizMainItemWithInput
                         value={quiz.description}
                         property={'description'}
                         outPutNewValue={getEditNewValue}
                      />
+                     <hr />
+                     <QuizMainItemWithInput
+                        value={quiz.ownerName}
+                        property={'Owner name'}
+                        outPutNewValue={getEditNewValue}
+                     />
+                     <hr />
+                     <QuizMainItemWithInput
+                        value={quiz.ownerEmail}
+                        property={'Owner email'}
+                        outPutNewValue={getEditNewValue}
+                     />
+                     <hr />
+                     <QuizMainItemWithInput
+                        value={quiz.password}
+                        property={'Password'}
+                        outPutNewValue={getEditNewValue}
+                     />
+                     {!quiz.published &&
+                        <AlertWindow color="danger">
+                           <SmallMessage
+                              message={'This quiz is not published'}
+                              color="withe"
+                           />
+                        </AlertWindow>}
                   </React.Fragment>}
             </CardContainer>
             {quiz.questions.length > 0 &&

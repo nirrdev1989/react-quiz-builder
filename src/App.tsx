@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import { Route, Switch } from 'react-router';
-import Loader from './components/Loader/Loader';
+// import Loader from './components/Loader/Loader';
 // import CreateQuizPage from './pages/Create.quiz.page';
 // import QuizzesListPage from './pages/Quizzes.list.page';
 // import QuizPage from './pages/Quiz.page';

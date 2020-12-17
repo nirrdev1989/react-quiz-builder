@@ -6,7 +6,7 @@ import QuizFinalResults from '../components/Quiz-final-results/Quiz.final.result
 import { QuizResults } from '../redux/quiz/model'
 import { setCurrentQuizAction } from '../redux/quiz/quiz.action'
 import { RootState } from '../redux/store'
-import { QuizDescription, QuizTitle } from '../components/Quiz-main/Quiz.main'
+import { QuizMainItem } from '../components/Quiz-main-item/Quiz.main.item'
 import FadeAnimateContainer from '../components/Fade-animate-container/Fade.animate.container'
 
 
@@ -30,12 +30,18 @@ function QuizPage({ currentQuiz, match }: any) {
       <React.Fragment>
          <FadeAnimateContainer>
             <CardContainer>
-               <QuizTitle
+               <h6>
+                  <small style={{ fontSize: '12px', float: 'right' }}>{quiz.dateCreated}</small>
+               </h6>
+               <QuizMainItem
                   value={quiz.title}
-                  dateCreated={quiz.dateCreated}
+                  property={'Title'}
                />
                <hr />
-               <QuizDescription value={quiz.description} />
+               <QuizMainItem
+                  value={quiz.description}
+                  property={'Description'}
+               />
             </CardContainer>
             {isSubmit ?
                (<QuizFinalResults

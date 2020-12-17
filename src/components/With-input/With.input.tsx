@@ -58,7 +58,10 @@ function WithInput(Component: React.FC<any>) {
                </div>
             </form>) : (
                <React.Fragment>
-                  &nbsp;  <Component value={newValue} {...props} />
+                  &nbsp;  <Component
+                     property={property}
+                     value={newValue} {...props}
+                  />
                </React.Fragment>
             )}
       </React.Fragment>

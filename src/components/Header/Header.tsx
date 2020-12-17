@@ -9,7 +9,7 @@ function Header() {
 
    return (
       <React.Fragment>
-         <nav className="navbar navbar-dark bg-dark">
+         <nav className="navbar navbar-light bg-light shadow-sm">
             <div className="container-fluid">
                <NavLink
                   id="brand"

@@ -208,7 +208,7 @@ a {
   }
 }
 
-@-webkit-keyframes animatebottom {
+/* @-webkit-keyframes animatebottom {
   from {
     bottom: 0px;
     opacity: 0
@@ -217,7 +217,7 @@ a {
     bottom: 0px;
     opacity: 1
   }
-}
+} */
 
 .animate-center {
   position: relative;
@@ -243,9 +243,17 @@ a {
 }
 
 a.active {
-  color: rgb(255, 255, 255) !important;
+  color: rgb(47, 33, 235) !important;
 }
 
+/* a {
+  color: black;
+} */
+
 #brand {
-  color: rgb(255, 255, 255) !important;
+  color: rgb(47, 33, 235) !important;
+}
+
+.navbar {
+  background-color: white !important;
 }

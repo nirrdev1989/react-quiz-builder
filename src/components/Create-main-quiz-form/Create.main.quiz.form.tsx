@@ -167,7 +167,7 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
                         className="form-control"
                         name="ownerEmail"
                         label={'Owner email*'}
-                        type="text"
+                        type="email"
                         placeholder="Owner email*"
                         required
                         value={createQuiz.ownerEmail}

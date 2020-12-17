@@ -1,4 +1,4 @@
-import { Quiz, QuizEditMain, QuizResults, Quizzes } from "./model"
+import { Quiz, QuizResults, Quizzes } from "./model"
 import {
     AddQuestionActionType,
     AddQuizActionType,

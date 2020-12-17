@@ -6,7 +6,7 @@ import SmallMessage from '../Small-massage/Small.message';
 
 
 function WithInput(Component: React.FC<any>) {
-   return function Input({ property, value, outPutNewValue, ...props }: any) {
+   return function Input({ property, value, type, outPutNewValue, ...props }: any) {
 
       const [newValue, setNewValue] = useState<string>(value)
       const [isEditMode, setIsEditMode] = useState<boolean>(false)
@@ -46,7 +46,7 @@ function WithInput(Component: React.FC<any>) {
                   onChange={handleChange}
                   name={newValue || ''}
                   value={newValue || ''}
-                  type="text"
+                  type={type}
                />
                <div className="mt-3">
                   <button

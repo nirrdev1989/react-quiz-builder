@@ -24,7 +24,7 @@ function App() {
       <React.Fragment>
          <Header />
          <main>
-            <div className="container mt-3 mb-4">
+            <div className="container mt-4 mb-4">
                <Switch>
                   <Suspense fallback={null} >
                      <Route

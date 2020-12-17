@@ -33,6 +33,7 @@ function QuizPage({ currentQuiz, match }: any) {
                <h6>
                   <small style={{ fontSize: '12px', float: 'right' }}>{quiz.dateCreated}</small>
                </h6>
+               <br />
                <QuizMainItem
                   value={quiz.title}
                   property={'Title'}

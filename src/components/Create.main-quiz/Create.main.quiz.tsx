@@ -6,18 +6,13 @@ import { withRouter } from 'react-router';
 import AlertWindow from '../Alert-window/Alert.window';
 import { Link } from 'react-router-dom';
 import CardContainer from '../Card-container/Card.container'
-import { ToggleElemetAction } from '../../redux/toggler/toggler.actions';
-// import { RootState } from '../../redux/store';
 
 
 interface CreateQuizProps {
    addQuiz: (quiz: Quiz) => void
-   // toggleElement: () => void
 }
 
 function CreateMainQuiz({ addQuiz }: CreateQuizProps) {
-
-
 
    const [quizIsCreated, setQuizIsCreated] = useState<boolean>(false)
 
@@ -25,6 +20,7 @@ function CreateMainQuiz({ addQuiz }: CreateQuizProps) {
       dateCreated: new Date().toLocaleDateString(),
       published: false,
       quizId: String(Date.now()),
+      isValid: false,
       title: '',
       description: '',
       numberQuestions: 0,
@@ -57,7 +53,14 @@ function CreateMainQuiz({ addQuiz }: CreateQuizProps) {
                   onClick={() => setQuizIsCreated(!quizIsCreated)}>
                   <span className="text-primary"> here </span>
                </Link>
-               <strong>to edit</strong>
+               <strong> to edit</strong>
+               <br />
+               <strong>Go to your Quizzes list</strong>
+               <Link
+                  to={`/quizzes-list`}
+                  onClick={() => setQuizIsCreated(!quizIsCreated)}>
+                  <span className="text-primary"> here </span>
+               </Link>
             </AlertWindow>) : (
                <CardContainer>
                   <form onSubmit={handleSubmit}>
@@ -106,7 +109,6 @@ function CreateMainQuiz({ addQuiz }: CreateQuizProps) {
 function mapDispatchToProps(dispatch: Function) {
    return {
       addQuiz: (quiz: Quiz) => dispatch(addQuizAction(quiz)),
-      // toggleElement: () => dispatch(ToggleElemetAction())
    }
 }
 

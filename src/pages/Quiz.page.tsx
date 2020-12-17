@@ -34,32 +34,32 @@ function QuizPage({ currentQuiz, match }: any) {
                 />
                 <hr />
                 <QuizDescription value={quiz.description} />
-
             </CardContainer>
             { isSubmit ?
-                <QuizFinalResults
+                (<QuizFinalResults
                     onBack={() => setIsSubmit(!isSubmit)}
-                    results={results} /> :
-                <CardContainer>
-                    {quiz.questions.map((question, index) => {
-                        return <div key={question.questionId}>
-                            <QuestionItem question={question} />
-                        </div>
-                    })}
-                    <button
-                        className="btn btn-blue btn-sm"
-                        onClick={() => {
-                            if (results.answers.length < quiz.questions.length) {
-                                return alert('Quiz did not completed')
-                            }
-                            setIsSubmit(!isSubmit)
-                        }} >
-                        Submit
-                    </button>
-                    <p className="float-end mb-1">
-                        <a href="#">Back to top</a>
-                    </p>
-                </CardContainer>}
+                    results={results}
+                />) : (
+                    <CardContainer>
+                        {quiz.questions.map((question, index) => {
+                            return <div key={question.questionId}>
+                                <QuestionItem question={question} />
+                            </div>
+                        })}
+                        <button
+                            className="btn btn-blue btn-sm"
+                            onClick={() => {
+                                if (results.answers.length < quiz.questions.length) {
+                                    return alert('Quiz did not completed')
+                                }
+                                setIsSubmit(!isSubmit)
+                            }} >
+                            Submit
+                        </button>
+                        <p className="float-end mb-1">
+                            <a href="#" style={{ textDecoration: 'none' }}>Back to top</a>
+                        </p>
+                    </CardContainer>)}
         </React.Fragment>
     )
 }

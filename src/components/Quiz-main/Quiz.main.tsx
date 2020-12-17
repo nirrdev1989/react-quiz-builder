@@ -15,7 +15,9 @@ interface QuizDescriptionProps {
 export function QuizTitle({ value, dateCreated }: QuizTitleProps) {
     return <React.Fragment>
         <strong>Title:</strong> <span>{value}</span>
-        <h6><small style={{ fontSize: '12px' }}>{dateCreated}</small></h6>
+        <h6>
+            <small style={{ fontSize: '12px' }}>{dateCreated}</small>
+        </h6>
     </React.Fragment>
 }
 

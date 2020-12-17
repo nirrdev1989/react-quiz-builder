@@ -44,7 +44,9 @@ main {
 .delete-quiz-btn {
   cursor: pointer;
   float: right;
+  font-size: 14px;
   opacity: 0.6;
+  font-weight: bold;
 }
 
 .delete-quiz-btn:hover {

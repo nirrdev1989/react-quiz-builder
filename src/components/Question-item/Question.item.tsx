@@ -29,6 +29,7 @@ function QuestionItem({ setAnswer, question }: QuestionItemProps) {
    return (
       <React.Fragment>
          <QuestionHeader value={question.question} />
+         <br />
          <small> <strong>Options:</strong> </small>
          {question.numberOfAnswers > 1 &&
             question.answers.map((answer, index) => {

@@ -57,7 +57,7 @@ function ManageQuizPage({ addQuestion, editQuizMain, match }: ManageQuizPageProp
                   type="button">
                   Add question +
                </button>
-               <div>
+               {/* <div>
                   <button
                      type="button"
                      className="btn btn-sm btn-blue">
@@ -69,7 +69,7 @@ function ManageQuizPage({ addQuestion, editQuizMain, match }: ManageQuizPageProp
                      className="btn btn-sm btn-pink">
                      Delete
                   </button>
-               </div>
+               </div> */}
             </div>
          </CardContainer>
          <CardContainer>

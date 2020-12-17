@@ -1,6 +1,7 @@
 import React from 'react'
 import { QuizResults } from '../../redux/quiz/model'
 import CardContainer from '../Card-container/Card.container'
+import { QuestionHeader } from '../Question-item/Question.item'
 
 
 interface QuizFinalResultsProps {
@@ -18,9 +19,7 @@ function QuizFinalResults({ results, onBack }: QuizFinalResultsProps) {
             {results.answers.map((answer, index) => {
                return <React.Fragment key={index + 2}>
                   <li style={{ listStyle: 'none' }}>
-                     <span>
-                        <strong>Question:</strong>&nbsp;{answer.question}
-                     </span>
+                     <QuestionHeader value={answer.question} />
                      <p>
                         <strong><small> Answer:</small></strong>&nbsp;{answer.choosenAnswer}
                      </p>
@@ -30,11 +29,11 @@ function QuizFinalResults({ results, onBack }: QuizFinalResultsProps) {
             })}
          </CardContainer>
          <CardContainer>
+            <button className="btn btn-blue btn-sm">Send</button>
+            &nbsp;&nbsp;
             <button
                className="btn btn-pink btn-sm"
                onClick={onBack}>Back</button>
-            &nbsp;&nbsp;
-            {/* <button className="btn btn-blue btn-sm">Send</button> */}
          </CardContainer>
       </React.Fragment>
    )

@@ -17,16 +17,19 @@ interface QuizCardItemProps {
 
 function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
 
-   const [isStatusOk, setIsStatusOk] = useState<boolean>(false)
-
-
+   const [isStatusOk, setIsStatusOk] = useState<boolean>(true)
 
    useEffect(() => {
       function checkStatus() {
+         if (quiz.numberQuestions === 0) {
+
+            return
+         }
          quiz.questions.forEach((question) => {
-            console.log(question)
-            if (question.numberOfAnswers > 1) {
-               setIsStatusOk(true)
+            setIsStatusOk(true)
+            if (question.numberOfAnswers <= 1) {
+               console.log(isStatusOk)
+               setIsStatusOk(false)
             }
          })
       }
@@ -38,22 +41,22 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
          <div className="col">
             <div className={`card mb-4 shadow-sm`}>
                <div className="card-header">
+                  <Link
+                     to={`quiz/edit/${quizId}`}
+                     className="edit-quiz-btn edit-icon">
+                     <EditIcon />
+                  </Link>
+                  <span
+                     className="delete-quiz-btn"
+                     onClick={() => {
+                        if (confirmAlert('quiz')) {
+                           removeQuiz(quizId)
+                        }
+                     }}>
+                     X
+                  </span>
                   <h4 >
                      {quiz.title}
-                     <Link
-                        to={`quiz/edit/${quizId}`}
-                        className="edit-quiz-btn edit-icon">
-                        <EditIcon />
-                     </Link>
-                     <span
-                        className="delete-quiz-btn"
-                        onClick={() => {
-                           if (confirmAlert('quiz')) {
-                              removeQuiz(quizId)
-                           }
-                        }}>
-                        x
-                     </span>
                   </h4>
                </div>
                <div className="card-body">
@@ -82,7 +85,7 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                   </Link>
                   <ErrorMessage
                      message={'Some of the questions are missing answers or there are no questions yet'}
-                     show={!isStatusOk} />
+                     show={quiz.questions.length === 0 || !isStatusOk} />
                </div>
             </div>
          </div>

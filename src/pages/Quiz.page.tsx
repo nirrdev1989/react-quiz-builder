@@ -63,10 +63,7 @@ function QuizPage({ currentQuiz, match }: any) {
                            setIsSubmit(!isSubmit)
                         }} >
                         Submit
-                        </button>
-                     <p className="float-end mb-1">
-                        <a href="#" style={{ textDecoration: 'none' }}>Back to top</a>
-                     </p>
+                     </button>
                   </CardContainer>)}
          </FadeAnimateContainer>
       </React.Fragment>

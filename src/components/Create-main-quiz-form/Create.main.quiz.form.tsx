@@ -10,6 +10,9 @@ import SmallMessage from '../Small-massage/Small.message';
 import FormInput from '../Form-input/Form.input';
 
 
+
+
+
 interface CreateQuizProps {
    addQuiz: (quiz: Quiz) => void
 }
@@ -112,7 +115,7 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
                      </span>
                      <hr />
                      <SmallMessage
-                        message="This is a quiz title"
+                        message="Quiz title"
                         color="black"
                      />
                      <FormInput
@@ -126,7 +129,7 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
                         onChange={handleChange}
                      />
                      <SmallMessage
-                        message="This is a quiz description"
+                        message="Quiz description"
                         color="black"
                      />
                      <div className="form-floating mb-3">

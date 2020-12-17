@@ -2,12 +2,8 @@ import React, { Suspense } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import { Route, Switch } from 'react-router';
-// import Loader from './components/Loader/Loader';
-// import CreateQuizPage from './pages/Create.quiz.page';
-// import QuizzesListPage from './pages/Quizzes.list.page';
-// import QuizPage from './pages/Quiz.page';
-// import ManageQuizPage from './pages/Manage.quiz.page';
-// import Footer from './components/Footer/Footer'
+import Footer from './components/Footer/Footer';
+
 
 const CreateQuizPage = React.lazy(() => import('./pages/Create.quiz.page'))
 const QuizzesListPage = React.lazy(() => import('./pages/Quizzes.list.page'))
@@ -25,10 +21,10 @@ const QuizPage = React.lazy(() => import('./pages/Quiz.page'))
 
 function App() {
    return (
-      <div className="App">
+      <React.Fragment>
          <Header />
          <main>
-            <div className="container">
+            <div className="container mt-3 mb-4">
                <Switch>
                   <Suspense fallback={null} >
                      <Route
@@ -53,10 +49,15 @@ function App() {
                      />
                   </Suspense>
                </Switch>
+               {/* <p className="float-end mt-3 mb-2">
+                  <a href="#" style={{ textDecoration: 'none' }}>
+                     <strong>Back to top</strong>
+                  </a>
+               </p> */}
             </div>
          </main>
-         {/* <Footer /> */}
-      </div>
+         <Footer />
+      </React.Fragment>
    );
 }
 

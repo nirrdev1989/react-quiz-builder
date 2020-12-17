@@ -1,6 +1,8 @@
-import React, { FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { ReactComponent as EditIcon } from "../../icons-svg/edit.svg";
 import { firstChartToUpperCase } from '../../utils/first.chart.uppercase';
+import FormInput from '../Form-input/Form.input';
+import SmallMessage from '../Small-massage/Small.message';
 
 
 function WithInput(Component: React.FC<any>) {
@@ -19,6 +21,10 @@ function WithInput(Component: React.FC<any>) {
          setIsEditMode(!isEditMode)
       }
 
+      function handleChange(event: ChangeEvent<HTMLInputElement>) {
+         setNewValue(() => event.target.value)
+      }
+
 
       return <React.Fragment>
          {!isEditMode &&
@@ -28,23 +34,26 @@ function WithInput(Component: React.FC<any>) {
             />}
          {isEditMode ?
             (<form onSubmit={handleSubmit}>
-               <label className="mb-1">{firstChartToUpperCase(property)}*</label>
-               <div className="center-element">
-                  <input
-                     placeholder={firstChartToUpperCase(property)}
-                     required
-                     className="form-control"
-                     onChange={(event) => setNewValue(() => event.target.value)}
-                     name={newValue || ''}
-                     value={newValue || ''}
-                     type="text" />
-               </div>
+               <SmallMessage
+                  color="black"
+                  message={firstChartToUpperCase(property)}
+               />
+               <FormInput
+                  label={firstChartToUpperCase(property) + '*'}
+                  placeholder={firstChartToUpperCase(property)}
+                  required
+                  className="form-control"
+                  onChange={handleChange}
+                  name={newValue || ''}
+                  value={newValue || ''}
+                  type="text"
+               />
                <div className="mt-3">
                   <button
                      type="submit"
                      className="btn btn-blue btn-sm">
                      Save
-                      </button>
+                  </button>
                       &nbsp;
                   <button
                      className="btn btn-pink btn-sm"

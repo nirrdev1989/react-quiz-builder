@@ -1,5 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Question } from '../../redux/quiz/model'
+import FormInput from '../Form-input/Form.input'
+import SmallMessage from '../Small-massage/Small.message'
 
 
 
@@ -70,18 +72,22 @@ function AddQuestionForm({ addQuestion, closeAddQuestionForm }: any) {
    return (
       <React.Fragment>
          <form onSubmit={handleSubmit} >
-            <div className="form-floating mb-3">
-               <input
-                  value={question.question}
-                  className="form-control"
-                  type="text"
-                  name="question"
-                  required
-                  placeholder="Question"
-                  onChange={handleQuestionChange} />
-               <label >Question*</label>
-            </div>
-            <span>Number of answers</span>
+            <SmallMessage
+               message={'Question'}
+               color="black"
+            />
+            <FormInput value={question.question}
+               className="form-control"
+               type="text"
+               name="question"
+               required
+               label={'Question*'}
+               placeholder="Question"
+               onChange={handleQuestionChange} />
+            <SmallMessage
+               message={'Number of answers'}
+               color="black"
+            />
             <input
                id="count-answers"
                value={question.numberOfAnswers}
@@ -92,20 +98,25 @@ function AddQuestionForm({ addQuestion, closeAddQuestionForm }: any) {
                name="numberOfAnswers"
                className="form-control"
                placeholder="Number of answers"
-               onChange={handleQuestionChange} />
+               onChange={handleQuestionChange}
+            />
             <br />
             {Array.from({ length: question.numberOfAnswers }).map((_, index) => {
                return <div key={index + 10}>
+                  <SmallMessage
+                     color="black"
+                     message={`Answer: ${index + 1}`}
+                  />
                   <input
                      name={`${index}`}
                      type="text"
                      required
                      className="form-control form-control-sm mb-2"
                      placeholder={`Answer: ${index + 1}`}
-                     onChange={handleAnswersChnage} />
+                     onChange={handleAnswersChnage}
+                  />
                </div>
             })}
-            <br />
             <button
                type="submit"
                className="btn btn-blue btn-sm">

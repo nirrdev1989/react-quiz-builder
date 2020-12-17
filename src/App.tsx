@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import { Route, Switch } from 'react-router';
+import Loader from './components/Loader/Loader';
 // import CreateQuizPage from './pages/Create.quiz.page';
 // import QuizzesListPage from './pages/Quizzes.list.page';
 // import QuizPage from './pages/Quiz.page';
@@ -14,6 +15,14 @@ const ManageQuizPage = React.lazy(() => import('./pages/Manage.quiz.page'))
 const QuizPage = React.lazy(() => import('./pages/Quiz.page'))
 
 
+// const QuizPage = React.lazy((): any => {
+//    return new Promise((resolve) => {
+//       setTimeout(() => {
+//          return resolve(import('./pages/Quiz.page'))
+//       }, 2000);
+//    })
+// })
+
 function App() {
    return (
       <div className="App">
@@ -21,28 +30,22 @@ function App() {
          <main>
             <div className="container">
                <Switch>
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={null} >
                      <Route
                         exact={true}
                         path="/"
                         component={CreateQuizPage}
                      />
-                     {/* </Suspense> */}
-                     {/* <Suspense fallback={<div>Loading...</div>}> */}
                      <Route
                         exact={true}
                         path="/quizzes-list"
-                        component={QuizzesListPage} />
-
-                     {/* </Suspense> */}
-                     {/* <Suspense fallback={<div>Loading...</div>}> */}
+                        component={QuizzesListPage}
+                     />
                      <Route
                         exact={true}
                         path="/quiz/:quizId"
                         component={QuizPage}
                      />
-                     {/* </Suspense> */}
-                     {/* <Suspense fallback={<div>Loading...</div>}> */}
                      <Route
                         exact={true}
                         path="/quiz/edit/:quizId"

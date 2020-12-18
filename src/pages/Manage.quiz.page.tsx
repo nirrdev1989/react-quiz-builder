@@ -43,6 +43,7 @@ function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz }: ManageQuizPag
 
 
    function getEditNewValue(value: string, property: propertiesQuizEditMain) {
+      console.log(property)
       if (value !== '' && value !== null) {
          editQuizMain({
             quizId: quizId,
@@ -102,12 +103,14 @@ function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz }: ManageQuizPag
                      <QuizMainItemWithInput
                         type="text"
                         property={'title'}
+                        maxLength={50}
                         value={quiz.title}
                         outPutNewValue={getEditNewValue}
                      />
                      <hr />
                      <QuizMainItemWithInput
                         type="text"
+                        maxLength={200}
                         value={quiz.description}
                         property={'description'}
                         outPutNewValue={getEditNewValue}
@@ -116,21 +119,26 @@ function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz }: ManageQuizPag
                      <QuizMainItemWithInput
                         type="text"
                         value={quiz.ownerName}
-                        property={'Owner name'}
+                        minLength={2}
+                        maxLength={20}
+                        property={'ownerName'}
                         outPutNewValue={getEditNewValue}
                      />
                      <hr />
                      <QuizMainItemWithInput
                         type="email"
                         value={quiz.ownerEmail}
-                        property={'Owner email'}
+                        maxLength={50}
+                        property={'ownerEmail'}
                         outPutNewValue={getEditNewValue}
                      />
                      <hr />
                      <QuizMainItemWithInput
-                        type="text"
+                        type="password"
+                        maxLength={10}
+                        minLength={3}
                         value={quiz.password}
-                        property={'Password'}
+                        property={'password'}
                         outPutNewValue={getEditNewValue}
                      />
                      {!quiz.published &&

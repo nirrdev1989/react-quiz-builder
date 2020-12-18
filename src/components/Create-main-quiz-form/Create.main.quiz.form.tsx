@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React from 'react';
 import { Quiz } from '../../redux/quiz/model';
 import { connect } from "react-redux";
 import { addQuizAction } from '../../redux/quiz/quiz.action';
@@ -8,8 +8,22 @@ import { Link } from 'react-router-dom';
 import CardContainer from '../Card-container/Card.container'
 import SmallMessage from '../Small-massage/Small.message';
 import FormInput from '../Form-input/Form.input';
+import { useForm } from '../../hooks/use.form';
+import { createQuizMainValidate, FormErros } from '../../form-validators/validators';
 
 
+let initialState = {
+   dateCreated: new Date().toLocaleDateString(),
+   published: false,
+   quizId: String(Date.now()),
+   title: '',
+   description: '',
+   numberQuestions: 0,
+   questions: [],
+   password: '',
+   ownerName: '',
+   ownerEmail: ''
+}
 
 
 
@@ -19,68 +33,21 @@ interface CreateQuizProps {
 
 function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
 
-   const [quizIsCreated, setQuizIsCreated] = useState<boolean>(false)
+   const [values, handleChange, handleSubmit, isSubmit, errors] = useForm(initialState, callSubmit, createQuizMainValidate)
 
-   const [createQuiz, setQuiz] = useState<Quiz>({
-      dateCreated: new Date().toLocaleDateString(),
-      published: false,
-      quizId: String(Date.now()),
-      isValid: false,
-      title: '',
-      description: '',
-      numberQuestions: 0,
-      questions: [],
-      password: '',
-      ownerName: '',
-      ownerEmail: ''
-   })
-
-   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
-      const { name, value } = event.target
-      setQuiz((prev) => {
-         return {
-            ...prev,
-            [name]: value
-         }
-      })
+   function callSubmit() {
+      addQuiz(values)
    }
 
-   function handleSubmit(event: FormEvent) {
-      event.preventDefault()
-      addQuiz(createQuiz)
-      switcAlertWindow()
-   }
-
-
-   function switcAlertWindow() {
-      setQuizIsCreated(!quizIsCreated)
-
-   }
-
-   function resetCreatQuizMain() {
-      setQuiz({
-         dateCreated: new Date().toLocaleDateString(),
-         published: false,
-         quizId: String(Date.now()),
-         isValid: false,
-         title: '',
-         description: '',
-         numberQuestions: 0,
-         questions: [],
-         password: '',
-         ownerName: '',
-         ownerEmail: ''
-      })
-   }
 
    return (
       <React.Fragment>
-         {quizIsCreated ?
+         {isSubmit && Object.keys(errors).length === 0 ?
             (<AlertWindow color="warning">
                <strong>Your quiz was created click,</strong>
                <Link
-                  to={`quiz/edit/${createQuiz.quizId}`}
-                  onClick={() => switcAlertWindow()}>
+                  to={`quiz/edit/${initialState.quizId}`}
+               >
                   <span className="text-primary"> here </span>
                </Link>
                <strong> to edit</strong>
@@ -88,22 +55,12 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
                <strong>Go to your Quizzes list</strong>
                <Link
                   to={`/quizzes-list`}
-                  onClick={() => switcAlertWindow()}>
-                  <span className="text-primary"> here </span>
-               </Link>
-               <br />
-               <strong>Create new quiz</strong>
-               <Link
-                  to={`/`}
-                  onClick={() => {
-                     switcAlertWindow()
-                     resetCreatQuizMain()
-                  }}>
+               >
                   <span className="text-primary"> here </span>
                </Link>
             </AlertWindow>) : (
                <CardContainer>
-                  <form onSubmit={handleSubmit}>
+                  <form noValidate onSubmit={handleSubmit}>
                      <span>
                         <strong style={{ fontSize: '17px' }}>Create your quiz</strong>
                         <button
@@ -114,6 +71,17 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
                         </button>
                      </span>
                      <hr />
+                     {Object.keys(errors).length > 0 && isSubmit &&
+                        <AlertWindow color="danger">
+                           {Object.values(errors as FormErros).map((error, index) => {
+                              return <div key={error.validatorName + index} className="mb-1">
+                                 <SmallMessage
+                                    message={error.message}
+                                    color="red"
+                                 />
+                              </div>
+                           })}
+                        </AlertWindow>}
                      <SmallMessage
                         message="Quiz title"
                         color="black"
@@ -125,7 +93,7 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
                         type="text"
                         placeholder="Title*"
                         required
-                        value={createQuiz.title}
+                        value={values.title}
                         onChange={handleChange}
                      />
                      <SmallMessage
@@ -139,7 +107,7 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
                            cols={5}
                            required
                            name="description"
-                           value={createQuiz.description}
+                           value={values.description}
                            className="form-control"
                            placeholder="Description*"
                            onChange={handleChange} />
@@ -156,7 +124,7 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
                         type="text"
                         placeholder="Owner name*"
                         required
-                        value={createQuiz.ownerName}
+                        value={values.ownerName}
                         onChange={handleChange}
                      />
                      <SmallMessage
@@ -170,7 +138,7 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
                         type="email"
                         placeholder="Owner email*"
                         required
-                        value={createQuiz.ownerEmail}
+                        value={values.ownerEmail}
                         onChange={handleChange}
                      />
                      <SmallMessage
@@ -184,7 +152,7 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
                         type="password"
                         placeholder="Password*"
                         required
-                        value={createQuiz.password}
+                        value={values.password}
                         onChange={handleChange}
                      />
                   </form>

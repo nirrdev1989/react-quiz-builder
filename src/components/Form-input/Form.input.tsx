@@ -2,7 +2,7 @@ import React from 'react'
 
 
 function FormInput(props: any) {
-    const { label, type, inlineLabel, ...rest } = props
+    const { label, type, inlineLabel, children, ...rest } = props
     // console.log(props)
     return (
         <React.Fragment>
@@ -12,6 +12,7 @@ function FormInput(props: any) {
                     type={type}
                 />
                 <label>{label}</label>
+                {children && children}
             </div>
         </React.Fragment>
     )

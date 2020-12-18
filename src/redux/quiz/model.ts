@@ -20,9 +20,8 @@ export interface OwnerQuiz {
 
 export interface Quiz {
     dateCreated: string
-    isValid: boolean
     // owner?: OwnerQuiz
-    password?: string
+    password: string
     ownerName: string
     ownerEmail: string
     published: boolean

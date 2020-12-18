@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware } from "redux";
 import { combineReducers } from "redux";
 import { quizReducer, quizResultsReducer } from "./quiz/quiz.reducers";
-import { toggleReducer } from './toggler/toggle.reducer'
 import logger from 'redux-logger'
 
 const middleweres = [logger]

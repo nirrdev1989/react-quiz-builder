@@ -11,7 +11,7 @@ function Footer() {
                         <a href="#"> <strong>Back to top</strong> </a>
                     </p>
                     <p className="mb-1">Quiz creator &copy;  2020</p>
-                    <p className="mb-0">Vist the repo
+                    <p className="mb-0">Visit the repo
                     <a
                             target="_blank"
                             href="https://github.com/nirrdev1989/react-quiz-builder">

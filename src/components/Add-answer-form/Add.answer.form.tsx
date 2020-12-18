@@ -1,10 +1,14 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
+// import { useForm } from '../../hooks/use.form'
 import FormInput from '../Form-input/Form.input'
 import SmallMessage from '../Small-massage/Small.message'
 
 
+
+
 function AddAnswerForm({ addAnswer, closeAddAnswerForm }: any) {
 
+    // const [values, handleChange, handleSubmit, isSubmit] = useForm('', callSubmit)
     const [answer, setAnswer] = useState<string>('')
 
     function handleSubmit(event: FormEvent) {
@@ -20,27 +24,25 @@ function AddAnswerForm({ addAnswer, closeAddAnswerForm }: any) {
         setAnswer(() => event.target.value)
     }
 
+    // function callSubmit() {
+    //     addAnswer(values)
+    // }
+
     return <React.Fragment>
         <form onSubmit={handleSubmit} className="mt-3">
-            <SmallMessage color="black" message={'Answer'} />
+            <SmallMessage
+                color="black"
+                message={'Answer'}
+            />
             <FormInput
                 label="Answer*"
                 required
                 className="form-control"
                 type="text"
+                maxLength={100}
                 placeholder="Answer"
                 onChange={handleChange}
             />
-            {/* <label className="mb-1">Answer*</label>
-            <div className="center-element">
-                <input
-                    required
-                    className="form-control"
-                    type="text"
-                    placeholder="Answer"
-                    onChange={(event) => setAnswer(() => event.target.value)}
-                />
-            </div> */}
             <div className="mt-3">
                 <button
                     type="submit"

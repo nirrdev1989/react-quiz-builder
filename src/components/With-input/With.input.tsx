@@ -42,6 +42,7 @@ function WithInput(Component: React.FC<any>) {
                   label={firstChartToUpperCase(property) + '*'}
                   placeholder={firstChartToUpperCase(property)}
                   required
+                  {...props}
                   className="form-control"
                   onChange={handleChange}
                   name={newValue || ''}

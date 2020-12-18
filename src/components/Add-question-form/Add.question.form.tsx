@@ -1,11 +1,16 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
+// import { useForm } from '../../hooks/use.form'
 import { Question } from '../../redux/quiz/model'
 import FormInput from '../Form-input/Form.input'
 import SmallMessage from '../Small-massage/Small.message'
 
 
+interface AddQuestionFormProps {
+   addQuestion: (info: Question) => void
+   closeAddQuestionForm: () => void
+}
 
-function AddQuestionForm({ addQuestion, closeAddQuestionForm }: any) {
+function AddQuestionForm({ addQuestion, closeAddQuestionForm }: AddQuestionFormProps) {
 
    const [question, setQuestion] = useState<Question>({
       questionId: '',
@@ -81,6 +86,7 @@ function AddQuestionForm({ addQuestion, closeAddQuestionForm }: any) {
                type="text"
                name="question"
                required
+               maxLength={100}
                label={'Question*'}
                placeholder="Question"
                onChange={handleQuestionChange} />
@@ -111,6 +117,7 @@ function AddQuestionForm({ addQuestion, closeAddQuestionForm }: any) {
                      name={`${index}`}
                      type="text"
                      required
+                     maxLength={100}
                      className="form-control form-control-sm mb-2"
                      placeholder={`Answer: ${index + 1}`}
                      onChange={handleAnswersChnage}
@@ -126,7 +133,7 @@ function AddQuestionForm({ addQuestion, closeAddQuestionForm }: any) {
             <button
                className="btn btn-pink btn-sm"
                onClick={() => {
-                  resetQuestion()
+                  // resetQuestion()
                   closeAddQuestionForm()
                }}>
                Cancel

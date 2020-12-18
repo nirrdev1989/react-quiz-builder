@@ -9,7 +9,7 @@ function QuizzesList() {
 
     return (
         <React.Fragment>
-            <div className="row row-cols-1 row-cols-md-3 mb-3 text-center">
+            <div className="row row-cols-1 row-cols-md-3  text-center">
                 {Object.keys(quizzes).length !== 0 ?
                     (Object.entries(quizzes).map(([quizId, { quiz }]) => {
                         return <div key={quizId}>

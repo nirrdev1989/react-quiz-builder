@@ -7,7 +7,7 @@ interface SmallMessageProps {
 
 function SmallMessage({ message, color }: SmallMessageProps) {
     return <React.Fragment>
-        <strong> <small style={{ color: color, fontSize: '12px' }} >{message}</small></strong>
+        <small style={{ color: color, fontSize: '12px' }} >{message}</small>
     </React.Fragment>
 }
 

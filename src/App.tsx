@@ -3,6 +3,7 @@ import './App.css';
 import Header from './components/Header/Header';
 import { Route, Switch } from 'react-router';
 import Footer from './components/Footer/Footer';
+import { email, maxLength, minLength, required } from './form-validators/validators';
 
 
 const CreateQuizPage = React.lazy(() => import('./pages/Create.quiz.page'))
@@ -18,6 +19,13 @@ const QuizPage = React.lazy(() => import('./pages/Quiz.page'))
 //       }, 2000);
 //    })
 // })
+
+console.log(required('fds  FGDF'), 'REQUIRED')
+console.log(email('fsdfsdf@d.com'), 'EMAIL')
+console.log(minLength('d3', 2), 'MIN LENGTH')
+console.log(maxLength('d33', 2), 'MAX LENGTH')
+
+
 
 function App() {
    return (
@@ -49,11 +57,6 @@ function App() {
                      />
                   </Suspense>
                </Switch>
-               {/* <p className="float-end mt-3 mb-2">
-                  <a href="#" style={{ textDecoration: 'none' }}>
-                     <strong>Back to top</strong>
-                  </a>
-               </p> */}
             </div>
          </main>
          <Footer />

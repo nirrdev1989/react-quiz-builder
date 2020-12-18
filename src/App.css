@@ -251,7 +251,8 @@ a.active {
 } */
 
 #brand {
-  color: rgb(47, 33, 235) !important;
+  /* color: rgb(0, 0, 0) !important; */
+  color: rgb(211, 45, 33)!important;
 }
 
 .navbar {

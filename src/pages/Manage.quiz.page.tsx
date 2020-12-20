@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect, useSelector } from 'react-redux'
 import AccordingList from '../components/According-list/According.list'
 import AddQuestionForm from '../components/Add-question-form/Add.question.form'
-import { AddQuestion, propertiesQuizEditMain, Question, QuizEditMain } from '../redux/quiz/model'
+import { AddQuestion, propertiesQuizEditMain, Question, Quiz, QuizEditMain } from '../redux/quiz/model'
 import { addQuestionAction, editQuizMainAction, removeQuizAction } from '../redux/quiz/quiz.action'
 import { RootState } from '../redux/store'
 import CardContainer from '../components/Card-container/Card.container'
@@ -13,7 +13,6 @@ import FadeAnimateContainer from '../components/Fade-animate-container/Fade.anim
 import { confirmAlert } from '../utils/confirm.alert'
 import AlertWindow from '../components/Alert-window/Alert.window'
 import SmallMessage from '../components/Small-massage/Small.message'
-// import { filterObject } from '../utils/filter.object'
 
 
 const QuizMainItemWithInput = WithInput(QuizMainItem)
@@ -23,16 +22,17 @@ interface ManageQuizPageProps {
    editQuizMain: (info: QuizEditMain) => void
    addQuestion: (info: AddQuestion) => void
    removeQuiz: (quizId: string) => void
+   publishQuiz: (quiz: Quiz) => void
+
 }
 
 
-function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz }: ManageQuizPageProps) {
+function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz, publishQuiz }: ManageQuizPageProps) {
 
    const quizId = useParams<{ quizId: string }>().quizId
+   const history = useHistory()
 
    const { quiz } = useSelector((state: RootState) => state.quizzes[quizId])
-
-   const history = useHistory()
 
    const [isAddQuestion, setIsAddQwuestion] = useState<boolean>(false)
 
@@ -53,10 +53,6 @@ function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz }: ManageQuizPag
       }
    }
 
-   // useEffect(() => {
-   //    console.log(filterObject(['title', 'description', 'ownerName', 'ownerEmail', 'password'], quiz))
-   // }, [])
-
    return (
       <React.Fragment>
          <FadeAnimateContainer>
@@ -69,12 +65,6 @@ function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz }: ManageQuizPag
                      Add question +
                   </button>
                   <div>
-                     {/* <button
-                        type="button"
-                        className="btn btn-sm btn-blue">
-                        Publish
-                   </button>
-                        &nbsp; */}
                      <button
                         onClick={() => {
                            if (confirmAlert('Quiz')) {
@@ -141,11 +131,17 @@ function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz }: ManageQuizPag
                         property={'password'}
                         outPutNewValue={getEditNewValue}
                      />
-                     {!quiz.published &&
+                     {!quiz.published ?
                         <AlertWindow color="danger">
                            <SmallMessage
                               message={'This quiz is not published'}
                               color="withe"
+                           />
+                        </AlertWindow> :
+                        <AlertWindow color="success">
+                           <SmallMessage
+                              color="withe"
+                              message={'This quiz is publish'}
                            />
                         </AlertWindow>}
                   </React.Fragment>}
@@ -165,7 +161,7 @@ function mapDispatchToState(dispatch: Function) {
    return {
       addQuestion: (info: AddQuestion) => dispatch(addQuestionAction(info)),
       editQuizMain: (info: QuizEditMain) => dispatch(editQuizMainAction(info)),
-      removeQuiz: (quizId: string) => dispatch(removeQuizAction(quizId))
+      removeQuiz: (quizId: string) => dispatch(removeQuizAction(quizId)),
    }
 }
 

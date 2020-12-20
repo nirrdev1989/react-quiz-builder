@@ -1,13 +1,15 @@
 import { createStore, applyMiddleware } from "redux";
 import { combineReducers } from "redux";
-import { quizReducer, quizResultsReducer } from "./quiz/quiz.reducers";
+import { quizReducer, quizResultsReducer, quizAsyncReducer } from "./quiz/quiz.reducers";
 import logger from 'redux-logger'
+import thunk from 'redux-thunk'
 
-const middleweres = [logger]
+const middleweres = [logger, thunk]
 
 const rootReducer = combineReducers({
     quizzes: quizReducer,
     currentQuiz: quizResultsReducer,
+    quizAsyncReducer: quizAsyncReducer
     // toggle: toggleReducer
     // quizzesMain: quizzesReducer
 })

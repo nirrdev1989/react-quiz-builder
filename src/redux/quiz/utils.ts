@@ -9,7 +9,8 @@ import {
     RemoveQuizActionType,
     RemoveAnswerActionType,
     SetCurrentQuizActionType,
-    SetAnswerActionType
+    SetAnswerActionType,
+    PublishQuizActionType
 } from "./quiz.actions.types"
 import { QuizzesState } from "./quiz.reducers"
 
@@ -126,6 +127,18 @@ export function editQuizMainUtil(currentState: QuizzesState, action: EditQuizMai
     const quiz = findQuiz(currentState, quizId)
 
     quiz[property] = value
+
+    const newState = updateState(currentState, quizId, quiz)
+
+    return { ...newState }
+}
+
+export function publishQuizUtil(currentState: QuizzesState, action: PublishQuizActionType) {
+    const quizId = action.payload
+
+    const quiz = findQuiz(currentState, quizId)
+
+    quiz.published = !quiz.published
 
     const newState = updateState(currentState, quizId, quiz)
 

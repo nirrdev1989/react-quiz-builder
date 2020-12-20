@@ -1,28 +1,36 @@
 import React, { useEffect, useState } from 'react'
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { addQuestionAction, removeQuizAction } from '../../redux/quiz/quiz.action';
 import { ReactComponent as EditIcon } from "../../icons-svg/edit.svg";
 import { AddQuestion, Quiz } from '../../redux/quiz/model';
 import ErrorMessage from '../Error-message/Error.message';
 import { confirmAlert } from '../../utils/confirm.alert';
+import { publishQuizAsync } from '../../redux/quiz/quiz.actions.async';
+import { RootState } from '../../redux/store';
+
 
 
 interface QuizCardItemProps {
    quiz: Quiz
    quizId: string
    removeQuiz: (quizId: string) => void
+   publishQuiz: (quiz: Quiz) => void
+
 }
 
 
-function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
+function QuizCardItem({ removeQuiz, publishQuiz, quizId, quiz }: QuizCardItemProps) {
 
    const [isStatusOk, setIsStatusOk] = useState<boolean>(true)
+
+   // const q = useSelector((state: RootState) => state.quizzes[quizId])
+
+
 
    useEffect(() => {
       function checkStatus() {
          if (quiz.numberQuestions === 0) {
-
             return
          }
          quiz.questions.forEach((question) => {
@@ -54,7 +62,7 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                         }
                      }}>
                      X
-                  </span>
+                    </span>
                   <h4 >
                      {quiz.title}
                   </h4>
@@ -81,11 +89,22 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
                      className={`${quiz.questions.length === 0 || !isStatusOk ? 'disabled-btn' : ''} w-100 btn btn-sm btn-blue`}
                      to={`/quiz/${quizId}`}
                      type="button">
-                     Try Quiz
+                     Get started
                   </Link>
+                  {/* <br />
+                  <br />
+                  <button
+                     type="button"
+                     onClick={() => {
+                        publishQuiz(quiz)
+                     }}
+                     className={`${q.quiz.published || quiz.questions.length === 0 || !isStatusOk ? 'disabled-btn' : ''} w-100 btn btn-sm btn-pink`}>
+                     Publish
+                  </button> */}
                   <ErrorMessage
                      message={'Some of the questions are missing answers or there are no questions yet'}
-                     show={quiz.questions.length === 0 || !isStatusOk} />
+                     show={quiz.questions.length === 0 || !isStatusOk}
+                  />
                </div>
             </div>
          </div>
@@ -97,7 +116,8 @@ function QuizCardItem({ removeQuiz, quizId, quiz }: QuizCardItemProps) {
 function mapDispatchToState(dispatch: Function) {
    return {
       removeQuiz: (quizId: string) => dispatch(removeQuizAction(quizId)),
-      addQuestion: (info: AddQuestion) => dispatch(addQuestionAction(info))
+      addQuestion: (info: AddQuestion) => dispatch(addQuestionAction(info)),
+      publishQuiz: (quiz: Quiz) => dispatch(publishQuizAsync(quiz))
    }
 }
 

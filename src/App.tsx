@@ -20,12 +20,6 @@ const QuizPage = React.lazy(() => import('./pages/Quiz.page'))
 //    })
 // })
 
-console.log(required('fds  FGDF'), 'REQUIRED')
-console.log(email('fsdfsdf@d.com'), 'EMAIL')
-console.log(minLength('d3', 2), 'MIN LENGTH')
-console.log(maxLength('d33', 2), 'MAX LENGTH')
-
-
 
 function App() {
    return (

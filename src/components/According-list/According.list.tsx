@@ -10,6 +10,7 @@ import { confirmAlert } from '../../utils/confirm.alert';
 import WithInput from '../With-input/With.input';
 import { QuestionHeader } from '../Question-item/Question.item';
 import AddAnswerForm from '../Add-answer-form/Add.answer.form';
+import SmallMessage from '../Small-massage/Small.message';
 
 const QuestionHeaderWhitInput = WithInput(QuestionHeader)
 
@@ -33,9 +34,9 @@ function AccordingList({ editQuestion, removeAnswer, removeQuestion, addAnswer, 
             {questions.map((question) => {
                return <CardContainer key={question.questionId}>
                   <div key={question.questionId}>
-                     <ErrorMessage
+                     {question.numberOfAnswers < 2 && <SmallMessage
                         message={'This question is missing an answer'}
-                        show={question.numberOfAnswers < 2} />
+                        color="red" />}
                      <AccordingItem
                         headerId={question.questionId}
                         collapseTarget={question.questionId + 1}

@@ -19,6 +19,7 @@ import {
     RemoveAnswerActionType,
     AddAnswerActionType,
     EditQuestionActionType,
+    PublishQuizActionType,
     EDIT_QUESTION,
     ADD_UNSWER,
     REMOVE_UNSWER,
@@ -29,6 +30,7 @@ import {
     SET_CURRENT_QUIZ,
     REMOVE_QUIZ,
     ADD_QUIZ,
+    PUBLISH_QUIZ
 } from "./quiz.actions.types";
 
 
@@ -99,6 +101,13 @@ export function editQuestionAction(info: EditQuestion): EditQuestionActionType {
     return {
         type: EDIT_QUESTION,
         payload: info
+    }
+}
+
+export function publishQuiz(quizId: string): PublishQuizActionType {
+    return {
+        type: PUBLISH_QUIZ,
+        payload: quizId
     }
 }
 

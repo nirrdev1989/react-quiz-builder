@@ -1,5 +1,6 @@
 import { getSessionStorage, saveSessionStorage } from "../localstorage";
-import { QuizResults, Quizzes } from "./model";
+import { Quiz, QuizResults, Quizzes } from "./model";
+import { PUBLISH_QUIZ_FAIL, PUBLISH_QUIZ_START, PUBLISH_QUIZ_SUCCESS, QuizAsyncActionsTypes } from "./quiz.actions.async.types";
 import {
     QuizActionsTypes,
     EDIT_QUESTION,
@@ -12,6 +13,7 @@ import {
     SET_CURRENT_QUIZ,
     REMOVE_QUIZ,
     ADD_QUIZ,
+    PUBLISH_QUIZ,
 } from "./quiz.actions.types";
 
 
@@ -67,11 +69,56 @@ export function quizReducer(state = INITIAL_STATE_QUIZZES, action: QuizActionsTy
             saveSessionStorage('quizzes', newStateAfterEditQuestion)
 
             return newStateAfterEditQuestion
+        case PUBLISH_QUIZ:
+            const newStateAfterPublish = QuizzesUtils.publishQuizUtil(state, action)
+            saveSessionStorage('quizzes', newStateAfterPublish)
+
+            return newStateAfterPublish
         default:
             return state
     }
 
 }
+
+
+export type QuizAsyncState = {
+    quiz: Quiz
+    loading: boolean
+    error: string
+}
+
+const INITIAL_STATE_QUIZ_ASYNC: QuizAsyncState = {
+    quiz: {} as Quiz,
+    loading: false,
+    error: ''
+}
+
+
+export function quizAsyncReducer(state = INITIAL_STATE_QUIZ_ASYNC, action: QuizAsyncActionsTypes) {
+    switch (action.type) {
+        case PUBLISH_QUIZ_START:
+            return {
+                ...state,
+                loading: true
+            }
+        case PUBLISH_QUIZ_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: ''
+            }
+        case PUBLISH_QUIZ_FAIL: {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        }
+        default:
+            return state
+    }
+}
+
 
 
 const INITIAL_STATE_RESULTS: QuizResults = {

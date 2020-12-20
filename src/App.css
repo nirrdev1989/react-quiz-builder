@@ -7,7 +7,7 @@
 }
 
 main {
-  min-height: 35rem;
+  min-height: 40rem;
   /* margin-bottom: 3rem; */
 }
 
@@ -180,12 +180,13 @@ a {
   left: 50%;
   top: 50%;
   z-index: 1000;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   margin: -76px 0 0 -76px;
   border: 16px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 16px solid rgb(236, 12, 87);
+  border-top: 16px solid rgb(241, 72, 128);
+  /* border-bottom: 16px solid rgb(96, 60, 224); */
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }
@@ -207,17 +208,6 @@ a {
     transform: rotate(360deg);
   }
 }
-
-/* @-webkit-keyframes animatebottom {
-  from {
-    bottom: 0px;
-    opacity: 0
-  }
-  to {
-    bottom: 0px;
-    opacity: 1
-  }
-} */
 
 .animate-center {
   position: relative;
@@ -257,4 +247,83 @@ a.active {
 
 .navbar {
   background-color: white !important;
+}
+
+.loader-con {
+  display: flex;
+  justify-content: center;
+  min-height: 70vh;
+  align-items: center;
+}
+
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1000;
+  text-indent: -9999em;
+  font-size: 10px;
+  width: 100px;
+  height: 100px;
+  margin: -76px 0 0 -76px;
+  border-radius: 50%;
+  background: #ffffff;
+  background: -moz-linear-gradient(left, #f02188 10%, rgba(255, 255, 255, 0) 42%);
+  background: -webkit-linear-gradient(left, #f02188 10%, rgba(255, 255, 255, 0) 42%);
+  background: -o-linear-gradient(left, #f02188 10%, rgba(255, 255, 255, 0) 42%);
+  background: -ms-linear-gradient(left, #f02188 10%, rgba(255, 255, 255, 0) 42%);
+  background: linear-gradient(to right, #f02188 10%, rgba(255, 255, 255, 0) 42%);
+  /* position: relative; */
+  -webkit-animation: load3 1.4s infinite linear;
+  animation: load3 1.4s infinite linear;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.loader:before {
+  width: 50%;
+  height: 50%;
+  background: #f02188;
+  border-radius: 100% 0 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+}
+
+.loader:after {
+  background: #ffffff;
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  content: '';
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+@-webkit-keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }

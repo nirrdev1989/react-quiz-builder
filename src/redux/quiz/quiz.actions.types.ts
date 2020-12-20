@@ -19,6 +19,7 @@ export const ADD_QUESTION = 'ADD_QUESTION'
 export const REMOVE_UNSWER = 'REMOVE_UNSWER'
 export const ADD_UNSWER = 'ADD_UNSWER'
 export const EDIT_QUESTION = 'EDIT_QUESTION'
+export const PUBLISH_QUIZ = 'PUBLISH_QUIZ'
 
 export const SET_CURRENT_QUIZ = 'SET_CURRENT_QUIZ'
 export const SET_UNSWER = 'SET_UNSWER'
@@ -89,6 +90,11 @@ export interface EditQuestionActionType {
     payload: EditQuestion
 }
 
+export interface PublishQuizActionType {
+    type: typeof PUBLISH_QUIZ
+    payload: string
+}
+
 export type QuizActionsTypes =
     AddQuizActionType |
     RemoveQuizActionType |
@@ -99,4 +105,5 @@ export type QuizActionsTypes =
     AddQuestionActionType |
     RemoveAnswerActionType |
     AddAnswerActionType |
-    EditQuestionActionType
+    EditQuestionActionType |
+    PublishQuizActionType

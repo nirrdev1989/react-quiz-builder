@@ -131,7 +131,7 @@ function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz, publishQuiz }: 
                         property={'password'}
                         outPutNewValue={getEditNewValue}
                      />
-                     {!quiz.published ?
+                     {/* {!quiz.published ?
                         <AlertWindow color="danger">
                            <SmallMessage
                               message={'This quiz is not published'}
@@ -143,7 +143,7 @@ function ManageQuizPage({ addQuestion, editQuizMain, removeQuiz, publishQuiz }: 
                               color="withe"
                               message={'This quiz is publish'}
                            />
-                        </AlertWindow>}
+                        </AlertWindow>} */}
                   </React.Fragment>}
             </CardContainer>
             {quiz.questions.length > 0 &&

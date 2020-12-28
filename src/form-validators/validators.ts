@@ -44,69 +44,69 @@ export function createQuizMainValidate(values: Quiz) {
         }
     }
 
-    if (required(values!.password)) {
-        erros['password'] = {
-            label: 'Password',
-            validatorName: 'required',
-            message: 'Password is required'
-        }
-    }
+    // if (required(values!.password)) {
+    //     erros['password'] = {
+    //         label: 'Password',
+    //         validatorName: 'required',
+    //         message: 'Password is required'
+    //     }
+    // }
 
-    else if (minLength(values!.password, 3)) {
-        erros['password'] = {
-            label: 'Password',
-            validatorName: 'minLength',
-            message: 'Password too short'
-        }
-    }
+    // else if (minLength(values!.password, 3)) {
+    //     erros['password'] = {
+    //         label: 'Password',
+    //         validatorName: 'minLength',
+    //         message: 'Password too short'
+    //     }
+    // }
 
-    else if (maxLength(values!.password, 10)) {
-        erros['password'] = {
-            label: 'Password',
-            validatorName: 'maxLength',
-            message: 'Password too long'
-        }
-    }
+    // else if (maxLength(values!.password, 10)) {
+    //     erros['password'] = {
+    //         label: 'Password',
+    //         validatorName: 'maxLength',
+    //         message: 'Password too long'
+    //     }
+    // }
 
-    if (required(values!.ownerEmail)) {
-        erros['ownerEmail'] = {
-            label: 'Owner email',
-            validatorName: 'required',
-            message: 'Owner Email is required'
-        }
-    }
+    // if (required(values!.ownerEmail)) {
+    //     erros['ownerEmail'] = {
+    //         label: 'Owner email',
+    //         validatorName: 'required',
+    //         message: 'Owner Email is required'
+    //     }
+    // }
 
-    else if (maxLength(values!.ownerEmail, 50)) {
-        erros['ownerEmail'] = {
-            label: 'Owner email',
-            validatorName: 'maxLength',
-            message: 'Email is to long'
-        }
-    }
+    // else if (maxLength(values!.ownerEmail, 50)) {
+    //     erros['ownerEmail'] = {
+    //         label: 'Owner email',
+    //         validatorName: 'maxLength',
+    //         message: 'Email is to long'
+    //     }
+    // }
 
-    else if (email(values!.ownerEmail)) {
-        erros['ownerEmail'] = {
-            label: 'Owner email',
-            validatorName: 'email',
-            message: 'Invalid email'
-        }
-    }
+    // else if (email(values!.ownerEmail)) {
+    //     erros['ownerEmail'] = {
+    //         label: 'Owner email',
+    //         validatorName: 'email',
+    //         message: 'Invalid email'
+    //     }
+    // }
 
-    if (required(values!.ownerName)) {
-        erros['ownerName'] = {
-            label: 'Owner Name',
-            validatorName: 'required',
-            message: 'Owner Name is required'
-        }
-    }
+    // if (required(values!.ownerName)) {
+    //     erros['ownerName'] = {
+    //         label: 'Owner Name',
+    //         validatorName: 'required',
+    //         message: 'Owner Name is required'
+    //     }
+    // }
 
-    else if (maxLength(values!.ownerName, 20)) {
-        erros['ownerName'] = {
-            label: 'Owner name',
-            validatorName: 'maxLength',
-            message: 'Owner name is to long'
-        }
-    }
+    // else if (maxLength(values!.ownerName, 20)) {
+    //     erros['ownerName'] = {
+    //         label: 'Owner name',
+    //         validatorName: 'maxLength',
+    //         message: 'Owner name is to long'
+    //     }
+    // }
     console.log(erros)
 
     return erros

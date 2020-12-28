@@ -20,9 +20,9 @@ let initialState = {
    description: '',
    numberQuestions: 0,
    questions: [],
-   password: '',
-   ownerName: '',
-   ownerEmail: ''
+   // password: '',
+   // ownerName: '',
+   // ownerEmail: ''
 }
 
 
@@ -113,7 +113,7 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
                            onChange={handleChange} />
                         <label >Description*</label>
                      </div>
-                     <SmallMessage
+                     {/* <SmallMessage
                         message="Owner name"
                         color="black"
                      />
@@ -154,7 +154,7 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
                         required
                         value={values.password}
                         onChange={handleChange}
-                     />
+                     /> */}
                   </form>
                </CardContainer>)}
       </React.Fragment>

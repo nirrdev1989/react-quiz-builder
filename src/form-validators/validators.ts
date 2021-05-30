@@ -8,7 +8,6 @@ export interface FormErros {
     }
 }
 
-
 export function createQuizMainValidate(values: Quiz) {
     let erros: FormErros = {}
 

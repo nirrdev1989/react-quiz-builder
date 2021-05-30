@@ -12,10 +12,14 @@ import { useForm } from '../../hooks/use.form';
 import { createQuizMainValidate, FormErros } from '../../form-validators/validators';
 
 
+function generateId(): number {
+   return Math.floor(Math.random() * 34234234324234324223)
+}
+
 let initialState = {
    dateCreated: new Date().toLocaleDateString(),
    published: false,
-   quizId: String(Date.now()),
+   quizId: -1,
    title: '',
    description: '',
    numberQuestions: 0,
@@ -36,6 +40,7 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
    const [values, handleChange, handleSubmit, isSubmit, errors] = useForm(initialState, callSubmit, createQuizMainValidate)
 
    function callSubmit() {
+      values.quizId = generateId()
       addQuiz(values)
    }
 
@@ -46,7 +51,7 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
             (<AlertWindow color="warning">
                <strong>Your quiz was created click,</strong>
                <Link
-                  to={`quiz/edit/${initialState.quizId}`}
+                  to={`quiz/edit/${values.quizId}`}
                >
                   <span className="text-primary"> here </span>
                </Link>
@@ -170,4 +175,4 @@ function mapDispatchToProps(dispatch: Function) {
 
 export default withRouter(
    connect(null, mapDispatchToProps)(CreateMainQuizForm)
-) 
+)

@@ -1,5 +1,9 @@
 # Getting Started with Create React App
 
+![](src/screenshots/Q1.png)
+![](img/b.png)
+![](img/c.png)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

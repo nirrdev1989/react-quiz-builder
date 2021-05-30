@@ -1,8 +1,11 @@
 # Getting Started with Create React App
 
 ![](src/screenshots/Q1.png)
-![](img/b.png)
-![](img/c.png)
+![](src/screenshots/Q2.png)
+![](src/screenshots/Q3.png)
+![](src/screenshots/Q4.png)
+![](src/screenshots/Q5.png)
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Quiz } from '../../redux/quiz/model';
 import { connect } from "react-redux";
 import { addQuizAction } from '../../redux/quiz/quiz.action';
@@ -38,9 +38,12 @@ interface CreateQuizProps {
 function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
 
    const [values, handleChange, handleSubmit, isSubmit, errors] = useForm(initialState, callSubmit, createQuizMainValidate)
+   const [id, setId] = useState<number>(0)
 
    function callSubmit() {
-      values.quizId = generateId()
+      const newId = generateId()
+      setId(() => newId)
+      values.quizId = newId
       addQuiz(values)
    }
 
@@ -51,7 +54,7 @@ function CreateMainQuizForm({ addQuiz }: CreateQuizProps) {
             (<AlertWindow color="warning">
                <strong>Your quiz was created click,</strong>
                <Link
-                  to={`quiz/edit/${values.quizId}`}
+                  to={`quiz/edit/${id}`}
                >
                   <span className="text-primary"> here </span>
                </Link>

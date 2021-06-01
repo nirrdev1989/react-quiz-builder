@@ -4,6 +4,7 @@ import Header from './components/Header/Header';
 import { Route, Switch } from 'react-router';
 import Footer from './components/Footer/Footer';
 import { email, maxLength, minLength, required } from './form-validators/validators';
+import NotPoundPage from './pages/NotPound.page';
 
 
 const CreateQuizPage = React.lazy(() => import('./pages/Create.quiz.page'))
@@ -48,6 +49,10 @@ function App() {
                         exact={true}
                         path="/quiz/edit/:quizId"
                         component={ManageQuizPage}
+                     />
+                     <Route
+                        path="**"
+                        component={NotPoundPage}
                      />
                   </Suspense>
                </Switch>
